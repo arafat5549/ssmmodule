@@ -18,7 +18,7 @@ public class MyTest
 	public static void main(String[] args) throws SAXException, IOException, CloneNotSupportedException 
 	{
 		
-		Properties props =PropertiesUtil.loadFromFile("classpath://mybatis-generator.properties");		
+		Properties props =PropertiesUtil.loadFromFile("classpath://jdbc.properties");		
 		System.out.println(props.get("dbName"));
 		
 		List<String> lists = Lists.newArrayList("sql/data/mybatistest.sql","sql/data/mybatistest_data.sql");

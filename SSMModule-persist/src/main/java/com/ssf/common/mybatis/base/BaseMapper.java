@@ -42,6 +42,14 @@ public interface BaseMapper<T> {
 	 */
 	int insertSelective(T record);
 	
+	/**
+	 * 根据ids数组，逻辑删除对象(逻辑删除 置delete标志位)
+	 * @param deleteFlag 要设置的delete标志位 0普通 1删除
+	 * @param ids 
+	 * @return
+	 */
+	int deleteLogicByIds(Integer deleteFlag, Integer[] ids);
+	
 	//测试方法-没有意义
 	List<T> selectTest(Map<Object, Object> map);
 

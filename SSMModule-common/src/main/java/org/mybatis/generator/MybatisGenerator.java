@@ -24,6 +24,13 @@ public class MybatisGenerator {
 			e.printStackTrace();
 		}
 	}
+	
+	public static  List<String> getTableNames(Properties props){
+		String dbName = props.getProperty("dbName");
+		String dbType = props.getProperty("dbType");
+		return DataBasePopulator.getTableNames(props, dbName,dbType);
+	}
+	
 	//第一步生成-数据库结构
 	public static void runSql(Properties props,List<String> lists){
 		

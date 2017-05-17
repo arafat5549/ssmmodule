@@ -88,7 +88,9 @@ public class DataBasePopulator {
 	
 	/**
 	 * 获取所有数据库的名称
-	 * databaseId ='mysql' , "oracle" , "sqlserver"
+	 * 
+	 * 
+	 * @param databaseId ='mysql' , "oracle" , "sqlserver" 默认为 mysql
 	 * @return
 	 */
 	public static List<String> getTableNames(Properties props,String dbName,String databaseId)
