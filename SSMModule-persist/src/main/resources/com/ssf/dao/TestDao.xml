@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.dao.TestDao">
+  <resultMap id="BaseResultMap" type="com.ssf.model.Test">
+    <id column="test_id" jdbcType="INTEGER" property="id" />
+    <result column="test_deleteFlag" jdbcType="VARCHAR" property="deleteflag" />
+    <result column="test_createTime" jdbcType="DATE" property="createtime" />
+    <result column="test_name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    test.id as test_id, test.deleteFlag as test_deleteFlag, test.createTime as test_createTime, 
+    test.name as test_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from test test
+    where test.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from test
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.model.Test">
+    insert into ${dynamicTableName} (id, deleteFlag, createTime,
+      name)
+    values (#{id,jdbcType=INTEGER}, #{deleteflag,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE}, 
+      #{name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.model.Test">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="deleteflag != null">
+        deleteFlag,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deleteflag != null">
+        #{deleteflag,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.model.Test">
+    update ${dynamicTableName}
+    <set>
+      <if test="deleteflag != null">
+        deleteFlag = #{deleteflag,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=DATE},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.model.Test">
+    update ${dynamicTableName}
+    set deleteFlag = #{deleteflag,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=DATE},
+      name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="deleteLogicByIds">
+    update test test set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  test </if><if test="dynamicTableName == null or dynamicTableName == ''"> test test</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  test </if><if test="dynamicTableName == null or dynamicTableName == ''"> test test</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND test.id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="deleteflag != null and deleteflag != ''">
+         AND test.deleteFlag = #{deleteflag,jdbcType=VARCHAR}
+      </if>
+      <if test="createtime != null and createtime != ''">
+         AND test.createTime = #{createtime,jdbcType=DATE}
+      </if>
+      <if test="name != null and name != ''">
+         AND test.name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND test.id &gt; #{myGreater_id,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_deleteflag != null and myGreater_deleteflag != ''">
+         AND test.deleteFlag &gt; #{myGreater_deleteflag,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_createtime != null and myGreater_createtime != ''">
+         AND test.createTime &gt; #{myGreater_createtime,jdbcType=DATE}
+      </if>
+      <if test="myGreater_name != null and myGreater_name != ''">
+         AND test.name &gt; #{myGreater_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND test.id &lt; #{myLesser_id,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_deleteflag != null and myLesser_deleteflag != ''">
+         AND test.deleteFlag &lt; #{myLesser_deleteflag,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_createtime != null and myLesser_createtime != ''">
+         AND test.createTime &lt; #{myLesser_createtime,jdbcType=DATE}
+      </if>
+      <if test="myLesser_name != null and myLesser_name != ''">
+         AND test.name &lt; #{myLesser_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND test.id like CONCAT('%', #{myLike_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_deleteflag != null and myLike_deleteflag != ''">
+         AND test.deleteFlag like CONCAT('%', #{myLike_deleteflag,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_createtime != null and myLike_createtime != ''">
+         AND test.createTime like CONCAT('%', #{myLike_createtime,jdbcType=DATE},'%' )
+      </if>
+      <if test="myLike_name != null and myLike_name != ''">
+         AND test.name like CONCAT('%', #{myLike_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND test.id like CONCAT('%', #{myLikeStart_id,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_deleteflag != null and myLikeStart_deleteflag != ''">
+         AND test.deleteFlag like CONCAT('%', #{myLikeStart_deleteflag,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_createtime != null and myLikeStart_createtime != ''">
+         AND test.createTime like CONCAT('%', #{myLikeStart_createtime,jdbcType=DATE})
+      </if>
+      <if test="myLikeStart_name != null and myLikeStart_name != ''">
+         AND test.name like CONCAT('%', #{myLikeStart_name,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND test.id like CONCAT( #{myLikeEnd_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_deleteflag != null and myLikeEnd_deleteflag != ''">
+         AND test.deleteFlag like CONCAT( #{myLikeEnd_deleteflag,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_createtime != null and myLikeEnd_createtime != ''">
+         AND test.createTime like CONCAT( #{myLikeEnd_createtime,jdbcType=DATE},'%' )
+      </if>
+      <if test="myLikeEnd_name != null and myLikeEnd_name != ''">
+         AND test.name like CONCAT( #{myLikeEnd_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND test.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_deleteflag != null and myIn_deleteflag != ''">
+         AND test.deleteFlag in <foreach item="item" index="index" collection="myIn_deleteflag" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createtime != null and myIn_createtime != ''">
+         AND test.createTime in <foreach item="item" index="index" collection="myIn_createtime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_name != null and myIn_name != ''">
+         AND test.name in <foreach item="item" index="index" collection="myIn_name" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKeyAndTableName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${dynamicTableName}  test where test.id = #{id, jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKeyAndTableName" parameterType="String">
+    delete from ${dynamicTableName} where id = #{id, jdbcType=VARCHAR}
+  </delete>
+</mapper>

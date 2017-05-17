@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.dao.SysmanroleresourcerelDao">
+  <resultMap id="BaseResultMap" type="com.ssf.model.SysmanroleresourcerelKey">
+    <id column="sysmanroleresourcerel_sysmanRoleId" jdbcType="INTEGER" property="sysmanroleid" />
+    <id column="sysmanroleresourcerel_sysmanResourceId" jdbcType="INTEGER" property="sysmanresourceid" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.ssf.model.SysmanroleresourcerelKey">
+    delete from sysmanroleresourcerel
+    where sysmanRoleId = #{sysmanroleid,jdbcType=INTEGER}
+      and sysmanResourceId = #{sysmanresourceid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.model.SysmanroleresourcerelKey">
+    insert into ${dynamicTableName} (sysmanRoleId, sysmanResourceId)
+    values (#{sysmanroleid,jdbcType=INTEGER}, #{sysmanresourceid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.model.SysmanroleresourcerelKey">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sysmanroleid != null">
+        sysmanRoleId,
+      </if>
+      <if test="sysmanresourceid != null">
+        sysmanResourceId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sysmanroleid != null">
+        #{sysmanroleid,jdbcType=INTEGER},
+      </if>
+      <if test="sysmanresourceid != null">
+        #{sysmanresourceid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="deleteLogicByIds">
+    update sysmanroleresourcerel sysmanroleresourcerel set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sysmanroleresourcerel </if><if test="dynamicTableName == null or dynamicTableName == ''"> sysmanroleresourcerel sysmanroleresourcerel</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sysmanroleresourcerel </if><if test="dynamicTableName == null or dynamicTableName == ''"> sysmanroleresourcerel sysmanroleresourcerel</if> <include refid="Base_Query_Map_Condition" />  order by  sysmanRoleId desc, sysmanResourceId desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="sysmanroleid != null and sysmanroleid != ''">
+         AND sysmanroleresourcerel.sysmanRoleId = #{sysmanroleid,jdbcType=INTEGER}
+      </if>
+      <if test="sysmanresourceid != null and sysmanresourceid != ''">
+         AND sysmanroleresourcerel.sysmanResourceId = #{sysmanresourceid,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_sysmanroleid != null and myGreater_sysmanroleid != ''">
+         AND sysmanroleresourcerel.sysmanRoleId &gt; #{myGreater_sysmanroleid,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_sysmanresourceid != null and myGreater_sysmanresourceid != ''">
+         AND sysmanroleresourcerel.sysmanResourceId &gt; #{myGreater_sysmanresourceid,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_sysmanroleid != null and myLesser_sysmanroleid != ''">
+         AND sysmanroleresourcerel.sysmanRoleId &lt; #{myLesser_sysmanroleid,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_sysmanresourceid != null and myLesser_sysmanresourceid != ''">
+         AND sysmanroleresourcerel.sysmanResourceId &lt; #{myLesser_sysmanresourceid,jdbcType=INTEGER}
+      </if>
+      <if test="myLike_sysmanroleid != null and myLike_sysmanroleid != ''">
+         AND sysmanroleresourcerel.sysmanRoleId like CONCAT('%', #{myLike_sysmanroleid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_sysmanresourceid != null and myLike_sysmanresourceid != ''">
+         AND sysmanroleresourcerel.sysmanResourceId like CONCAT('%', #{myLike_sysmanresourceid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeStart_sysmanroleid != null and myLikeStart_sysmanroleid != ''">
+         AND sysmanroleresourcerel.sysmanRoleId like CONCAT('%', #{myLikeStart_sysmanroleid,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_sysmanresourceid != null and myLikeStart_sysmanresourceid != ''">
+         AND sysmanroleresourcerel.sysmanResourceId like CONCAT('%', #{myLikeStart_sysmanresourceid,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeEnd_sysmanroleid != null and myLikeEnd_sysmanroleid != ''">
+         AND sysmanroleresourcerel.sysmanRoleId like CONCAT( #{myLikeEnd_sysmanroleid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_sysmanresourceid != null and myLikeEnd_sysmanresourceid != ''">
+         AND sysmanroleresourcerel.sysmanResourceId like CONCAT( #{myLikeEnd_sysmanresourceid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myIn_sysmanroleid != null and myIn_sysmanroleid != ''">
+         AND sysmanroleresourcerel.sysmanRoleId in <foreach item="item" index="index" collection="myIn_sysmanroleid" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_sysmanresourceid != null and myIn_sysmanresourceid != ''">
+         AND sysmanroleresourcerel.sysmanResourceId in <foreach item="item" index="index" collection="myIn_sysmanresourceid" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+</mapper>

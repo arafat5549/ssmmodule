@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.dao.SysmanuserrolerelDao">
+  <resultMap id="BaseResultMap" type="com.ssf.model.SysmanuserrolerelKey">
+    <id column="sysmanuserrolerel_sysmanUserId" jdbcType="INTEGER" property="sysmanuserid" />
+    <id column="sysmanuserrolerel_sysmanRoleId" jdbcType="INTEGER" property="sysmanroleid" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.ssf.model.SysmanuserrolerelKey">
+    delete from sysmanuserrolerel
+    where sysmanUserId = #{sysmanuserid,jdbcType=INTEGER}
+      and sysmanRoleId = #{sysmanroleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.model.SysmanuserrolerelKey">
+    insert into ${dynamicTableName} (sysmanUserId, sysmanRoleId)
+    values (#{sysmanuserid,jdbcType=INTEGER}, #{sysmanroleid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.model.SysmanuserrolerelKey">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sysmanuserid != null">
+        sysmanUserId,
+      </if>
+      <if test="sysmanroleid != null">
+        sysmanRoleId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sysmanuserid != null">
+        #{sysmanuserid,jdbcType=INTEGER},
+      </if>
+      <if test="sysmanroleid != null">
+        #{sysmanroleid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="deleteLogicByIds">
+    update sysmanuserrolerel sysmanuserrolerel set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sysmanuserrolerel </if><if test="dynamicTableName == null or dynamicTableName == ''"> sysmanuserrolerel sysmanuserrolerel</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sysmanuserrolerel </if><if test="dynamicTableName == null or dynamicTableName == ''"> sysmanuserrolerel sysmanuserrolerel</if> <include refid="Base_Query_Map_Condition" />  order by  sysmanUserId desc, sysmanRoleId desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="sysmanuserid != null and sysmanuserid != ''">
+         AND sysmanuserrolerel.sysmanUserId = #{sysmanuserid,jdbcType=INTEGER}
+      </if>
+      <if test="sysmanroleid != null and sysmanroleid != ''">
+         AND sysmanuserrolerel.sysmanRoleId = #{sysmanroleid,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_sysmanuserid != null and myGreater_sysmanuserid != ''">
+         AND sysmanuserrolerel.sysmanUserId &gt; #{myGreater_sysmanuserid,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_sysmanroleid != null and myGreater_sysmanroleid != ''">
+         AND sysmanuserrolerel.sysmanRoleId &gt; #{myGreater_sysmanroleid,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_sysmanuserid != null and myLesser_sysmanuserid != ''">
+         AND sysmanuserrolerel.sysmanUserId &lt; #{myLesser_sysmanuserid,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_sysmanroleid != null and myLesser_sysmanroleid != ''">
+         AND sysmanuserrolerel.sysmanRoleId &lt; #{myLesser_sysmanroleid,jdbcType=INTEGER}
+      </if>
+      <if test="myLike_sysmanuserid != null and myLike_sysmanuserid != ''">
+         AND sysmanuserrolerel.sysmanUserId like CONCAT('%', #{myLike_sysmanuserid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_sysmanroleid != null and myLike_sysmanroleid != ''">
+         AND sysmanuserrolerel.sysmanRoleId like CONCAT('%', #{myLike_sysmanroleid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeStart_sysmanuserid != null and myLikeStart_sysmanuserid != ''">
+         AND sysmanuserrolerel.sysmanUserId like CONCAT('%', #{myLikeStart_sysmanuserid,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_sysmanroleid != null and myLikeStart_sysmanroleid != ''">
+         AND sysmanuserrolerel.sysmanRoleId like CONCAT('%', #{myLikeStart_sysmanroleid,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeEnd_sysmanuserid != null and myLikeEnd_sysmanuserid != ''">
+         AND sysmanuserrolerel.sysmanUserId like CONCAT( #{myLikeEnd_sysmanuserid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_sysmanroleid != null and myLikeEnd_sysmanroleid != ''">
+         AND sysmanuserrolerel.sysmanRoleId like CONCAT( #{myLikeEnd_sysmanroleid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myIn_sysmanuserid != null and myIn_sysmanuserid != ''">
+         AND sysmanuserrolerel.sysmanUserId in <foreach item="item" index="index" collection="myIn_sysmanuserid" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_sysmanroleid != null and myIn_sysmanroleid != ''">
+         AND sysmanuserrolerel.sysmanRoleId in <foreach item="item" index="index" collection="myIn_sysmanroleid" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+</mapper>
