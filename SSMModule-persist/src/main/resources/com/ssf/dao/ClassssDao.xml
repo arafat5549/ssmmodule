@@ -2,29 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssf.dao.ClassssDao">
   <resultMap id="BaseResultMap" type="com.ssf.model.Classss">
-    <id column="classss_id" jdbcType="INTEGER" property="id" />
-    <result column="classss_createTime" jdbcType="DATE" property="createtime" />
-    <result column="classss_deleteFlag" jdbcType="VARCHAR" property="deleteflag" />
+    <id column="classss_id" jdbcType="BIGINT" property="id" />
+    <result column="classss_delete_flag" jdbcType="INTEGER" property="deleteFlag" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler" />
+    <result column="classss_create_time" jdbcType="TIMESTAMP" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
     <result column="classss_namess" jdbcType="VARCHAR" property="namess" />
   </resultMap>
   <sql id="Base_Column_List">
-    classss.id as classss_id, classss.createTime as classss_createTime, classss.deleteFlag as classss_deleteFlag, 
+    classss.id as classss_id, classss.delete_flag as classss_delete_flag, classss.create_time as classss_create_time, 
     classss.namess as classss_namess
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from classss classss
-    where classss.id = #{id,jdbcType=INTEGER}
+    where classss.id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from classss
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.ssf.model.Classss">
-    insert into ${dynamicTableName} (id, createTime, deleteFlag,
+    insert into ${dynamicTableName} (id, delete_flag,
+      create_time, 
       namess)
-    values (#{id,jdbcType=INTEGER}, #{createtime,jdbcType=DATE}, #{deleteflag,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}, 
+      #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}, 
       #{namess,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ssf.model.Classss">
@@ -33,11 +35,11 @@
       <if test="id != null">
         id,
       </if>
-      <if test="createtime != null">
-        createTime,
+      <if test="deleteFlag != null">
+        delete_flag,
       </if>
-      <if test="deleteflag != null">
-        deleteFlag,
+      <if test="createTime != null">
+        create_time,
       </if>
       <if test="namess != null">
         namess,
@@ -45,13 +47,13 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=BIGINT},
       </if>
-      <if test="createtime != null">
-        #{createtime,jdbcType=DATE},
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},
       </if>
-      <if test="deleteflag != null">
-        #{deleteflag,jdbcType=VARCHAR},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
       </if>
       <if test="namess != null">
         #{namess,jdbcType=VARCHAR},
@@ -61,24 +63,24 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.ssf.model.Classss">
     update ${dynamicTableName}
     <set>
-      <if test="createtime != null">
-        createTime = #{createtime,jdbcType=DATE},
+      <if test="deleteFlag != null">
+        delete_flag = #{deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},
       </if>
-      <if test="deleteflag != null">
-        deleteFlag = #{deleteflag,jdbcType=VARCHAR},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
       </if>
       <if test="namess != null">
         namess = #{namess,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ssf.model.Classss">
     update ${dynamicTableName}
-    set createTime = #{createtime,jdbcType=DATE},
-      deleteFlag = #{deleteflag,jdbcType=VARCHAR},
+    set delete_flag = #{deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},
+      create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
       namess = #{namess,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="deleteLogicByIds">
     update classss classss set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
@@ -107,73 +109,73 @@
   <sql id="Base_Query_Map_Condition">
     <trim prefix="where" prefixOverrides="and | or">
       <if test="id != null and id != ''">
-         AND classss.id = #{id,jdbcType=INTEGER}
+         AND classss.id = #{id,jdbcType=BIGINT}
       </if>
-      <if test="createtime != null and createtime != ''">
-         AND classss.createTime = #{createtime,jdbcType=DATE}
+      <if test="deleteFlag != null and deleteFlag != ''">
+         AND classss.delete_flag = #{deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}
       </if>
-      <if test="deleteflag != null and deleteflag != ''">
-         AND classss.deleteFlag = #{deleteflag,jdbcType=VARCHAR}
+      <if test="createTime != null and createTime != ''">
+         AND classss.create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
       </if>
       <if test="namess != null and namess != ''">
          AND classss.namess = #{namess,jdbcType=VARCHAR}
       </if>
       <if test="myGreater_id != null and myGreater_id != ''">
-         AND classss.id &gt; #{myGreater_id,jdbcType=INTEGER}
+         AND classss.id &gt; #{myGreater_id,jdbcType=BIGINT}
       </if>
-      <if test="myGreater_createtime != null and myGreater_createtime != ''">
-         AND classss.createTime &gt; #{myGreater_createtime,jdbcType=DATE}
+      <if test="myGreater_deleteFlag != null and myGreater_deleteFlag != ''">
+         AND classss.delete_flag &gt; #{myGreater_deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}
       </if>
-      <if test="myGreater_deleteflag != null and myGreater_deleteflag != ''">
-         AND classss.deleteFlag &gt; #{myGreater_deleteflag,jdbcType=VARCHAR}
+      <if test="myGreater_createTime != null and myGreater_createTime != ''">
+         AND classss.create_time &gt; #{myGreater_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
       </if>
       <if test="myGreater_namess != null and myGreater_namess != ''">
          AND classss.namess &gt; #{myGreater_namess,jdbcType=VARCHAR}
       </if>
       <if test="myLesser_id != null and myLesser_id != ''">
-         AND classss.id &lt; #{myLesser_id,jdbcType=INTEGER}
+         AND classss.id &lt; #{myLesser_id,jdbcType=BIGINT}
       </if>
-      <if test="myLesser_createtime != null and myLesser_createtime != ''">
-         AND classss.createTime &lt; #{myLesser_createtime,jdbcType=DATE}
+      <if test="myLesser_deleteFlag != null and myLesser_deleteFlag != ''">
+         AND classss.delete_flag &lt; #{myLesser_deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}
       </if>
-      <if test="myLesser_deleteflag != null and myLesser_deleteflag != ''">
-         AND classss.deleteFlag &lt; #{myLesser_deleteflag,jdbcType=VARCHAR}
+      <if test="myLesser_createTime != null and myLesser_createTime != ''">
+         AND classss.create_time &lt; #{myLesser_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
       </if>
       <if test="myLesser_namess != null and myLesser_namess != ''">
          AND classss.namess &lt; #{myLesser_namess,jdbcType=VARCHAR}
       </if>
       <if test="myLike_id != null and myLike_id != ''">
-         AND classss.id like CONCAT('%', #{myLike_id,jdbcType=INTEGER},'%' )
+         AND classss.id like CONCAT('%', #{myLike_id,jdbcType=BIGINT},'%' )
       </if>
-      <if test="myLike_createtime != null and myLike_createtime != ''">
-         AND classss.createTime like CONCAT('%', #{myLike_createtime,jdbcType=DATE},'%' )
+      <if test="myLike_deleteFlag != null and myLike_deleteFlag != ''">
+         AND classss.delete_flag like CONCAT('%', #{myLike_deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},'%' )
       </if>
-      <if test="myLike_deleteflag != null and myLike_deleteflag != ''">
-         AND classss.deleteFlag like CONCAT('%', #{myLike_deleteflag,jdbcType=VARCHAR},'%' )
+      <if test="myLike_createTime != null and myLike_createTime != ''">
+         AND classss.create_time like CONCAT('%', #{myLike_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
       </if>
       <if test="myLike_namess != null and myLike_namess != ''">
          AND classss.namess like CONCAT('%', #{myLike_namess,jdbcType=VARCHAR},'%' )
       </if>
       <if test="myLikeStart_id != null and myLikeStart_id != ''">
-         AND classss.id like CONCAT('%', #{myLikeStart_id,jdbcType=INTEGER})
+         AND classss.id like CONCAT('%', #{myLikeStart_id,jdbcType=BIGINT})
       </if>
-      <if test="myLikeStart_createtime != null and myLikeStart_createtime != ''">
-         AND classss.createTime like CONCAT('%', #{myLikeStart_createtime,jdbcType=DATE})
+      <if test="myLikeStart_deleteFlag != null and myLikeStart_deleteFlag != ''">
+         AND classss.delete_flag like CONCAT('%', #{myLikeStart_deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler})
       </if>
-      <if test="myLikeStart_deleteflag != null and myLikeStart_deleteflag != ''">
-         AND classss.deleteFlag like CONCAT('%', #{myLikeStart_deleteflag,jdbcType=VARCHAR})
+      <if test="myLikeStart_createTime != null and myLikeStart_createTime != ''">
+         AND classss.create_time like CONCAT('%', #{myLikeStart_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
       </if>
       <if test="myLikeStart_namess != null and myLikeStart_namess != ''">
          AND classss.namess like CONCAT('%', #{myLikeStart_namess,jdbcType=VARCHAR})
       </if>
       <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
-         AND classss.id like CONCAT( #{myLikeEnd_id,jdbcType=INTEGER},'%' )
+         AND classss.id like CONCAT( #{myLikeEnd_id,jdbcType=BIGINT},'%' )
       </if>
-      <if test="myLikeEnd_createtime != null and myLikeEnd_createtime != ''">
-         AND classss.createTime like CONCAT( #{myLikeEnd_createtime,jdbcType=DATE},'%' )
+      <if test="myLikeEnd_deleteFlag != null and myLikeEnd_deleteFlag != ''">
+         AND classss.delete_flag like CONCAT( #{myLikeEnd_deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},'%' )
       </if>
-      <if test="myLikeEnd_deleteflag != null and myLikeEnd_deleteflag != ''">
-         AND classss.deleteFlag like CONCAT( #{myLikeEnd_deleteflag,jdbcType=VARCHAR},'%' )
+      <if test="myLikeEnd_createTime != null and myLikeEnd_createTime != ''">
+         AND classss.create_time like CONCAT( #{myLikeEnd_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
       </if>
       <if test="myLikeEnd_namess != null and myLikeEnd_namess != ''">
          AND classss.namess like CONCAT( #{myLikeEnd_namess,jdbcType=VARCHAR},'%' )
@@ -181,11 +183,11 @@
       <if test="myIn_id != null and myIn_id != ''">
          AND classss.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
       </if>
-      <if test="myIn_createtime != null and myIn_createtime != ''">
-         AND classss.createTime in <foreach item="item" index="index" collection="myIn_createtime" open="(" separator="," close=")"> #{item} </foreach>
+      <if test="myIn_deleteFlag != null and myIn_deleteFlag != ''">
+         AND classss.delete_flag in <foreach item="item" index="index" collection="myIn_deleteFlag" open="(" separator="," close=")"> #{item} </foreach>
       </if>
-      <if test="myIn_deleteflag != null and myIn_deleteflag != ''">
-         AND classss.deleteFlag in <foreach item="item" index="index" collection="myIn_deleteflag" open="(" separator="," close=")"> #{item} </foreach>
+      <if test="myIn_createTime != null and myIn_createTime != ''">
+         AND classss.create_time in <foreach item="item" index="index" collection="myIn_createTime" open="(" separator="," close=")"> #{item} </foreach>
       </if>
       <if test="myIn_namess != null and myIn_namess != ''">
          AND classss.namess in <foreach item="item" index="index" collection="myIn_namess" open="(" separator="," close=")"> #{item} </foreach>

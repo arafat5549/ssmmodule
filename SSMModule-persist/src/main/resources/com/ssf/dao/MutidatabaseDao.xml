@@ -3,10 +3,13 @@
 <mapper namespace="com.ssf.dao.MutidatabaseDao">
   <resultMap id="BaseResultMap" type="com.ssf.model.Mutidatabase">
     <id column="mutidatabase_id" jdbcType="BIGINT" property="id" />
+    <result column="mutidatabase_delete_flag" jdbcType="INTEGER" property="deleteFlag" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler" />
+    <result column="mutidatabase_create_time" jdbcType="TIMESTAMP" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
     <result column="mutidatabase_name" jdbcType="VARCHAR" property="name" />
   </resultMap>
   <sql id="Base_Column_List">
-    mutidatabase.id as mutidatabase_id, mutidatabase.name as mutidatabase_name
+    mutidatabase.id as mutidatabase_id, mutidatabase.delete_flag as mutidatabase_delete_flag, 
+    mutidatabase.create_time as mutidatabase_create_time, mutidatabase.name as mutidatabase_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -19,14 +22,24 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.ssf.model.Mutidatabase">
-    insert into ${dynamicTableName} (id, name)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR})
+    insert into ${dynamicTableName} (id, delete_flag,
+      create_time, 
+      name)
+    values (#{id,jdbcType=BIGINT}, #{deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}, 
+      #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}, 
+      #{name,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ssf.model.Mutidatabase">
     insert into ${dynamicTableName}
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="deleteFlag != null">
+        delete_flag,
+      </if>
+      <if test="createTime != null">
+        create_time,
       </if>
       <if test="name != null">
         name,
@@ -36,6 +49,12 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
@@ -44,6 +63,12 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.ssf.model.Mutidatabase">
     update ${dynamicTableName}
     <set>
+      <if test="deleteFlag != null">
+        delete_flag = #{deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -52,7 +77,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ssf.model.Mutidatabase">
     update ${dynamicTableName}
-    set name = #{name,jdbcType=VARCHAR}
+    set delete_flag = #{deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},
+      create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="deleteLogicByIds">
@@ -84,11 +111,23 @@
       <if test="id != null and id != ''">
          AND mutidatabase.id = #{id,jdbcType=BIGINT}
       </if>
+      <if test="deleteFlag != null and deleteFlag != ''">
+         AND mutidatabase.delete_flag = #{deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}
+      </if>
+      <if test="createTime != null and createTime != ''">
+         AND mutidatabase.create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
       <if test="name != null and name != ''">
          AND mutidatabase.name = #{name,jdbcType=VARCHAR}
       </if>
       <if test="myGreater_id != null and myGreater_id != ''">
          AND mutidatabase.id &gt; #{myGreater_id,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_deleteFlag != null and myGreater_deleteFlag != ''">
+         AND mutidatabase.delete_flag &gt; #{myGreater_deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}
+      </if>
+      <if test="myGreater_createTime != null and myGreater_createTime != ''">
+         AND mutidatabase.create_time &gt; #{myGreater_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
       </if>
       <if test="myGreater_name != null and myGreater_name != ''">
          AND mutidatabase.name &gt; #{myGreater_name,jdbcType=VARCHAR}
@@ -96,11 +135,23 @@
       <if test="myLesser_id != null and myLesser_id != ''">
          AND mutidatabase.id &lt; #{myLesser_id,jdbcType=BIGINT}
       </if>
+      <if test="myLesser_deleteFlag != null and myLesser_deleteFlag != ''">
+         AND mutidatabase.delete_flag &lt; #{myLesser_deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}
+      </if>
+      <if test="myLesser_createTime != null and myLesser_createTime != ''">
+         AND mutidatabase.create_time &lt; #{myLesser_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
       <if test="myLesser_name != null and myLesser_name != ''">
          AND mutidatabase.name &lt; #{myLesser_name,jdbcType=VARCHAR}
       </if>
       <if test="myLike_id != null and myLike_id != ''">
          AND mutidatabase.id like CONCAT('%', #{myLike_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_deleteFlag != null and myLike_deleteFlag != ''">
+         AND mutidatabase.delete_flag like CONCAT('%', #{myLike_deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},'%' )
+      </if>
+      <if test="myLike_createTime != null and myLike_createTime != ''">
+         AND mutidatabase.create_time like CONCAT('%', #{myLike_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
       </if>
       <if test="myLike_name != null and myLike_name != ''">
          AND mutidatabase.name like CONCAT('%', #{myLike_name,jdbcType=VARCHAR},'%' )
@@ -108,17 +159,35 @@
       <if test="myLikeStart_id != null and myLikeStart_id != ''">
          AND mutidatabase.id like CONCAT('%', #{myLikeStart_id,jdbcType=BIGINT})
       </if>
+      <if test="myLikeStart_deleteFlag != null and myLikeStart_deleteFlag != ''">
+         AND mutidatabase.delete_flag like CONCAT('%', #{myLikeStart_deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler})
+      </if>
+      <if test="myLikeStart_createTime != null and myLikeStart_createTime != ''">
+         AND mutidatabase.create_time like CONCAT('%', #{myLikeStart_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
       <if test="myLikeStart_name != null and myLikeStart_name != ''">
          AND mutidatabase.name like CONCAT('%', #{myLikeStart_name,jdbcType=VARCHAR})
       </if>
       <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
          AND mutidatabase.id like CONCAT( #{myLikeEnd_id,jdbcType=BIGINT},'%' )
       </if>
+      <if test="myLikeEnd_deleteFlag != null and myLikeEnd_deleteFlag != ''">
+         AND mutidatabase.delete_flag like CONCAT( #{myLikeEnd_deleteFlag,jdbcType=INTEGER,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},'%' )
+      </if>
+      <if test="myLikeEnd_createTime != null and myLikeEnd_createTime != ''">
+         AND mutidatabase.create_time like CONCAT( #{myLikeEnd_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
       <if test="myLikeEnd_name != null and myLikeEnd_name != ''">
          AND mutidatabase.name like CONCAT( #{myLikeEnd_name,jdbcType=VARCHAR},'%' )
       </if>
       <if test="myIn_id != null and myIn_id != ''">
          AND mutidatabase.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_deleteFlag != null and myIn_deleteFlag != ''">
+         AND mutidatabase.delete_flag in <foreach item="item" index="index" collection="myIn_deleteFlag" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createTime != null and myIn_createTime != ''">
+         AND mutidatabase.create_time in <foreach item="item" index="index" collection="myIn_createTime" open="(" separator="," close=")"> #{item} </foreach>
       </if>
       <if test="myIn_name != null and myIn_name != ''">
          AND mutidatabase.name in <foreach item="item" index="index" collection="myIn_name" open="(" separator="," close=")"> #{item} </foreach>

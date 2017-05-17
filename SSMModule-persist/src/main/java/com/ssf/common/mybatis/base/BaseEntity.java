@@ -27,7 +27,7 @@ public class BaseEntity implements Serializable, IDynamicTableName{
 	/**
 	 * 删除标示
 	 */
-	private String deleteFlag;
+	private DeleteFlagEnum deleteFlag;
 
 	/**
 	 * 创建时间
@@ -43,8 +43,6 @@ public class BaseEntity implements Serializable, IDynamicTableName{
 	 */
     private String dynamicTableName;
 	
-	
-
 	public Long getId() {
 		return id;
 	}
@@ -53,11 +51,11 @@ public class BaseEntity implements Serializable, IDynamicTableName{
 		this.id = id;
 	}
 
-	public String getDeleteFlag() {
+	public DeleteFlagEnum getDeleteFlag() {
 		return deleteFlag;
 	}
 
-	public void setDeleteFlag(String deleteFlag) {
+	public void setDeleteFlag(DeleteFlagEnum deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
 
@@ -68,7 +66,7 @@ public class BaseEntity implements Serializable, IDynamicTableName{
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-
+	
 	public Date getUpdateTime() {
 		return updateTime;
 	}

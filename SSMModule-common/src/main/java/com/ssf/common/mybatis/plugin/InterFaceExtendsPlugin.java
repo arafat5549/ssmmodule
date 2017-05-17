@@ -54,6 +54,7 @@ public class InterFaceExtendsPlugin extends PluginAdapter {
 			interfaze.addImportedType(new FullyQualifiedJavaType(mapper));
 			interfaze.addSuperInterface(new FullyQualifiedJavaType(mapper + "<" + entityType.getShortName() + ">"));
 		}
+		//System.out.println(entityType.getShortName()+",,,,"+entityType);
 		// import实体类
 		interfaze.addImportedType(entityType);
 		return true;

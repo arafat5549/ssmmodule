@@ -5,13 +5,13 @@ import com.ssf.model.BaseLocation;
 import org.apache.ibatis.annotations.Param;;
 
 public interface BaseLocationDao extends BaseMapper<BaseLocation> {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     BaseLocation selectByPrimaryKeyAndTableName(@Param("id") String id, @Param("dynamicTableName") String dynamicTableName);
 
     int deleteByPrimaryKeyAndTableName(@Param("id") String id, @Param("dynamicTableName") String dynamicTableName);
 
-    BaseLocation selectByPrimaryKey(Integer id);
+    BaseLocation selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(BaseLocation record);
 

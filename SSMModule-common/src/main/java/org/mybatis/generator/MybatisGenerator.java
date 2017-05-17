@@ -11,8 +11,9 @@ import org.xml.sax.SAXException;
 
 
 public class MybatisGenerator {
+	private static final String ORIGIN_CONFIG = "generatorConfig.xml";
+	private static final String OUT_CONFIG   = "src/main/resources/generatorConfigBak.xml";
 	
-	private static  String OUT_CONFIG   = "src/main/resources/generatorConfigBak.xml";
 	public static final Properties PROPERTIES = new Properties();
 	static
 	{
@@ -30,10 +31,10 @@ public class MybatisGenerator {
 	}
 	//第二步-生成配置文件
 	public static void createConfigs(){
-		createConfigs(PROPERTIES,OUT_CONFIG);
+		createConfigs(PROPERTIES,ORIGIN_CONFIG,OUT_CONFIG);
 	}
 	
-	public static void createConfigs(Properties props,String out){
+	public static void createConfigs(Properties props,String src,String out){
 		String dbName = props.getProperty("dbName");
 		String dbType = props.getProperty("dbType");
 		if(dbName==null || "".equals(dbName)){
@@ -45,7 +46,7 @@ public class MybatisGenerator {
 		}
 		
 		try {
-			GeneratorConfigXMLUtil.convertXmlStrToObjectTest(props,dbName, dbType,out);
+			GeneratorConfigXMLUtil.convertXmlStrToObjectTest(props,dbName, dbType,src,out);
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

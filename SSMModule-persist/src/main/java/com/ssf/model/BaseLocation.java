@@ -6,16 +6,6 @@ import java.util.Date;
 
 public class BaseLocation extends BaseEntity implements Serializable {
     /**
-     *  ,所属表字段为base_location.deleteFlag
-     */
-    private String deleteflag;
-
-    /**
-     *  创建时间,所属表字段为base_location.createTime
-     */
-    private Date createtime;
-
-    /**
      *  中文名称,所属表字段为base_location.nameCN
      */
     private String namecn;
@@ -131,22 +121,6 @@ public class BaseLocation extends BaseEntity implements Serializable {
     private String isoften;
 
     private static final long serialVersionUID = 1L;
-
-    public String getDeleteflag() {
-        return deleteflag;
-    }
-
-    public void setDeleteflag(String deleteflag) {
-        this.deleteflag = deleteflag;
-    }
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
 
     public String getNamecn() {
         return namecn;
@@ -338,8 +312,6 @@ public class BaseLocation extends BaseEntity implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", deleteflag=").append(deleteflag);
-        sb.append(", createtime=").append(createtime);
         sb.append(", namecn=").append(namecn);
         sb.append(", nameen=").append(nameen);
         sb.append(", code=").append(code);

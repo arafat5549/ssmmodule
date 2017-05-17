@@ -5,13 +5,13 @@ import com.ssf.model.Student;
 import org.apache.ibatis.annotations.Param;;
 
 public interface StudentDao extends BaseMapper<Student> {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     Student selectByPrimaryKeyAndTableName(@Param("id") String id, @Param("dynamicTableName") String dynamicTableName);
 
     int deleteByPrimaryKeyAndTableName(@Param("id") String id, @Param("dynamicTableName") String dynamicTableName);
 
-    Student selectByPrimaryKey(Integer id);
+    Student selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(Student record);
 

@@ -541,6 +541,7 @@
 	<modules>
 		<module>SSMModule-common</module>
 		<module>SSMModule-persist</module>
+		<module>SSMModule-service</module>
 	</modules>
 
 	<!-- 提供pluginManagement 帮助管理插件 -->

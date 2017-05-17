@@ -13,31 +13,19 @@ import com.google.common.collect.Lists;
 public class MyTest 
 {
 	private static final String ORIGIN_CONFIG = "generatorConfig.xml";
+	private static final String OUT_CONFIG   = "src/main/resources/generatorConfigBak.xml";
+	
 	public static void main(String[] args) throws SAXException, IOException, CloneNotSupportedException 
 	{
-		String out = "src/main/resources/generatorConfigPersist.xml";
+		
 		Properties props =PropertiesUtil.loadFromFile("classpath://mybatis-generator.properties");		
 		System.out.println(props.get("dbName"));
 		
-		//List<String> lists = Lists.newArrayList("sql/data/mybatistest20160425.sql");
-		//MybatisGenerator.runSql(props,lists);
-		//MybatisGenerator.createConfigs(props,out);
+		List<String> lists = Lists.newArrayList("sql/data/mybatistest.sql","sql/data/mybatistest_data.sql");
+		MybatisGenerator.runSql(props,lists);
+		MybatisGenerator.createConfigs(props,ORIGIN_CONFIG,OUT_CONFIG);
 		
-		MybatisGenerator.generator(out);
+		MybatisGenerator.generator(OUT_CONFIG);
 		
-//		System.out.println("开始生成代码...");
-//		MybatisGenerator t = new MybatisGenerator();
-//		String config = "generatorConfigBak.xml";
-//		try {
-//			config = Resources.getResourceAsFile(config).getPath();
-//		}  catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		System.out.println("完整的配置文件路径：" + config);
-//		String[] arg = { "-configfile", config, "-overwrite" };
-//		ShellRunner.main(arg);
-//		System.out.println("完成。");
 	}
 }

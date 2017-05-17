@@ -5,13 +5,13 @@ import com.ssf.model.Classss;
 import org.apache.ibatis.annotations.Param;;
 
 public interface ClassssDao extends BaseMapper<Classss> {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     Classss selectByPrimaryKeyAndTableName(@Param("id") String id, @Param("dynamicTableName") String dynamicTableName);
 
     int deleteByPrimaryKeyAndTableName(@Param("id") String id, @Param("dynamicTableName") String dynamicTableName);
 
-    Classss selectByPrimaryKey(Integer id);
+    Classss selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(Classss record);
 

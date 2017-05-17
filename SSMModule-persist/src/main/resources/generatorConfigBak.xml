@@ -66,42 +66,42 @@
       <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
       <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
     </table>
-    <table mapperName="SysmanresourceDao" schema="" tableName="sysmanresource" domainObjectName="Sysmanresource" delimitAllColumns="true" alias="sysmanresource" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+    <table mapperName="ResourceDao" schema="" tableName="sys_resource" domainObjectName="Resource" delimitAllColumns="true" alias="sys_resource" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
       <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
       <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
       <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
       <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
       <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
     </table>
-    <table mapperName="SysmanroleDao" schema="" tableName="sysmanrole" domainObjectName="Sysmanrole" delimitAllColumns="true" alias="sysmanrole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+    <table mapperName="RoleDao" schema="" tableName="sys_role" domainObjectName="Role" delimitAllColumns="true" alias="sys_role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
       <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
       <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
       <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
       <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
       <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
     </table>
-    <table mapperName="SysmanroleresourcerelDao" schema="" tableName="sysmanroleresourcerel" domainObjectName="Sysmanroleresourcerel" delimitAllColumns="true" alias="sysmanroleresourcerel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+    <table mapperName="RoleResourceRelDao" schema="" tableName="sys_role_resource_rel" domainObjectName="RoleResourceRel" delimitAllColumns="true" alias="sys_role_resource_rel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
       <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
       <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
       <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
       <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
       <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
     </table>
-    <table mapperName="SysmanuserDao" schema="" tableName="sysmanuser" domainObjectName="Sysmanuser" delimitAllColumns="true" alias="sysmanuser" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+    <table mapperName="TestDao" schema="" tableName="sys_test" domainObjectName="Test" delimitAllColumns="true" alias="sys_test" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
       <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
       <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
       <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
       <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
       <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
     </table>
-    <table mapperName="SysmanuserrolerelDao" schema="" tableName="sysmanuserrolerel" domainObjectName="Sysmanuserrolerel" delimitAllColumns="true" alias="sysmanuserrolerel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+    <table mapperName="UserDao" schema="" tableName="sys_user" domainObjectName="User" delimitAllColumns="true" alias="sys_user" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
       <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
       <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
       <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
       <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
       <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
     </table>
-    <table mapperName="TestDao" schema="" tableName="test" domainObjectName="Test" delimitAllColumns="true" alias="test" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+    <table mapperName="UserRoleRelDao" schema="" tableName="sys_user_role_rel" domainObjectName="UserRoleRel" delimitAllColumns="true" alias="sys_user_role_rel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
       <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
       <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
       <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>

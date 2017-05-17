@@ -31,7 +31,7 @@ import com.ssf.common.utils.XmlParserUtilss;
  */
 public class GeneratorConfigXMLUtil {
 
-	private static final String ORIGIN_CONFIG = "generatorConfig.xml";
+//	private static final String ORIGIN_CONFIG = "generatorConfig.xml";
 //	private static final String OUT_CONFIG    = "generatorConfigBak.xml";
 //	
 //	/**
@@ -56,14 +56,14 @@ public class GeneratorConfigXMLUtil {
 	 * @param dbType 数据库类型 (支持mysql和oracle) 默认为"mysql"
 	 */
 	@SuppressWarnings("rawtypes")
-	public static void convertXmlStrToObjectTest(Properties props,String dbName,String dbType,String out) throws SAXException, IOException, CloneNotSupportedException {
+	public static void convertXmlStrToObjectTest(Properties props,String dbName,String dbType,String src,String out) throws SAXException, IOException, CloneNotSupportedException {
 		//String xmlPath ="src/main/resources/generatorConfig.xml";
 		//String opath = Resources.getResourceAsFile(ORIGIN_CONFIG).toString();
 		//String opath = URLResourceUtil.asFile("classpath://"+ORIGIN_CONFIG).toString();
 		//System.out.println(opath);
 		
 		
-		InputStream is = URLResourceUtil.asStream("classpath://"+ORIGIN_CONFIG);
+		InputStream is = URLResourceUtil.asStream("classpath://"+src);
 		//System.out.println(IOUtils.toString(is));
 		
 		Document document = XmlParserUtilss.getDocument(is);
