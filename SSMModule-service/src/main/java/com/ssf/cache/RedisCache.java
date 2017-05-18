@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.ssf.common.mybatis.base.BaseMapper;
 import com.ssf.utils.ProtoStuffSerializerUtil;
 
@@ -190,7 +191,11 @@ public class RedisCache {
 		}
 		return result_cache;
 	}
-	
+	//-生成CacheKey
+	public  static String generatorCacheKey(String base,Map<Object,Object>  paramMap){
+		String cache_key = base + paramMap;
+		return cache_key;
+	}
 	
 	
 }
