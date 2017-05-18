@@ -42,7 +42,8 @@ public interface BaseMapper<T> {
 	 */
 	int insertSelective(T record);
 	
+	int deleteLogicByIds(Integer deleteFlag, Integer[] ids);
+	
 	//测试方法-没有意义
-	List<T> selectTest(Map<Object, Object> map);
-
+	//List<T> selectTest(Map<Object, Object> map);
 }

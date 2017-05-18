@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.dao.OrderItemDao">
+  <resultMap id="BaseResultMap" type="com.ssf.model.OrderItem">
+    <id column="sys_order_item_id" jdbcType="BIGINT" property="id" />
+    <result column="sys_order_item_product_id" jdbcType="BIGINT" property="productId" />
+    <result column="sys_order_item_order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="sys_order_item_user_id" jdbcType="BIGINT" property="userId" />
+    <result column="sys_order_item_count" jdbcType="INTEGER" property="count" />
+    <result column="sys_order_item_create_time" jdbcType="VARCHAR" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+    <result column="sys_order_item_update_time" jdbcType="VARCHAR" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sys_order_item.id as sys_order_item_id, sys_order_item.product_id as sys_order_item_product_id, 
+    sys_order_item.order_id as sys_order_item_order_id, sys_order_item.user_id as sys_order_item_user_id, 
+    sys_order_item.count as sys_order_item_count, sys_order_item.create_time as sys_order_item_create_time, 
+    sys_order_item.update_time as sys_order_item_update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_order_item sys_order_item
+    where sys_order_item.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_order_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.model.OrderItem">
+    insert into ${dynamicTableName} (id, product_id, order_id,
+      user_id, count, create_time, 
+      update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, 
+      #{userId,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}, 
+      #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.model.OrderItem">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="count != null">
+        count,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.model.OrderItem">
+    update ${dynamicTableName}
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="count != null">
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.model.OrderItem">
+    update ${dynamicTableName}
+    set product_id = #{productId,jdbcType=BIGINT},
+      order_id = #{orderId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      count = #{count,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      update_time = #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByIds">
+    update sys_order_item sys_order_item set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_order_item </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_order_item sys_order_item</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_order_item </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_order_item sys_order_item</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND sys_order_item.id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="productId != null and productId != ''">
+         AND sys_order_item.product_id = #{productId,jdbcType=BIGINT}
+      </if>
+      <if test="orderId != null and orderId != ''">
+         AND sys_order_item.order_id = #{orderId,jdbcType=BIGINT}
+      </if>
+      <if test="userId != null and userId != ''">
+         AND sys_order_item.user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="count != null and count != ''">
+         AND sys_order_item.count = #{count,jdbcType=INTEGER}
+      </if>
+      <if test="createTime != null and createTime != ''">
+         AND sys_order_item.create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+         AND sys_order_item.update_time = #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND sys_order_item.id &gt; #{myGreater_id,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_productId != null and myGreater_productId != ''">
+         AND sys_order_item.product_id &gt; #{myGreater_productId,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_orderId != null and myGreater_orderId != ''">
+         AND sys_order_item.order_id &gt; #{myGreater_orderId,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_userId != null and myGreater_userId != ''">
+         AND sys_order_item.user_id &gt; #{myGreater_userId,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_count != null and myGreater_count != ''">
+         AND sys_order_item.count &gt; #{myGreater_count,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_createTime != null and myGreater_createTime != ''">
+         AND sys_order_item.create_time &gt; #{myGreater_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_updateTime != null and myGreater_updateTime != ''">
+         AND sys_order_item.update_time &gt; #{myGreater_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND sys_order_item.id &lt; #{myLesser_id,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_productId != null and myLesser_productId != ''">
+         AND sys_order_item.product_id &lt; #{myLesser_productId,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_orderId != null and myLesser_orderId != ''">
+         AND sys_order_item.order_id &lt; #{myLesser_orderId,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_userId != null and myLesser_userId != ''">
+         AND sys_order_item.user_id &lt; #{myLesser_userId,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_count != null and myLesser_count != ''">
+         AND sys_order_item.count &lt; #{myLesser_count,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_createTime != null and myLesser_createTime != ''">
+         AND sys_order_item.create_time &lt; #{myLesser_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_updateTime != null and myLesser_updateTime != ''">
+         AND sys_order_item.update_time &lt; #{myLesser_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND sys_order_item.id like CONCAT('%', #{myLike_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_productId != null and myLike_productId != ''">
+         AND sys_order_item.product_id like CONCAT('%', #{myLike_productId,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_orderId != null and myLike_orderId != ''">
+         AND sys_order_item.order_id like CONCAT('%', #{myLike_orderId,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_userId != null and myLike_userId != ''">
+         AND sys_order_item.user_id like CONCAT('%', #{myLike_userId,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_count != null and myLike_count != ''">
+         AND sys_order_item.count like CONCAT('%', #{myLike_count,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_createTime != null and myLike_createTime != ''">
+         AND sys_order_item.create_time like CONCAT('%', #{myLike_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLike_updateTime != null and myLike_updateTime != ''">
+         AND sys_order_item.update_time like CONCAT('%', #{myLike_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND sys_order_item.id like CONCAT('%', #{myLikeStart_id,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_productId != null and myLikeStart_productId != ''">
+         AND sys_order_item.product_id like CONCAT('%', #{myLikeStart_productId,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_orderId != null and myLikeStart_orderId != ''">
+         AND sys_order_item.order_id like CONCAT('%', #{myLikeStart_orderId,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_userId != null and myLikeStart_userId != ''">
+         AND sys_order_item.user_id like CONCAT('%', #{myLikeStart_userId,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_count != null and myLikeStart_count != ''">
+         AND sys_order_item.count like CONCAT('%', #{myLikeStart_count,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_createTime != null and myLikeStart_createTime != ''">
+         AND sys_order_item.create_time like CONCAT('%', #{myLikeStart_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeStart_updateTime != null and myLikeStart_updateTime != ''">
+         AND sys_order_item.update_time like CONCAT('%', #{myLikeStart_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND sys_order_item.id like CONCAT( #{myLikeEnd_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_productId != null and myLikeEnd_productId != ''">
+         AND sys_order_item.product_id like CONCAT( #{myLikeEnd_productId,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_orderId != null and myLikeEnd_orderId != ''">
+         AND sys_order_item.order_id like CONCAT( #{myLikeEnd_orderId,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_userId != null and myLikeEnd_userId != ''">
+         AND sys_order_item.user_id like CONCAT( #{myLikeEnd_userId,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_count != null and myLikeEnd_count != ''">
+         AND sys_order_item.count like CONCAT( #{myLikeEnd_count,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_createTime != null and myLikeEnd_createTime != ''">
+         AND sys_order_item.create_time like CONCAT( #{myLikeEnd_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeEnd_updateTime != null and myLikeEnd_updateTime != ''">
+         AND sys_order_item.update_time like CONCAT( #{myLikeEnd_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND sys_order_item.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_productId != null and myIn_productId != ''">
+         AND sys_order_item.product_id in <foreach item="item" index="index" collection="myIn_productId" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_orderId != null and myIn_orderId != ''">
+         AND sys_order_item.order_id in <foreach item="item" index="index" collection="myIn_orderId" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_userId != null and myIn_userId != ''">
+         AND sys_order_item.user_id in <foreach item="item" index="index" collection="myIn_userId" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_count != null and myIn_count != ''">
+         AND sys_order_item.count in <foreach item="item" index="index" collection="myIn_count" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createTime != null and myIn_createTime != ''">
+         AND sys_order_item.create_time in <foreach item="item" index="index" collection="myIn_createTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_updateTime != null and myIn_updateTime != ''">
+         AND sys_order_item.update_time in <foreach item="item" index="index" collection="myIn_updateTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKeyAndTableName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${dynamicTableName}  sys_order_item where sys_order_item.id = #{id, jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKeyAndTableName" parameterType="String">
+    delete from ${dynamicTableName} where id = #{id, jdbcType=VARCHAR}
+  </delete>
+</mapper>

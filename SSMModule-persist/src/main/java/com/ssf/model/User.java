@@ -5,14 +5,24 @@ import java.io.Serializable;
 
 public class User extends BaseEntity implements Serializable {
     /**
-     *  ,所属表字段为sys_user.name
+     *  用户名,所属表字段为sys_user.name
      */
     private String name;
 
     /**
-     *  ,所属表字段为sys_user.password
+     *  密码,所属表字段为sys_user.password
      */
     private String password;
+
+    /**
+     *  手机号,所属表字段为sys_user.phone
+     */
+    private Long phone;
+
+    /**
+     *  积分,所属表字段为sys_user.score
+     */
+    private Integer score;
 
     private static final long serialVersionUID = 1L;
 
@@ -32,6 +42,22 @@ public class User extends BaseEntity implements Serializable {
         this.password = password;
     }
 
+    public Long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Long phone) {
+        this.phone = phone;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -40,6 +66,8 @@ public class User extends BaseEntity implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", name=").append(name);
         sb.append(", password=").append(password);
+        sb.append(", phone=").append(phone);
+        sb.append(", score=").append(score);
         sb.append("]");
         return sb.toString();
     }

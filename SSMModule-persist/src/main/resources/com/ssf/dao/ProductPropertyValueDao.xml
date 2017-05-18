@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.dao.ProductPropertyValueDao">
+  <resultMap id="BaseResultMap" type="com.ssf.model.ProductPropertyValue">
+    <id column="sys_product_property_value_id" jdbcType="BIGINT" property="id" />
+    <result column="sys_product_property_value_product_id" jdbcType="BIGINT" property="productId" />
+    <result column="sys_product_property_value_property_id" jdbcType="BIGINT" property="propertyId" />
+    <result column="sys_product_property_value_name" jdbcType="VARCHAR" property="name" />
+    <result column="sys_product_property_value_create_time" jdbcType="VARCHAR" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sys_product_property_value.id as sys_product_property_value_id, sys_product_property_value.product_id as sys_product_property_value_product_id, 
+    sys_product_property_value.property_id as sys_product_property_value_property_id, 
+    sys_product_property_value.name as sys_product_property_value_name, sys_product_property_value.create_time as sys_product_property_value_create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_product_property_value sys_product_property_value
+    where sys_product_property_value.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_product_property_value
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.model.ProductPropertyValue">
+    insert into ${dynamicTableName} (id, product_id, property_id,
+      name, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{propertyId,jdbcType=BIGINT}, 
+      #{name,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.model.ProductPropertyValue">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="propertyId != null">
+        property_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="propertyId != null">
+        #{propertyId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.model.ProductPropertyValue">
+    update ${dynamicTableName}
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="propertyId != null">
+        property_id = #{propertyId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.model.ProductPropertyValue">
+    update ${dynamicTableName}
+    set product_id = #{productId,jdbcType=BIGINT},
+      property_id = #{propertyId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByIds">
+    update sys_product_property_value sys_product_property_value set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_product_property_value </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_product_property_value sys_product_property_value</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_product_property_value </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_product_property_value sys_product_property_value</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND sys_product_property_value.id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="productId != null and productId != ''">
+         AND sys_product_property_value.product_id = #{productId,jdbcType=BIGINT}
+      </if>
+      <if test="propertyId != null and propertyId != ''">
+         AND sys_product_property_value.property_id = #{propertyId,jdbcType=BIGINT}
+      </if>
+      <if test="name != null and name != ''">
+         AND sys_product_property_value.name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null and createTime != ''">
+         AND sys_product_property_value.create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND sys_product_property_value.id &gt; #{myGreater_id,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_productId != null and myGreater_productId != ''">
+         AND sys_product_property_value.product_id &gt; #{myGreater_productId,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_propertyId != null and myGreater_propertyId != ''">
+         AND sys_product_property_value.property_id &gt; #{myGreater_propertyId,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_name != null and myGreater_name != ''">
+         AND sys_product_property_value.name &gt; #{myGreater_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_createTime != null and myGreater_createTime != ''">
+         AND sys_product_property_value.create_time &gt; #{myGreater_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND sys_product_property_value.id &lt; #{myLesser_id,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_productId != null and myLesser_productId != ''">
+         AND sys_product_property_value.product_id &lt; #{myLesser_productId,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_propertyId != null and myLesser_propertyId != ''">
+         AND sys_product_property_value.property_id &lt; #{myLesser_propertyId,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_name != null and myLesser_name != ''">
+         AND sys_product_property_value.name &lt; #{myLesser_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_createTime != null and myLesser_createTime != ''">
+         AND sys_product_property_value.create_time &lt; #{myLesser_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND sys_product_property_value.id like CONCAT('%', #{myLike_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_productId != null and myLike_productId != ''">
+         AND sys_product_property_value.product_id like CONCAT('%', #{myLike_productId,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_propertyId != null and myLike_propertyId != ''">
+         AND sys_product_property_value.property_id like CONCAT('%', #{myLike_propertyId,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_name != null and myLike_name != ''">
+         AND sys_product_property_value.name like CONCAT('%', #{myLike_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_createTime != null and myLike_createTime != ''">
+         AND sys_product_property_value.create_time like CONCAT('%', #{myLike_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND sys_product_property_value.id like CONCAT('%', #{myLikeStart_id,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_productId != null and myLikeStart_productId != ''">
+         AND sys_product_property_value.product_id like CONCAT('%', #{myLikeStart_productId,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_propertyId != null and myLikeStart_propertyId != ''">
+         AND sys_product_property_value.property_id like CONCAT('%', #{myLikeStart_propertyId,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_name != null and myLikeStart_name != ''">
+         AND sys_product_property_value.name like CONCAT('%', #{myLikeStart_name,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_createTime != null and myLikeStart_createTime != ''">
+         AND sys_product_property_value.create_time like CONCAT('%', #{myLikeStart_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND sys_product_property_value.id like CONCAT( #{myLikeEnd_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_productId != null and myLikeEnd_productId != ''">
+         AND sys_product_property_value.product_id like CONCAT( #{myLikeEnd_productId,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_propertyId != null and myLikeEnd_propertyId != ''">
+         AND sys_product_property_value.property_id like CONCAT( #{myLikeEnd_propertyId,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_name != null and myLikeEnd_name != ''">
+         AND sys_product_property_value.name like CONCAT( #{myLikeEnd_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_createTime != null and myLikeEnd_createTime != ''">
+         AND sys_product_property_value.create_time like CONCAT( #{myLikeEnd_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND sys_product_property_value.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_productId != null and myIn_productId != ''">
+         AND sys_product_property_value.product_id in <foreach item="item" index="index" collection="myIn_productId" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_propertyId != null and myIn_propertyId != ''">
+         AND sys_product_property_value.property_id in <foreach item="item" index="index" collection="myIn_propertyId" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_name != null and myIn_name != ''">
+         AND sys_product_property_value.name in <foreach item="item" index="index" collection="myIn_name" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createTime != null and myIn_createTime != ''">
+         AND sys_product_property_value.create_time in <foreach item="item" index="index" collection="myIn_createTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKeyAndTableName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${dynamicTableName}  sys_product_property_value where sys_product_property_value.id = #{id, jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKeyAndTableName" parameterType="String">
+    delete from ${dynamicTableName} where id = #{id, jdbcType=VARCHAR}
+  </delete>
+</mapper>

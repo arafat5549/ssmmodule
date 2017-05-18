@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.dao.ProductImageDao">
+  <resultMap id="BaseResultMap" type="com.ssf.model.ProductImage">
+    <id column="sys_product_image_id" jdbcType="BIGINT" property="id" />
+    <result column="sys_product_image_product_id" jdbcType="BIGINT" property="productId" />
+    <result column="sys_product_image_type" jdbcType="VARCHAR" property="type" />
+    <result column="sys_product_image_create_time" jdbcType="VARCHAR" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sys_product_image.id as sys_product_image_id, sys_product_image.product_id as sys_product_image_product_id, 
+    sys_product_image.type as sys_product_image_type, sys_product_image.create_time as sys_product_image_create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_product_image sys_product_image
+    where sys_product_image.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_product_image
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.model.ProductImage">
+    insert into ${dynamicTableName} (id, product_id, type,
+      create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.model.ProductImage">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.model.ProductImage">
+    update ${dynamicTableName}
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.model.ProductImage">
+    update ${dynamicTableName}
+    set product_id = #{productId,jdbcType=BIGINT},
+      type = #{type,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByIds">
+    update sys_product_image sys_product_image set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_product_image </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_product_image sys_product_image</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_product_image </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_product_image sys_product_image</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND sys_product_image.id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="productId != null and productId != ''">
+         AND sys_product_image.product_id = #{productId,jdbcType=BIGINT}
+      </if>
+      <if test="type != null and type != ''">
+         AND sys_product_image.type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null and createTime != ''">
+         AND sys_product_image.create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND sys_product_image.id &gt; #{myGreater_id,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_productId != null and myGreater_productId != ''">
+         AND sys_product_image.product_id &gt; #{myGreater_productId,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_type != null and myGreater_type != ''">
+         AND sys_product_image.type &gt; #{myGreater_type,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_createTime != null and myGreater_createTime != ''">
+         AND sys_product_image.create_time &gt; #{myGreater_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND sys_product_image.id &lt; #{myLesser_id,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_productId != null and myLesser_productId != ''">
+         AND sys_product_image.product_id &lt; #{myLesser_productId,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_type != null and myLesser_type != ''">
+         AND sys_product_image.type &lt; #{myLesser_type,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_createTime != null and myLesser_createTime != ''">
+         AND sys_product_image.create_time &lt; #{myLesser_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND sys_product_image.id like CONCAT('%', #{myLike_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_productId != null and myLike_productId != ''">
+         AND sys_product_image.product_id like CONCAT('%', #{myLike_productId,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_type != null and myLike_type != ''">
+         AND sys_product_image.type like CONCAT('%', #{myLike_type,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_createTime != null and myLike_createTime != ''">
+         AND sys_product_image.create_time like CONCAT('%', #{myLike_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND sys_product_image.id like CONCAT('%', #{myLikeStart_id,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_productId != null and myLikeStart_productId != ''">
+         AND sys_product_image.product_id like CONCAT('%', #{myLikeStart_productId,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_type != null and myLikeStart_type != ''">
+         AND sys_product_image.type like CONCAT('%', #{myLikeStart_type,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_createTime != null and myLikeStart_createTime != ''">
+         AND sys_product_image.create_time like CONCAT('%', #{myLikeStart_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND sys_product_image.id like CONCAT( #{myLikeEnd_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_productId != null and myLikeEnd_productId != ''">
+         AND sys_product_image.product_id like CONCAT( #{myLikeEnd_productId,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_type != null and myLikeEnd_type != ''">
+         AND sys_product_image.type like CONCAT( #{myLikeEnd_type,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_createTime != null and myLikeEnd_createTime != ''">
+         AND sys_product_image.create_time like CONCAT( #{myLikeEnd_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND sys_product_image.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_productId != null and myIn_productId != ''">
+         AND sys_product_image.product_id in <foreach item="item" index="index" collection="myIn_productId" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_type != null and myIn_type != ''">
+         AND sys_product_image.type in <foreach item="item" index="index" collection="myIn_type" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createTime != null and myIn_createTime != ''">
+         AND sys_product_image.create_time in <foreach item="item" index="index" collection="myIn_createTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKeyAndTableName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${dynamicTableName}  sys_product_image where sys_product_image.id = #{id, jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKeyAndTableName" parameterType="String">
+    delete from ${dynamicTableName} where id = #{id, jdbcType=VARCHAR}
+  </delete>
+</mapper>

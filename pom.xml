@@ -187,12 +187,12 @@
 				<artifactId>spring-messaging</artifactId>
 				<version>${springframework.version}</version>
 			</dependency>
+			<!-- Redis缓存 -->
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-redis</artifactId>
 				<version>${spring-data-redis}</version>
 			</dependency>
-			
 			<dependency>
 				<groupId>redis.clients</groupId>
 				<artifactId>jedis</artifactId>
@@ -208,7 +208,7 @@
 				<artifactId>protostuff-runtime</artifactId>
 				<version>${protostuff}</version>
 			</dependency>			
-			
+			<!-- Mybatis -->
 			<dependency>
 				<groupId>org.mybatis</groupId>
 				<artifactId>mybatis</artifactId>

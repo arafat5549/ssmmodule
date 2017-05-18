@@ -69,7 +69,7 @@ public class MybatisGenerator {
 		try {
 			//Resources.getResourceAsFile(config)
 			config = URLResourceUtil.asFile("file:"+config).getPath();
-			System.out.println(config);
+			//System.out.println("配置文件:"+config);
 		}  catch (IOException e) {
 			e.printStackTrace();
 			return;

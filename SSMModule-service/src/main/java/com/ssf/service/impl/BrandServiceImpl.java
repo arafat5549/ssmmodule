@@ -1,37 +1,39 @@
-package ${packageName}.impl;
+package com.ssf.service.impl;
 
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.ssf.service.I${className}Service;
-
-import com.ssf.dao.${className}Dao;
-import com.ssf.model.${className};
+import com.ssf.service.IBrandService;
 import com.ssf.cache.RedisCache;
+import com.ssf.dao.BrandDao;
+import com.ssf.model.Brand;
+import com.ssf.model.Product;
 
 /**
  * 
- * I${className}Service 接口实现类
+ * IBrandService 接口实现类
  *
  * @author wang
  */
-@Service(value = "${smallClassName}Service")
-public class ${className}ServiceImpl implements I${className}Service {
+@Service(value = "brandService")
+public class BrandServiceImpl implements IBrandService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(${className}ServiceImpl.class);
-	private static final String PREFIX_CAHCE = RedisCache.CAHCENAME + "|${className}|";
-	private static final Class<${className}> SELF_CLASS = ${className}.class;
-
-	@Resource(name = "${smallClassName}Dao")
-	private ${className}Dao mapper;
-
+	private static final Logger LOG = LoggerFactory.getLogger(BrandServiceImpl.class);
+	private static final String PREFIX_CAHCE = RedisCache.CAHCENAME + "|Brand|";
+	private static final Class<Brand> SELF_CLASS = Brand.class;
+	
+	@Resource(name = "brandDao")
+	private BrandDao mapper;
+	
 	@Resource(name= "redisCache")
 	private RedisCache redisCache;
-	
+
 	@Override
 	public int selectCountByMap(Map<Object, Object> map) {
 		String cache_key = PREFIX_CAHCE + "selectCountByMap|" + map;
@@ -39,13 +41,14 @@ public class ${className}ServiceImpl implements I${className}Service {
 	}
 
 	@Override
-	public List<${className}> selectListByMap(Map<Object, Object> map) {
+	public List<Brand> selectListByMap(Map<Object, Object> map) {
 		String cache_key = PREFIX_CAHCE + "selectListByMap|" + map;
+		//redisCache.cacheList(cache_key, t, paramMap, dao, LOG)
 		return mapper.selectListByMap(map);
 	}
 
 	@Override
-	public ${className} selectByPrimaryKey(Long id) {
+	public Brand selectByPrimaryKey(Long id) {
 		String cache_key = PREFIX_CAHCE + "selectByPrimaryKey|" + id;
 		return mapper.selectByPrimaryKey(id);
 	}
@@ -62,22 +65,22 @@ public class ${className}ServiceImpl implements I${className}Service {
 	}
 
 	@Override
-	public int insert(${className} record) {
+	public int insert(Brand record) {
 		return mapper.insert(record);
 	}
 
 	@Override
-	public int insertSelective(${className} record) {
+	public int insertSelective(Brand record) {
 		return mapper.insertSelective(record);
 	}
 
 	@Override
-	public int updateByPrimaryKeySelective(${className} record) {
+	public int updateByPrimaryKeySelective(Brand record) {
 		return mapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
-	public int updateByPrimaryKey(${className} record) {
+	public int updateByPrimaryKey(Brand record) {
 		return mapper.updateByPrimaryKey(record);
 	}
 }

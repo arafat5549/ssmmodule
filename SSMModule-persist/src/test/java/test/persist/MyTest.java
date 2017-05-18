@@ -19,12 +19,11 @@ public class MyTest
 	{
 		
 		Properties props =PropertiesUtil.loadFromFile("classpath://jdbc.properties");		
-		System.out.println(props.get("dbName"));
-		
-		List<String> lists = Lists.newArrayList("sql/data/mybatistest.sql","sql/data/mybatistest_data.sql");
-		MybatisGenerator.runSql(props,lists);
+//		System.out.println(props.get("dbName"));
+//		
+//		List<String> lists = Lists.newArrayList("sql/data/mybatistest.sql","sql/data/mybatistest_data.sql");
+//		MybatisGenerator.runSql(props,lists);s
 		MybatisGenerator.createConfigs(props,ORIGIN_CONFIG,OUT_CONFIG);
-		
 		MybatisGenerator.generator(OUT_CONFIG);
 		
 	}
