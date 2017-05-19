@@ -2,6 +2,7 @@ package org.mybatis.generator;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Properties;
 
@@ -10,7 +11,6 @@ import org.springside.modules.utils.io.URLResourceUtil;
 import org.xml.sax.SAXException;
 
 import com.google.common.collect.Lists;
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 
 
 public class MybatisGenerator {
@@ -110,7 +110,7 @@ public class MybatisGenerator {
 		 
 		 try {
 			return GeneratorConfigXMLUtil.generateConfigXML(tableNames, prefixs, ORIGIN_CONFIG, myBussinessPackage, myModelPackage);
-		} catch (IOException | CloneNotSupportedException e) {
+		} catch (IOException | CloneNotSupportedException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
 			e.printStackTrace();
 		}
 		 return Lists.newArrayList();

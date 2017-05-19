@@ -4,34 +4,27 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.utils.CloneUtils;
-import org.apache.ibatis.io.Resources;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
-import org.springside.modules.utils.io.FilePathUtil;
-import org.springside.modules.utils.io.ResourceUtil;
 import org.springside.modules.utils.io.URLResourceUtil;
-import org.xml.sax.SAXException;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.ssf.common.utils.StringUtilss;
 import com.ssf.common.utils.XmlParserUtilss;
 
@@ -98,7 +91,7 @@ public class GeneratorConfigXMLUtil {
         return ele;
 	}
 	
-	private static void generteConfigBase(List<String> tableNames,String src,String out,String pName,String mName) throws IOException, CloneNotSupportedException{
+	private static void generteConfigBase(List<String> tableNames,String src,String out,String pName,String mName) throws IOException, CloneNotSupportedException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException{
 		InputStream is = URLResourceUtil.asStream("classpath://"+src);
 		
 		Document document = XmlParserUtilss.getDocument(is);
@@ -108,7 +101,7 @@ public class GeneratorConfigXMLUtil {
 		Element ele = selectElement("//table",document);
         //生成所有table节点
         for (String tname : tableNames) {
-			Element newele = (Element) CloneUtils.clone(ele); 
+			Element newele = (Element) 	BeanUtils.cloneBean(ele);
 			String base = StringUtils.capitalize(StringUtilss.toCamelCase(tname));
 			newele.addAttribute("mapperName", base +"Dao");
 			newele.addAttribute("tableName",  tname);
@@ -182,8 +175,12 @@ public class GeneratorConfigXMLUtil {
 	 * 
 	 * @param dbName 数据库名称
 	 * @param dbType 数据库类型 (支持mysql和oracle) 默认为"mysql"
+     * @throws NoSuchMethodException 
+     * @throws InvocationTargetException 
+     * @throws InstantiationException 
+     * @throws IllegalAccessException 
 	 */
-	public static List<String> generateConfigXML(List<String> tableNames,List<String> prefixs,String src,String myBussinessPackage,String myModelPackage) throws IOException, CloneNotSupportedException{
+	public static List<String> generateConfigXML(List<String> tableNames,List<String> prefixs,String src,String myBussinessPackage,String myModelPackage) throws IOException, CloneNotSupportedException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException{
 		//String src = "generatorConfig.xml";
 		//List<String> tableNames = Lists.newArrayList("sys_pix_user","sys_product","rp_account_check_batch","pms_menu","pix_account","demo");
 		//String myBussinessPackage = "com.ssf.dao";

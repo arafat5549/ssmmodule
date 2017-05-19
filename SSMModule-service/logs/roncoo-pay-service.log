@@ -17,3 +17,6 @@
 [INFO ][2017-05-19 17:32:09,245][DruidDataSource:669] {dataSource-1} inited
 [INFO ][2017-05-19 17:32:10,433][DruidDataSource:669] {dataSource-2} inited
 [INFO ][2017-05-19 17:32:10,865][DruidDataSource:669] {dataSource-3} inited
+[INFO ][2017-05-19 19:22:27,304][DruidDataSource:669] {dataSource-1} inited
+[INFO ][2017-05-19 19:22:29,791][DruidDataSource:669] {dataSource-2} inited
+[INFO ][2017-05-19 19:22:30,285][DruidDataSource:669] {dataSource-3} inited

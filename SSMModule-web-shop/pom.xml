@@ -33,8 +33,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
-		
-		<!--  -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc-portlet</artifactId>
@@ -55,14 +53,20 @@
 					<artifactId>jackson-annotations</artifactId>
 			</dependency>
 		
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-		</dependency>
-		<dependency>
-            <groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-        </dependency>
+			<!-- WEB依赖包 -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>jsp-api</artifactId>
+			</dependency>
+			<!-- jstl jsp页面标签 -->
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+			</dependency>
 		
   </dependencies>
   

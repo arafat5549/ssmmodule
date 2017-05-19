@@ -1,6 +1,9 @@
 .idea/
 .idea/*
+*/.idea/
+*/.idea/*
 *.iml
+*/.iml
 
 .DS_Store
 */.DS_Store

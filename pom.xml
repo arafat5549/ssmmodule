@@ -60,7 +60,6 @@
 		<log4j>1.2.14</log4j>
 		<slf4j-api>1.7.7</slf4j-api>
 		<jcl-over-slf4j>1.7.5</jcl-over-slf4j>
-		
 		<logback-core>1.1.2</logback-core>
 		<logback-classic>1.1.2</logback-classic>
 		<logback-access>1.1.2</logback-access>
@@ -69,33 +68,32 @@
 		<org.aspectj.aspectjweaver>1.8.7</org.aspectj.aspectjweaver>
 		<org.aspectj.aspectjrt>1.8.7</org.aspectj.aspectjrt>
 		<cglib>3.1</cglib>
-		<!-- 数据库相�? -->
+		<!-- 数据库 -->
 		<org.mybatis.mybatis>3.2.8</org.mybatis.mybatis>
 		<org.mybatis.mybatis-spring>1.2.2</org.mybatis.mybatis-spring>
 		<mysql-connector-java>5.1.21</mysql-connector-java>
 		<com.alibaba.druid>1.0.13</com.alibaba.druid> 
 		<com.mchange.c3p0>0.9.5</com.mchange.c3p0>
+		<commons-pool>1.6</commons-pool>
 		<commons-dbcp>1.4</commons-dbcp>
 		<mybatis-generator-core>1.3.5</mybatis-generator-core>
 		<!-- Redis缓存 -->
 		<spring-data-redis>1.6.4.RELEASE</spring-data-redis>
 		<redis.clients.jedis>2.8.0</redis.clients.jedis>
 		<protostuff>1.0.8</protostuff>
-		<!-- WEB依赖包记得设�? 记得将serlet-api和jsp-api的scope为provided -->
+		<!-- WEB依赖包记得将serlet-api和jsp-api的scope为provided -->
 		<javax.servlet.javax.servlet-api>3.1.0</javax.servlet.javax.servlet-api>
 		<javax.servlet.jsp.jsp-api>2.2</javax.servlet.jsp.jsp-api>
 		<jstl>1.2</jstl>
 		<!-- 序列化工具XML和Json -->
 		<dom4j.dom4j>1.6.1</dom4j.dom4j>
-		<jaxen.jaxen>1.1.6</jaxen.jaxen><!-- Jaxen是一个Java编写的开源的XPath库�?�这是�?�应多种不同的对象模型，包括DOM，XOM，dom4j和JDOM -->
-		
+		<jaxen.jaxen>1.1.6</jaxen.jaxen><!-- Jaxen是一个Java编写的开源的XPath库应多种不同的对象模型，包括DOM，XOM，dom4j和JDOM -->
 		<jackson.version>2.7.4</jackson.version>
 		<org.json.json>20160212</org.json.json>
 		<json-simple>1.1.1</json-simple>
 		<fastjson.version>1.2.11</fastjson.version>
-		<!-- ApacheCommons工具 -->
+		<!-- 通用工具类 -->
 		<commons-codec>1.9</commons-codec>
-		<commons-pool>1.6</commons-pool>
 		<commons-lang>2.6</commons-lang>
 		<commons-lang3>3.3.2</commons-lang3>
 		<commons-fileupload.commons-fileupload>1.3</commons-fileupload.commons-fileupload>
@@ -114,7 +112,7 @@
 		<commons-httpclient>3.1</commons-httpclient>
 		<cxf.version>3.1.5</cxf.version>
 		<jsqlparser>0.9.5</jsqlparser>  <!-- SQL解析工具 -->
-		
+		<!-- 需要本地导入的包 -->
 		<springside.version>5.0.0-SNAPSHOT</springside.version>
 	</properties>
 
@@ -122,16 +120,101 @@
 	<!-- 在父模块中如下声明之后，子模块的dependency依赖声明就可以直接只声明groupId artifactId 这两个部分就可以使用 -->
 	<dependencyManagement>
 		<dependencies>
+			<!-- begin日记 与测试begin -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j-api}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${jcl-over-slf4j}</version>
+			</dependency>
+			
+			
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-core</artifactId>
+				<version>${logback-core}</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>${logback-classic}</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-access</artifactId>
+				<version>${logback-access}</version>
+			</dependency>
+			<!-- end日记与测试 end -->
+		    <!-- 通用工具类 -->
+		    <dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava}</version>
+			</dependency>
+						<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${commons-codec}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons-lang}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang3}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>${commons-fileupload.commons-fileupload}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.commons-io}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>${commons-beanutils.version}</version>
+			</dependency>
+			<!-- Spring框架基础 -->
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>spring-webmvc</artifactId>
+				<artifactId>spring-core</artifactId>
 				<version>${springframework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>spring-web</artifactId>
+				<artifactId>spring-beans</artifactId>
 				<version>${springframework.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			
+			
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-tx</artifactId>
@@ -149,29 +232,26 @@
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			<!-- Spring框架WEB部分 -->
+			<dependency>
+				<groupId>org.springframework</groupId>
 				<artifactId>spring-context-support</artifactId>
 				<version>${springframework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>spring-core</artifactId>
+				<artifactId>spring-webmvc</artifactId>
 				<version>${springframework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
+				<artifactId>spring-web</artifactId>
 				<version>${springframework.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-				<version>${springframework.version}</version>
-			</dependency>
+			<!-- Spring框架其他 -->
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-web</artifactId>
@@ -186,6 +266,22 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-messaging</artifactId>
 				<version>${springframework.version}</version>
+			</dependency>
+			<!-- AOP部分 -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${org.aspectj.aspectjweaver}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>${org.aspectj.aspectjrt}</version>
+			</dependency>
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>${cglib}</version>
 			</dependency>
 			<!-- Redis缓存 -->
 			<dependency>
@@ -210,9 +306,20 @@
 			</dependency>			
 			<!-- Mybatis -->
 			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql-connector-java}</version>
+			</dependency>
+			
+			<dependency>
 				<groupId>org.mybatis</groupId>
 				<artifactId>mybatis</artifactId>
 				<version>${org.mybatis.mybatis}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>${org.mybatis.mybatis-spring}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.mybatis.generator</groupId>
@@ -224,70 +331,29 @@
 			    <artifactId>mybatis-generator-maven-plugin</artifactId>
 			    <version>${mybatis-generator-core}</version>
 			</dependency>
-			
+			<!-- 数据库连接池 -->
 			<dependency>
-				<groupId>org.mybatis</groupId>
-				<artifactId>mybatis-spring</artifactId>
-				<version>${org.mybatis.mybatis-spring}</version>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${com.alibaba.druid}</version>
 			</dependency>
+			
 			<dependency>
 				<groupId>com.mchange</groupId>
 				<artifactId>c3p0</artifactId>
 				<version>${com.mchange.c3p0}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjweaver</artifactId>
-				<version>${org.aspectj.aspectjweaver}</version>
+				<groupId>commons-pool</groupId>
+				<artifactId>commons-pool</artifactId>
+				<version>${commons-pool}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjrt</artifactId>
-				<version>${org.aspectj.aspectjrt}</version>
+				<groupId>commons-dbcp</groupId>
+				<artifactId>commons-dbcp</artifactId>
+				<version>${commons-dbcp}</version>
 			</dependency>
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>${mysql-connector-java}</version>
-			</dependency>
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>${log4j}</version>
-			</dependency>
-			<!-- logback begin -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j-api}</version>
-			</dependency>
-			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-core</artifactId>
-				<version>${logback-core}</version>
-			</dependency>
-			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-classic</artifactId>
-				<version>${logback-classic}</version>
-			</dependency>
-			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-access</artifactId>
-				<version>${logback-access}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>jcl-over-slf4j</artifactId>
-				<version>${jcl-over-slf4j}</version>
-			</dependency>
-			<!-- logback end -->
-			<!-- jstl jsp页面标签 -->
-			<dependency>
-				<groupId>jstl</groupId>
-				<artifactId>jstl</artifactId>
-				<version>${jstl}</version>
-			</dependency>
+			<!-- 模板引擎 -->
 			<dependency>
 				<groupId>org.freemarker</groupId>
 				<artifactId>freemarker</artifactId>
@@ -326,61 +392,7 @@
 				<version>${json-simple}</version>
 			</dependency>
 			<!-- JSON包结束 -->
-			<dependency>
-				<groupId>cglib</groupId>
-				<artifactId>cglib</artifactId>
-				<version>${cglib}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-codec</groupId>
-				<artifactId>commons-codec</artifactId>
-				<version>${commons-codec}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-dbcp</groupId>
-				<artifactId>commons-dbcp</artifactId>
-				<version>${commons-dbcp}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-pool</groupId>
-				<artifactId>commons-pool</artifactId>
-				<version>${commons-pool}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid</artifactId>
-				<version>${com.alibaba.druid}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>${commons-lang}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>${commons-lang3}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-fileupload</groupId>
-				<artifactId>commons-fileupload</artifactId>
-				<version>${commons-fileupload.commons-fileupload}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>${commons-io.commons-io}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-beanutils</groupId>
-				<artifactId>commons-beanutils</artifactId>
-				<version>${commons-beanutils.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.im4java</groupId>
-				<artifactId>im4java</artifactId>
-				<version>${org.im4java}</version>
-			</dependency>
+			<!-- XML处理 -->
 			<dependency>
 				<groupId>dom4j</groupId>
 				<artifactId>dom4j</artifactId>
@@ -391,12 +403,54 @@
 				<artifactId>jaxen</artifactId>
 				<version>${jaxen.jaxen}</version>
 			</dependency>
+			<!-- WEB依赖包 -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${javax.servlet.javax.servlet-api}</version>
+				<scope>provided</scope> <!--打包时不包含 -->
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>jsp-api</artifactId>
+				<version>${javax.servlet.jsp.jsp-api}</version>
+				<scope>provided</scope>   <!--这里说明jsp-api.jar文件将由应用服务器提�? -->
+			</dependency>
+			<!-- jstl jsp页面标签 -->
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+				<version>${jstl}</version>
+			</dependency>
+			
+			<!-- ImageMagick图像处理 -->
+			<dependency>
+				<groupId>org.im4java</groupId>
+				<artifactId>im4java</artifactId>
+				<version>${org.im4java}</version>
+			</dependency>
+			<dependency>
+			    <groupId>com.github.jsqlparser</groupId>
+			    <artifactId>jsqlparser</artifactId>
+			    <version>${jsqlparser}</version>
+			</dependency>
+			<!-- 布局引擎 -->
+			<dependency>
+				<groupId>org.sitemesh</groupId>
+				<artifactId>sitemesh</artifactId>
+				<version>${org.sitemesh.sitemesh}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>${org.apache.httpcomponents.httpclient}</version>
+			</dependency>
 			<dependency>
 				<groupId>commons-httpclient</groupId>
 				<artifactId>commons-httpclient</artifactId>
 				<version>${commons-httpclient}</version>
 			</dependency>
-
+			
 			<!-- lucene begin -->
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
@@ -452,11 +506,7 @@
 				<version>${com.itextpdf}</version>
 			</dependency>
 			<!-- poi -->
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>${guava}</version>
-			</dependency>
+			
 			<!-- cfx -->
 			<dependency>
 				<groupId>org.apache.cxf</groupId>
@@ -504,42 +554,6 @@
 				<version>${cxf.version}</version>
 			</dependency>
 
-			<dependency>
-				<groupId>org.sitemesh</groupId>
-				<artifactId>sitemesh</artifactId>
-				<version>${org.sitemesh.sitemesh}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.httpcomponents</groupId>
-				<artifactId>httpclient</artifactId>
-				<version>${org.apache.httpcomponents.httpclient}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>${javax.servlet.javax.servlet-api}</version>
-				<scope>provided</scope> <!--打包时不包含 -->
-			</dependency>
-			<dependency>
-				<groupId>javax.servlet.jsp</groupId>
-				<artifactId>jsp-api</artifactId>
-				<version>${javax.servlet.jsp.jsp-api}</version>
-				<scope>provided</scope>   <!--这里说明jsp-api.jar文件将由应用服务器提�? -->
-			</dependency>
-			<dependency>
-			    <groupId>com.github.jsqlparser</groupId>
-			    <artifactId>jsqlparser</artifactId>
-			    <version>${jsqlparser}</version>
-			</dependency>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit.version}</version>
-				<scope>test</scope>
-			</dependency>
-			
 			<!-- 私有方法�? -->
 			<dependency>
 				<groupId>springside4</groupId>
