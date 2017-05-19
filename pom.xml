@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.ssf</groupId>
@@ -70,7 +69,7 @@
 		<org.aspectj.aspectjweaver>1.8.7</org.aspectj.aspectjweaver>
 		<org.aspectj.aspectjrt>1.8.7</org.aspectj.aspectjrt>
 		<cglib>3.1</cglib>
-		<!-- 数据库相关 -->
+		<!-- 数据库相�? -->
 		<org.mybatis.mybatis>3.2.8</org.mybatis.mybatis>
 		<org.mybatis.mybatis-spring>1.2.2</org.mybatis.mybatis-spring>
 		<mysql-connector-java>5.1.21</mysql-connector-java>
@@ -82,18 +81,19 @@
 		<spring-data-redis>1.6.4.RELEASE</spring-data-redis>
 		<redis.clients.jedis>2.8.0</redis.clients.jedis>
 		<protostuff>1.0.8</protostuff>
-		<!-- WEB依赖包记得设置 记得将serlet-api和jsp-api的scope为provided -->
+		<!-- WEB依赖包记得设�? 记得将serlet-api和jsp-api的scope为provided -->
 		<javax.servlet.javax.servlet-api>3.1.0</javax.servlet.javax.servlet-api>
 		<javax.servlet.jsp.jsp-api>2.2</javax.servlet.jsp.jsp-api>
 		<jstl>1.2</jstl>
 		<!-- 序列化工具XML和Json -->
 		<dom4j.dom4j>1.6.1</dom4j.dom4j>
-		<jaxen.jaxen>1.1.6</jaxen.jaxen><!-- Jaxen是一个Java编写的开源的XPath库。这是适应多种不同的对象模型，包括DOM，XOM，dom4j和JDOM -->
+		<jaxen.jaxen>1.1.6</jaxen.jaxen><!-- Jaxen是一个Java编写的开源的XPath库�?�这是�?�应多种不同的对象模型，包括DOM，XOM，dom4j和JDOM -->
 		
-		<org.codehaus.jackson>1.9.13</org.codehaus.jackson>
+		<jackson.version>2.7.4</jackson.version>
 		<org.json.json>20160212</org.json.json>
 		<json-simple>1.1.1</json-simple>
-		<!-- ApacheCommons工具类 -->
+		<fastjson.version>1.2.11</fastjson.version>
+		<!-- ApacheCommons工具 -->
 		<commons-codec>1.9</commons-codec>
 		<commons-pool>1.6</commons-pool>
 		<commons-lang>2.6</commons-lang>
@@ -106,7 +106,7 @@
 		<org.freemarker.freemarker>2.3.22</org.freemarker.freemarker>
 		<!-- 其他 -->
 		<lucene.version>5.2.1</lucene.version><!-- 搜索引擎 -->
-		<org.im4java>1.4.0</org.im4java><!-- im4java是ImageMagick的另一个Java开源接口,图形处理 -->
+		<org.im4java>1.4.0</org.im4java><!-- im4java是ImageMagick的另�?个Java�?源接�?,图形处理 -->
 		<org.apache.poi>3.9</org.apache.poi><!-- 处理Word,Excle等Office文档 -->
 		<com.itextpdf>5.5.7</com.itextpdf>  <!-- 处理PDF -->
 		<org.sitemesh.sitemesh>3.0.1</org.sitemesh.sitemesh> <!-- 布局引擎 -->
@@ -293,22 +293,39 @@
 				<artifactId>freemarker</artifactId>
 				<version>${org.freemarker.freemarker}</version>
 			</dependency>
-			<!-- json jackson -->
+			<!-- JSON解析#jackson-->
 			<dependency>
-				<groupId>org.codehaus.jackson</groupId>
-				<artifactId>jackson-core-asl</artifactId>
-				<version>${org.codehaus.jackson}</version>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-core</artifactId>
+					<version>${jackson.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.codehaus.jackson</groupId>
-				<artifactId>jackson-mapper-asl</artifactId>
-				<version>${org.codehaus.jackson}</version>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-annotations</artifactId>
+					<version>${jackson.version}</version>
+			</dependency>
+			<!-- 其他JSON包 -->
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>${org.json.json}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.googlecode.json-simple</groupId>
 				<artifactId>json-simple</artifactId>
 				<version>${json-simple}</version>
 			</dependency>
+			<!-- JSON包结束 -->
 			<dependency>
 				<groupId>cglib</groupId>
 				<artifactId>cglib</artifactId>
@@ -343,11 +360,6 @@
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
 				<version>${commons-lang3}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.json</groupId>
-				<artifactId>json</artifactId>
-				<version>${org.json.json}</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-fileupload</groupId>
@@ -514,7 +526,7 @@
 				<groupId>javax.servlet.jsp</groupId>
 				<artifactId>jsp-api</artifactId>
 				<version>${javax.servlet.jsp.jsp-api}</version>
-				<scope>provided</scope>   <!--这里说明jsp-api.jar文件将由应用服务器提供 -->
+				<scope>provided</scope>   <!--这里说明jsp-api.jar文件将由应用服务器提�? -->
 			</dependency>
 			<dependency>
 			    <groupId>com.github.jsqlparser</groupId>
@@ -528,7 +540,7 @@
 				<scope>test</scope>
 			</dependency>
 			
-			<!-- 私有方法类 -->
+			<!-- 私有方法�? -->
 			<dependency>
 				<groupId>springside4</groupId>
 				<artifactId>springside-utils</artifactId>
@@ -542,7 +554,9 @@
 		<module>SSMModule-common</module>
 		<module>SSMModule-persist</module>
 		<module>SSMModule-service</module>
-	</modules>
+		<module>SSMModule-web-shop</module>
+    <module>SSMModule-web-admin</module>
+  </modules>
 
 	<!-- 提供pluginManagement 帮助管理插件 -->
 	<!-- 父模块定义了plugin ,子模块如果想引入这个插件，如下声明即可，它同时又继承了父模块的配 -->
@@ -567,6 +581,9 @@
 						<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
+				
+
+	            
 			</plugins>
 		</pluginManagement>
 	</build>

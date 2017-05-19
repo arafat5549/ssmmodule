@@ -11,3 +11,9 @@
 [INFO ][2017-05-19 15:56:10,592][DruidDataSource:669] {dataSource-1} inited
 [INFO ][2017-05-19 15:56:14,237][DruidDataSource:669] {dataSource-2} inited
 [INFO ][2017-05-19 15:56:14,615][DruidDataSource:669] {dataSource-3} inited
+[INFO ][2017-05-19 17:21:33,888][DruidDataSource:669] {dataSource-1} inited
+[INFO ][2017-05-19 17:21:35,419][DruidDataSource:669] {dataSource-2} inited
+[INFO ][2017-05-19 17:21:35,932][DruidDataSource:669] {dataSource-3} inited
+[INFO ][2017-05-19 17:32:09,245][DruidDataSource:669] {dataSource-1} inited
+[INFO ][2017-05-19 17:32:10,433][DruidDataSource:669] {dataSource-2} inited
+[INFO ][2017-05-19 17:32:10,865][DruidDataSource:669] {dataSource-3} inited

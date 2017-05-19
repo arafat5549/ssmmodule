@@ -72,6 +72,7 @@
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 		</dependency>
+		<!--  
         <dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
@@ -80,6 +81,7 @@
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 		</dependency>
+		-->
 		<dependency>
 		  <groupId>org.im4java</groupId>
 		  <artifactId>im4java</artifactId>
@@ -163,7 +165,7 @@
 		    <version>1.0.15</version> 
 		</dependency>  -->
 		
-		<!-- CXF JAX-WS web-serice框架 -->
+		<!-- CXF JAX-WS web-serice框架
 		<dependency>  
             <groupId>org.apache.cxf</groupId>  
             <artifactId>cxf-rt-frontend-jaxws</artifactId>  
@@ -200,13 +202,14 @@
             <groupId>org.apache.cxf</groupId>  
             <artifactId>cxf-tools-wsdlto-frontend-jaxws</artifactId>  
         </dependency>
+         -->
 		<!-- 需要安装的本地jar包 -->
 		<dependency>
 			<groupId>springside4</groupId>
 			<artifactId>springside-utils</artifactId>
 		</dependency>
 		
-		<!-- 作用域为test的包区域 -->
+		<!-- 作用域为test的包区域 
 		<dependency>
 			<groupId>commons-dbutils</groupId>
 			<artifactId>commons-dbutils</artifactId>
@@ -224,5 +227,6 @@
 			<artifactId>commons-dbcp</artifactId>
 			<scope>test</scope>
 		</dependency>
+		-->
   </dependencies>
 </project>
