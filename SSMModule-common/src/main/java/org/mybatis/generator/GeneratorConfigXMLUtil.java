@@ -8,18 +8,30 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.CloneUtils;
+import org.apache.ibatis.io.Resources;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
+import org.springside.modules.utils.io.FilePathUtil;
+import org.springside.modules.utils.io.ResourceUtil;
 import org.springside.modules.utils.io.URLResourceUtil;
 import org.xml.sax.SAXException;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.ssf.common.utils.StringUtilss;
 import com.ssf.common.utils.XmlParserUtilss;
 
@@ -30,44 +42,14 @@ import com.ssf.common.utils.XmlParserUtilss;
  * 
  */
 public class GeneratorConfigXMLUtil {
-
-//	private static final String ORIGIN_CONFIG = "generatorConfig.xml";
-//	private static final String OUT_CONFIG    = "generatorConfigBak.xml";
-//	
-//	/**
-//	 * 读取数据库 生成所有table标签<p>
-//	 * 
-//	 * 源文件:  src/main/resources/generatorConfig.xml<p>
-//	 * 生成文件: src/main/resources/generatorConfigBak.xml<p>
-//	 * 
-//	 * @param dbName 数据库名称
-//	 * @param dbType 数据库类型 (支持mysql和oracle) 默认为"mysql" 
-//	 */
-//	public static void convertXmlStrToObjectTest(Properties props,String dbName,String dbType) throws SAXException, IOException, CloneNotSupportedException{
-//		convertXmlStrToObjectTest(props,dbName, dbType,OUT_CONFIG);
-//	}
-	/**
-	 * 读取数据库 生成所有table标签<p>
-	 * 
-	 * 源文件:  src/main/resources/generatorConfig.xml<p>
-	 * 生成文件: src/main/resources/generatorConfigBak.xml<p>
-	 * 
-	 * @param dbName 数据库名称
-	 * @param dbType 数据库类型 (支持mysql和oracle) 默认为"mysql"
-	 */
+	
+	/*
 	@SuppressWarnings("rawtypes")
 	public static void convertXmlStrToObjectTest(Properties props,String dbName,String dbType,String src,String out) throws SAXException, IOException, CloneNotSupportedException {
-		//String xmlPath ="src/main/resources/generatorConfig.xml";
-		//String opath = Resources.getResourceAsFile(ORIGIN_CONFIG).toString();
-		//String opath = URLResourceUtil.asFile("classpath://"+ORIGIN_CONFIG).toString();
-		//System.out.println(opath);
-		
 		
 		InputStream is = URLResourceUtil.asStream("classpath://"+src);
-		//System.out.println(IOUtils.toString(is));
 		
 		Document document = XmlParserUtilss.getDocument(is);
-		//System.out.println(document.asXML()); 
 		deleteXmlNotation(document.getRootElement());
 		
 		List list = document.selectNodes("//table");
@@ -82,7 +64,7 @@ public class GeneratorConfigXMLUtil {
         for (String tname : tableNames) {
 			//System.out.println(tname);
 			Element newele = (Element) CloneUtils.clone(ele); 
-			String base = StringUtilss.toCamelCase(tname.replace("sys_", ""));
+			String base = StringUtilss.toCamelCase(tname.replace(TABLE_PREFIX, ""));
 			base = StringUtils.capitalize(base);
 			newele.addAttribute("mapperName", base +"Dao");
 			newele.addAttribute("tableName",  tname);
@@ -94,7 +76,7 @@ public class GeneratorConfigXMLUtil {
         ele.getParent().remove(ele);
 	
         
-        String outpath = URLResourceUtil.asFile("file:"+out).toString();
+        String outpath = URLResourceUtil.asFile("classpath:"+out).toString();
 		File outFile = new File(outpath);
 		OutputFormat format = OutputFormat.createPrettyPrint();  
         format.setEncoding("UTF-8");//根据需要设置编码  
@@ -103,20 +85,71 @@ public class GeneratorConfigXMLUtil {
         writer.close();  
         System.out.println("生成Generator配置文件:"+outpath);
 	}
+	*/
 	
-//	private static void edit(Element ele,String baseName){
-//		
-//		String tableName = "sys_"+baseName;
-//		String domain = StringUtils.capitalize(baseName);
-//		ele.setAttributeValue("mapperName", domain+"Dao");
-//		ele.setAttributeValue("tableName",  tableName);
-//		ele.setAttributeValue("domainObjectName", domain);
-//		ele.setAttributeValue("alias", tableName);  
-//	}
+	private static Element selectElement(String name,Document document){
+		List list = document.selectNodes(name);
+		Iterator  iter = list.iterator(); 
+		Element ele =null;
+        while (iter.hasNext()) 
+        {  
+        	ele = (Element) iter.next();   
+        }  
+        return ele;
+	}
 	
+	private static void generteConfigBase(List<String> tableNames,String src,String out,String pName,String mName) throws IOException, CloneNotSupportedException{
+		InputStream is = URLResourceUtil.asStream("classpath://"+src);
+		
+		Document document = XmlParserUtilss.getDocument(is);
+		//System.out.println(document.asXML()); 
+		deleteXmlNotation(document.getRootElement());
+		
+		Element ele = selectElement("//table",document);
+        //生成所有table节点
+        for (String tname : tableNames) {
+			Element newele = (Element) CloneUtils.clone(ele); 
+			String base = StringUtils.capitalize(StringUtilss.toCamelCase(tname));
+			newele.addAttribute("mapperName", base +"Dao");
+			newele.addAttribute("tableName",  tname);
+			newele.addAttribute("domainObjectName", base);
+			newele.addAttribute("alias", tname);  
+	        ele.getParent().add(newele);
+		}
+        ele.getParent().remove(ele);
+        
+        if(!StringUtils.isBlank(mName)){
+        	Element element = selectElement("//javaModelGenerator",document);
+        	element.addAttribute("targetPackage", mName);
+        }
+        if(!StringUtils.isBlank(pName)){
+        	Element element = selectElement("//sqlMapGenerator",document);
+        	element.addAttribute("targetPackage", pName);
+            System.out.println(pName);
+            
+        	Element element2 = selectElement("//javaClientGenerator",document);
+        	element2.addAttribute("targetPackage", pName);
+        }
+        
+        
+        //String name = Resources.getResourceURL(out).toString();//getResourceAsFile(out).toString();
+        System.out.println(out);
+        String outpath = URLResourceUtil.asFile(out).getAbsolutePath();;//URLResourceUtil.asFile("classpath://"+out).toString();
+		File outFile = new File(outpath);
+		if(!outFile.exists())
+		{
+			outFile.getParentFile().mkdirs();
+		}
+		
+		OutputFormat format = OutputFormat.createPrettyPrint();  
+        format.setEncoding("UTF-8");//根据需要设置编码  
+		XMLWriter writer = new XMLWriter(new FileWriter(outFile),format);  
+        writer.write(document);  
+        writer.close();  
+        System.out.println("生成Generator配置文件:"+outpath);
+	}
     /** 
      * 去掉注释 
-     * @param ele 
      */  
     @SuppressWarnings("unchecked")
 	private static void deleteXmlNotation(Element ele){  
@@ -140,5 +173,80 @@ public class GeneratorConfigXMLUtil {
             deleteXmlNotation(eleIt.next());  
         }
     }
+	
+    /**
+	 * 读取数据库 生成所有table标签<p>
+	 * 
+	 * 源文件:  src/main/resources/generatorConfig.xml<p>
+	 * 生成文件: src/main/resources/generatorConfigBak.xml<p>
+	 * 
+	 * @param dbName 数据库名称
+	 * @param dbType 数据库类型 (支持mysql和oracle) 默认为"mysql"
+	 */
+	public static List<String> generateConfigXML(List<String> tableNames,List<String> prefixs,String src,String myBussinessPackage,String myModelPackage) throws IOException, CloneNotSupportedException{
+		//String src = "generatorConfig.xml";
+		//List<String> tableNames = Lists.newArrayList("sys_pix_user","sys_product","rp_account_check_batch","pms_menu","pix_account","demo");
+		//String myBussinessPackage = "com.ssf.dao";
+		//String myModelPackage = "com.ssf.model";
+		//List<String> prefixs = Lists.newArrayList("rp_","pms_","sys_");//也就是包名
+		
+		List<String> configs =  Lists.newArrayList();
+		
+		String regex = "";
+		if(prefixs != null)
+			regex = "("+Joiner.on("|").join(prefixs)+")";
+		
+		Pattern pattern = Pattern.compile(regex);
+		Multimap<String, String> multimap = ArrayListMultimap.create();
+		for (String tname : tableNames)  
+		{
+			Matcher macther = pattern.matcher(tname);
+			String find = "";
+			if(macther.find())
+			{
+				find = macther.group();
+				tname = tname.replace(find, "");
+			}
+			String packageName = (find).replace("_", ".");
+			multimap.put(packageName, tname);
+		}
+		int srcidx = src.lastIndexOf(".");
+		String outBaseName =  src.substring(0,srcidx);
+		for (String key : multimap.keySet()) {
+			int idx = myBussinessPackage.lastIndexOf(".");
+			String pName = myBussinessPackage.substring(0,idx)+"." + key+"."+myBussinessPackage.substring(idx+1);
+			pName = Joiner.on(".").join(Splitter.on(".").omitEmptyStrings().split(pName));
+			
+			String mName = myModelPackage.substring(0,idx)+"." + key+"."+myModelPackage.substring(idx+1);
+			mName = Joiner.on(".").join(Splitter.on(".").omitEmptyStrings().split(mName));
+			
+			String out = outBaseName+"Bak.xml";
+			if(prefixs != null){
+				out = outBaseName+"_"+key+"xml";
+				if(key.equals("")){
+					out = outBaseName+"_"+key+".xml";
+				}
+				out = "generator/"+out;	
+				configs.add(out);
+			}
+			else{
+				configs.add(out);
+			}
+			out = "src/main/resources/"+  out;
+		    generteConfigBase(tableNames, src, out ,pName,mName);
+		}
+		
+		return configs;
+	}
+
+//	public static void main(String[] args) {
+//		 try {
+//			generateConfigXML();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} catch (CloneNotSupportedException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 }

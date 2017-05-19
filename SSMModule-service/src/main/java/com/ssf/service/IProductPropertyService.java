@@ -31,6 +31,8 @@ public interface IProductPropertyService {
 	 */
 	List<ProductProperty> selectListByMap(Map<Object, Object> map);
 
+	List<ProductProperty> listPage(int offset,int limit,Map<Object, Object> map);
+
 	ProductProperty selectByPrimaryKey(Long id);
     
     //写部分

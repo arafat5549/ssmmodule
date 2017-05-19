@@ -1,7 +1,5 @@
 package org.mybatis.generator;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.ibatis.datasource.DataSourceFactory;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springside.modules.utils.io.URLResourceUtil;
-
-import com.google.common.collect.Lists;
 
 /**
  * 运行sql语句 创建数据库和测试数据

@@ -1,10 +1,15 @@
 package com.ssf.model;
 
-import com.ssf.common.mybatis.base.BaseEntity;
+import com.ssf.common.vo.enums.DeleteFlagEnum;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Product extends BaseEntity implements Serializable {
+public class Product implements Serializable {
+    /**
+     *  主键自增长,所属表字段为sys_product.id
+     */
+    private Long id;
+
     /**
      *  商品名称,所属表字段为sys_product.name
      */
@@ -45,7 +50,30 @@ public class Product extends BaseEntity implements Serializable {
      */
     private Long brandId;
 
+    /**
+     *  创建时间,所属表字段为sys_product.create_time
+     */
+    private String createTime;
+
+    /**
+     *  更新时间,所属表字段为sys_product.update_time
+     */
+    private String updateTime;
+
+    /**
+     *  删除标记,所属表字段为sys_product.DELETE_FLAG
+     */
+    private DeleteFlagEnum deleteFlag;
+
     private static final long serialVersionUID = 1L;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -111,12 +139,37 @@ public class Product extends BaseEntity implements Serializable {
         this.brandId = brandId;
     }
 
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public DeleteFlagEnum getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(DeleteFlagEnum deleteFlag) {
+        this.deleteFlag = deleteFlag;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
         sb.append(", name=").append(name);
         sb.append(", title=").append(title);
         sb.append(", originPrice=").append(originPrice);
@@ -125,6 +178,9 @@ public class Product extends BaseEntity implements Serializable {
         sb.append(", state=").append(state);
         sb.append(", categoryId=").append(categoryId);
         sb.append(", brandId=").append(brandId);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", deleteFlag=").append(deleteFlag);
         sb.append("]");
         return sb.toString();
     }

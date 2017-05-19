@@ -31,6 +31,8 @@ public interface IBrandService {
 	 */
 	List<Brand> selectListByMap(Map<Object, Object> map);
 
+	List<Brand> listPage(int offset,int limit,Map<Object, Object> map);
+
 	Brand selectByPrimaryKey(Long id);
     
     //写部分

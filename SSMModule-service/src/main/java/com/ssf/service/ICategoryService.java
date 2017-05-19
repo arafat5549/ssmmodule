@@ -31,6 +31,8 @@ public interface ICategoryService {
 	 */
 	List<Category> selectListByMap(Map<Object, Object> map);
 
+	List<Category> listPage(int offset,int limit,Map<Object, Object> map);
+
 	Category selectByPrimaryKey(Long id);
     
     //写部分

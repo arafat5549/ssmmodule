@@ -48,33 +48,33 @@ public class ${className}DaoTest {
 		System.out.println("测试deleteByPrimaryKeyTest："+ret);
 	}
 	
-	@Test
-	public void deleteLogicByIdsTest() {
+	//@Test
+	//public void deleteLogicByIdsTest() {
 		//Integer deleteFlag, Integer[] ids
 		//return mapper.deleteLogicByIds(deleteFlag, ids);
-	}
+	//}
 
-	@Test
-	public void insertTest() {
-		//${className} record 
+	//@Test
+	//public void insertTest() {
+		//${className} record =new ${className}();
 		//return mapper.insert(record);
-	}
+	//}
 
-	@Test
-	public void insertSelectiveTest() {
+	//@Test
+	//public void insertSelectiveTest() {
 	    //${className} record
 		//return mapper.insertSelective(record);
-	}
+	//}
 
-	@Test
-	public void updateByPrimaryKeySelectiveTest() {
+	//@Test
+	//public void updateByPrimaryKeySelectiveTest() {
 		//${className} record
 		//return mapper.updateByPrimaryKeySelective(record);
-	}
+	//}
 
-	@Test
-	public void updateByPrimaryKey() {
+	//@Test
+	//public void updateByPrimaryKey() {
 		//${className} record
 		//return mapper.updateByPrimaryKey(record);
-	}
+	//}
 }

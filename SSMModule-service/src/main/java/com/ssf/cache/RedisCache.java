@@ -191,6 +191,26 @@ public class RedisCache {
 		}
 		return result_cache;
 	}
+//	//按主键查找
+//	public <T> T cacheObjectPK(String cache_key,Class<T> t,Object id,BaseMapper<T> dao,Logger LOG)
+//	{
+//		T result_cache = getCache(cache_key, t);
+//		if (result_cache != null) {
+//			LOG.info("get cache with key:" + cache_key);
+//		} else {
+//			result_cache = dao.sele
+//			if(result_cache!=null){
+//				putCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+//				LOG.info("put cache with key:" + cache_key);
+//			}
+//			else{
+//				LOG.error(cache_key+":获取的是空的对象");
+//			}
+//			return result_cache;
+//		}
+//		return result_cache;
+//	}
+	
 	//-生成CacheKey
 	public  static String generatorCacheKey(String base,Map<Object,Object>  paramMap){
 		String cache_key = base + paramMap;

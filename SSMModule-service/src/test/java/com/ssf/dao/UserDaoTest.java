@@ -24,7 +24,7 @@ public class UserDaoTest {
 	@Before
     public void prepare() throws Exception {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring/spring-dao.xml");
-        mapper = (UserDao) ctx.getBean("user");
+        mapper = (UserDao) ctx.getBean("userDao");
     }
 
 	@Test
@@ -48,33 +48,33 @@ public class UserDaoTest {
 		System.out.println("测试deleteByPrimaryKeyTest："+ret);
 	}
 	
-	@Test
-	public void deleteLogicByIdsTest() {
+	//@Test
+	//public void deleteLogicByIdsTest() {
 		//Integer deleteFlag, Integer[] ids
 		//return mapper.deleteLogicByIds(deleteFlag, ids);
-	}
+	//}
 
-	@Test
-	public void insertTest() {
-		//User record 
+	//@Test
+	//public void insertTest() {
+		//User record =new User();
 		//return mapper.insert(record);
-	}
+	//}
 
-	@Test
-	public void insertSelectiveTest() {
+	//@Test
+	//public void insertSelectiveTest() {
 	    //User record
 		//return mapper.insertSelective(record);
-	}
+	//}
 
-	@Test
-	public void updateByPrimaryKeySelectiveTest() {
+	//@Test
+	//public void updateByPrimaryKeySelectiveTest() {
 		//User record
 		//return mapper.updateByPrimaryKeySelective(record);
-	}
+	//}
 
-	@Test
-	public void updateByPrimaryKey() {
+	//@Test
+	//public void updateByPrimaryKey() {
 		//User record
 		//return mapper.updateByPrimaryKey(record);
-	}
+	//}
 }

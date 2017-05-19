@@ -54,29 +54,22 @@ public class CodeGeneratorUtil {
     }
 	 
 	public static void main(String[] args) {
-//		String packageName = "com.ssf.service";
-//		Properties props =PropertiesUtil.loadFromFile("classpath://jdbc.properties");
-//		List<String> lists = MybatisGenerator.getTableNames(props);
-//		for (String tname : lists) {
-//			String clsName = StringUtilss.toCamelCase(tname.replace("sys_", ""));
-//			clsName = StringUtils.capitalize(clsName);
-//			System.out.println(clsName);
-//			createTemplate(packageName,clsName);
-//			System.out.println("生成Service模板:"+packageName+"."+clsName+"ServiceImpl");
-//		}
+		String packageName = "com.ssf.service";
+		Properties props =PropertiesUtil.loadFromFile("classpath://jdbc.properties");
+		List<String> lists =MybatisGenerator.getTableNames(props);
+		for (String tname : lists) {
+			String clsName = StringUtilss.toCamelCase(tname.replace("sys_", ""));
+			clsName = StringUtils.capitalize(clsName);
+			System.out.println(clsName);
+			createTemplate(packageName,clsName);
+			System.out.println("生成Service模板:"+packageName+"."+clsName+"ServiceImpl");
+		}
 		
-		String packageName    = "com.ssf.dao";
-		String clsName = "User";
-		createTemplateDaoTest(packageName,clsName);
-		System.out.println("生成DaoTest模板:"+packageName+"."+clsName+"Test");
+//		String packageName    = "com.ssf.dao";
+//		String clsName = "User";
+//		createTemplateDaoTest(packageName,clsName);
+//		System.out.println("生成DaoTest模板:"+packageName+"."+clsName+"Test");
 		
-		//String clsName = "BaseLocation";
-		//createTemplate(packageName,clsName);
-		
-		//System.out.println("生成Service模板:"+packageName+"."+clsName+"ServiceImpl");
-		//System.out.println(lowerCapital(clsName));
-		//String packageName = "com.ssf.service".toString().replaceAll("\\.", "/");
-		//System.out.println(packageName);
 	}
 
 	

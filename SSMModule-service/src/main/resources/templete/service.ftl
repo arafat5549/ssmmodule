@@ -31,6 +31,8 @@ public interface I${className}Service {
 	 */
 	List<${className}> selectListByMap(Map<Object, Object> map);
 
+	List<${className}> listPage(int offset,int limit,Map<Object, Object> map);
+
 	${className} selectByPrimaryKey(Long id);
     
     //写部分

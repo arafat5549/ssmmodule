@@ -1,10 +1,14 @@
 package com.ssf.model;
 
-import com.ssf.common.mybatis.base.BaseEntity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Order extends BaseEntity implements Serializable {
+public class Order implements Serializable {
+    /**
+     *  主键自增长,所属表字段为sys_order.id
+     */
+    private Long id;
+
     /**
      *  唯一ID 订单号,所属表字段为sys_order.ordercode
      */
@@ -60,7 +64,25 @@ public class Order extends BaseEntity implements Serializable {
      */
     private Date confirmDate;
 
+    /**
+     *  创建时间,所属表字段为sys_order.create_time
+     */
+    private String createTime;
+
+    /**
+     *  更新时间,所属表字段为sys_order.update_time
+     */
+    private String updateTime;
+
     private static final long serialVersionUID = 1L;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getOrdercode() {
         return ordercode;
@@ -150,12 +172,29 @@ public class Order extends BaseEntity implements Serializable {
         this.confirmDate = confirmDate;
     }
 
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
         sb.append(", ordercode=").append(ordercode);
         sb.append(", address=").append(address);
         sb.append(", post=").append(post);
@@ -167,6 +206,8 @@ public class Order extends BaseEntity implements Serializable {
         sb.append(", payDate=").append(payDate);
         sb.append(", deliveryDate=").append(deliveryDate);
         sb.append(", confirmDate=").append(confirmDate);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append("]");
         return sb.toString();
     }

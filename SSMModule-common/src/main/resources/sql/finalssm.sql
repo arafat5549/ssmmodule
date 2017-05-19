@@ -1,8 +1,8 @@
 -- 需要 MySQL 5.6.5以上的版本
 
-DROP DATABASE IF EXISTS `finalssm`;
-CREATE DATABASE IF NOT EXISTS `finalssm` DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
-USE `finalssm`;
+-- DROP DATABASE IF EXISTS `finalssm`;
+-- CREATE DATABASE IF NOT EXISTS `finalssm` DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
+-- USE `finalssm`;
 
 -- 用户表
 DROP TABLE IF EXISTS `sys_user`;

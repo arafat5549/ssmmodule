@@ -27,7 +27,6 @@
     </commentGenerator>
     <jdbcConnection driverClass="${jdbc.driverClassName}" connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}"/>
     <javaModelGenerator targetPackage="${myModelPackage}" targetProject="${targetProject}src\main\java">
-      <property name="rootClass" value="com.ssf.common.mybatis.base.BaseEntity"/>
     </javaModelGenerator>
     <sqlMapGenerator targetPackage="${myBussinessPackage}" targetProject="${targetProject}src\main\resources"/>
     <javaClientGenerator targetPackage="${myBussinessPackage}" targetProject="${targetProject}src\main\java" type="XMLMAPPER"/>

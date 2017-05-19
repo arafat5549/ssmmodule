@@ -31,6 +31,8 @@ public interface IOrderItemService {
 	 */
 	List<OrderItem> selectListByMap(Map<Object, Object> map);
 
+	List<OrderItem> listPage(int offset,int limit,Map<Object, Object> map);
+
 	OrderItem selectByPrimaryKey(Long id);
     
     //写部分

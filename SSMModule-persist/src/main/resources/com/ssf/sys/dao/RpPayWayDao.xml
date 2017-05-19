@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.sys.dao.RpPayWayDao">
+  <resultMap id="BaseResultMap" type="com.ssf.sys.model.RpPayWay">
+    <id column="rp_pay_way_id" jdbcType="VARCHAR" property="id" />
+    <result column="rp_pay_way_version" jdbcType="BIGINT" property="version" />
+    <result column="rp_pay_way_create_time" jdbcType="TIMESTAMP" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+    <result column="rp_pay_way_edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="rp_pay_way_pay_way_code" jdbcType="VARCHAR" property="payWayCode" />
+    <result column="rp_pay_way_pay_way_name" jdbcType="VARCHAR" property="payWayName" />
+    <result column="rp_pay_way_pay_type_code" jdbcType="VARCHAR" property="payTypeCode" />
+    <result column="rp_pay_way_pay_type_name" jdbcType="VARCHAR" property="payTypeName" />
+    <result column="rp_pay_way_pay_product_code" jdbcType="VARCHAR" property="payProductCode" />
+    <result column="rp_pay_way_status" jdbcType="VARCHAR" property="status" />
+    <result column="rp_pay_way_sorts" jdbcType="INTEGER" property="sorts" />
+    <result column="rp_pay_way_pay_rate" jdbcType="DOUBLE" property="payRate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    rp_pay_way.id as rp_pay_way_id, rp_pay_way.version as rp_pay_way_version, rp_pay_way.create_time as rp_pay_way_create_time, 
+    rp_pay_way.edit_time as rp_pay_way_edit_time, rp_pay_way.pay_way_code as rp_pay_way_pay_way_code, 
+    rp_pay_way.pay_way_name as rp_pay_way_pay_way_name, rp_pay_way.pay_type_code as rp_pay_way_pay_type_code, 
+    rp_pay_way.pay_type_name as rp_pay_way_pay_type_name, rp_pay_way.pay_product_code as rp_pay_way_pay_product_code, 
+    rp_pay_way.status as rp_pay_way_status, rp_pay_way.sorts as rp_pay_way_sorts, rp_pay_way.pay_rate as rp_pay_way_pay_rate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rp_pay_way rp_pay_way
+    where rp_pay_way.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from rp_pay_way
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.sys.model.RpPayWay">
+    insert into ${dynamicTableName} (id, version, create_time,
+      edit_time, pay_way_code, pay_way_name, 
+      pay_type_code, pay_type_name, pay_product_code, 
+      status, sorts, pay_rate
+      )
+    values (#{id,jdbcType=VARCHAR}, #{version,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}, 
+      #{editTime,jdbcType=TIMESTAMP}, #{payWayCode,jdbcType=VARCHAR}, #{payWayName,jdbcType=VARCHAR}, 
+      #{payTypeCode,jdbcType=VARCHAR}, #{payTypeName,jdbcType=VARCHAR}, #{payProductCode,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{sorts,jdbcType=INTEGER}, #{payRate,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.sys.model.RpPayWay">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="editTime != null">
+        edit_time,
+      </if>
+      <if test="payWayCode != null">
+        pay_way_code,
+      </if>
+      <if test="payWayName != null">
+        pay_way_name,
+      </if>
+      <if test="payTypeCode != null">
+        pay_type_code,
+      </if>
+      <if test="payTypeName != null">
+        pay_type_name,
+      </if>
+      <if test="payProductCode != null">
+        pay_product_code,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="sorts != null">
+        sorts,
+      </if>
+      <if test="payRate != null">
+        pay_rate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payWayCode != null">
+        #{payWayCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payWayName != null">
+        #{payWayName,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeCode != null">
+        #{payTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeName != null">
+        #{payTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payProductCode != null">
+        #{payProductCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sorts != null">
+        #{sorts,jdbcType=INTEGER},
+      </if>
+      <if test="payRate != null">
+        #{payRate,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.sys.model.RpPayWay">
+    update ${dynamicTableName}
+    <set>
+      <if test="version != null">
+        version = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="editTime != null">
+        edit_time = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payWayCode != null">
+        pay_way_code = #{payWayCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payWayName != null">
+        pay_way_name = #{payWayName,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeCode != null">
+        pay_type_code = #{payTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeName != null">
+        pay_type_name = #{payTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payProductCode != null">
+        pay_product_code = #{payProductCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sorts != null">
+        sorts = #{sorts,jdbcType=INTEGER},
+      </if>
+      <if test="payRate != null">
+        pay_rate = #{payRate,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.sys.model.RpPayWay">
+    update ${dynamicTableName}
+    set version = #{version,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      edit_time = #{editTime,jdbcType=TIMESTAMP},
+      pay_way_code = #{payWayCode,jdbcType=VARCHAR},
+      pay_way_name = #{payWayName,jdbcType=VARCHAR},
+      pay_type_code = #{payTypeCode,jdbcType=VARCHAR},
+      pay_type_name = #{payTypeName,jdbcType=VARCHAR},
+      pay_product_code = #{payProductCode,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      sorts = #{sorts,jdbcType=INTEGER},
+      pay_rate = #{payRate,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="deleteLogicByIds">
+    update rp_pay_way rp_pay_way set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  rp_pay_way </if><if test="dynamicTableName == null or dynamicTableName == ''"> rp_pay_way rp_pay_way</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  rp_pay_way </if><if test="dynamicTableName == null or dynamicTableName == ''"> rp_pay_way rp_pay_way</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND rp_pay_way.id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="version != null and version != ''">
+         AND rp_pay_way.version = #{version,jdbcType=BIGINT}
+      </if>
+      <if test="createTime != null and createTime != ''">
+         AND rp_pay_way.create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="editTime != null and editTime != ''">
+         AND rp_pay_way.edit_time = #{editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="payWayCode != null and payWayCode != ''">
+         AND rp_pay_way.pay_way_code = #{payWayCode,jdbcType=VARCHAR}
+      </if>
+      <if test="payWayName != null and payWayName != ''">
+         AND rp_pay_way.pay_way_name = #{payWayName,jdbcType=VARCHAR}
+      </if>
+      <if test="payTypeCode != null and payTypeCode != ''">
+         AND rp_pay_way.pay_type_code = #{payTypeCode,jdbcType=VARCHAR}
+      </if>
+      <if test="payTypeName != null and payTypeName != ''">
+         AND rp_pay_way.pay_type_name = #{payTypeName,jdbcType=VARCHAR}
+      </if>
+      <if test="payProductCode != null and payProductCode != ''">
+         AND rp_pay_way.pay_product_code = #{payProductCode,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != ''">
+         AND rp_pay_way.status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="sorts != null and sorts != ''">
+         AND rp_pay_way.sorts = #{sorts,jdbcType=INTEGER}
+      </if>
+      <if test="payRate != null and payRate != ''">
+         AND rp_pay_way.pay_rate = #{payRate,jdbcType=DOUBLE}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND rp_pay_way.id &gt; #{myGreater_id,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_version != null and myGreater_version != ''">
+         AND rp_pay_way.version &gt; #{myGreater_version,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_createTime != null and myGreater_createTime != ''">
+         AND rp_pay_way.create_time &gt; #{myGreater_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_editTime != null and myGreater_editTime != ''">
+         AND rp_pay_way.edit_time &gt; #{myGreater_editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myGreater_payWayCode != null and myGreater_payWayCode != ''">
+         AND rp_pay_way.pay_way_code &gt; #{myGreater_payWayCode,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_payWayName != null and myGreater_payWayName != ''">
+         AND rp_pay_way.pay_way_name &gt; #{myGreater_payWayName,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_payTypeCode != null and myGreater_payTypeCode != ''">
+         AND rp_pay_way.pay_type_code &gt; #{myGreater_payTypeCode,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_payTypeName != null and myGreater_payTypeName != ''">
+         AND rp_pay_way.pay_type_name &gt; #{myGreater_payTypeName,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_payProductCode != null and myGreater_payProductCode != ''">
+         AND rp_pay_way.pay_product_code &gt; #{myGreater_payProductCode,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_status != null and myGreater_status != ''">
+         AND rp_pay_way.status &gt; #{myGreater_status,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_sorts != null and myGreater_sorts != ''">
+         AND rp_pay_way.sorts &gt; #{myGreater_sorts,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_payRate != null and myGreater_payRate != ''">
+         AND rp_pay_way.pay_rate &gt; #{myGreater_payRate,jdbcType=DOUBLE}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND rp_pay_way.id &lt; #{myLesser_id,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_version != null and myLesser_version != ''">
+         AND rp_pay_way.version &lt; #{myLesser_version,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_createTime != null and myLesser_createTime != ''">
+         AND rp_pay_way.create_time &lt; #{myLesser_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_editTime != null and myLesser_editTime != ''">
+         AND rp_pay_way.edit_time &lt; #{myLesser_editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myLesser_payWayCode != null and myLesser_payWayCode != ''">
+         AND rp_pay_way.pay_way_code &lt; #{myLesser_payWayCode,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_payWayName != null and myLesser_payWayName != ''">
+         AND rp_pay_way.pay_way_name &lt; #{myLesser_payWayName,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_payTypeCode != null and myLesser_payTypeCode != ''">
+         AND rp_pay_way.pay_type_code &lt; #{myLesser_payTypeCode,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_payTypeName != null and myLesser_payTypeName != ''">
+         AND rp_pay_way.pay_type_name &lt; #{myLesser_payTypeName,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_payProductCode != null and myLesser_payProductCode != ''">
+         AND rp_pay_way.pay_product_code &lt; #{myLesser_payProductCode,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_status != null and myLesser_status != ''">
+         AND rp_pay_way.status &lt; #{myLesser_status,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_sorts != null and myLesser_sorts != ''">
+         AND rp_pay_way.sorts &lt; #{myLesser_sorts,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_payRate != null and myLesser_payRate != ''">
+         AND rp_pay_way.pay_rate &lt; #{myLesser_payRate,jdbcType=DOUBLE}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND rp_pay_way.id like CONCAT('%', #{myLike_id,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_version != null and myLike_version != ''">
+         AND rp_pay_way.version like CONCAT('%', #{myLike_version,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_createTime != null and myLike_createTime != ''">
+         AND rp_pay_way.create_time like CONCAT('%', #{myLike_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLike_editTime != null and myLike_editTime != ''">
+         AND rp_pay_way.edit_time like CONCAT('%', #{myLike_editTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLike_payWayCode != null and myLike_payWayCode != ''">
+         AND rp_pay_way.pay_way_code like CONCAT('%', #{myLike_payWayCode,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_payWayName != null and myLike_payWayName != ''">
+         AND rp_pay_way.pay_way_name like CONCAT('%', #{myLike_payWayName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_payTypeCode != null and myLike_payTypeCode != ''">
+         AND rp_pay_way.pay_type_code like CONCAT('%', #{myLike_payTypeCode,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_payTypeName != null and myLike_payTypeName != ''">
+         AND rp_pay_way.pay_type_name like CONCAT('%', #{myLike_payTypeName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_payProductCode != null and myLike_payProductCode != ''">
+         AND rp_pay_way.pay_product_code like CONCAT('%', #{myLike_payProductCode,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_status != null and myLike_status != ''">
+         AND rp_pay_way.status like CONCAT('%', #{myLike_status,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_sorts != null and myLike_sorts != ''">
+         AND rp_pay_way.sorts like CONCAT('%', #{myLike_sorts,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_payRate != null and myLike_payRate != ''">
+         AND rp_pay_way.pay_rate like CONCAT('%', #{myLike_payRate,jdbcType=DOUBLE},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND rp_pay_way.id like CONCAT('%', #{myLikeStart_id,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_version != null and myLikeStart_version != ''">
+         AND rp_pay_way.version like CONCAT('%', #{myLikeStart_version,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_createTime != null and myLikeStart_createTime != ''">
+         AND rp_pay_way.create_time like CONCAT('%', #{myLikeStart_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeStart_editTime != null and myLikeStart_editTime != ''">
+         AND rp_pay_way.edit_time like CONCAT('%', #{myLikeStart_editTime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="myLikeStart_payWayCode != null and myLikeStart_payWayCode != ''">
+         AND rp_pay_way.pay_way_code like CONCAT('%', #{myLikeStart_payWayCode,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_payWayName != null and myLikeStart_payWayName != ''">
+         AND rp_pay_way.pay_way_name like CONCAT('%', #{myLikeStart_payWayName,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_payTypeCode != null and myLikeStart_payTypeCode != ''">
+         AND rp_pay_way.pay_type_code like CONCAT('%', #{myLikeStart_payTypeCode,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_payTypeName != null and myLikeStart_payTypeName != ''">
+         AND rp_pay_way.pay_type_name like CONCAT('%', #{myLikeStart_payTypeName,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_payProductCode != null and myLikeStart_payProductCode != ''">
+         AND rp_pay_way.pay_product_code like CONCAT('%', #{myLikeStart_payProductCode,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_status != null and myLikeStart_status != ''">
+         AND rp_pay_way.status like CONCAT('%', #{myLikeStart_status,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_sorts != null and myLikeStart_sorts != ''">
+         AND rp_pay_way.sorts like CONCAT('%', #{myLikeStart_sorts,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_payRate != null and myLikeStart_payRate != ''">
+         AND rp_pay_way.pay_rate like CONCAT('%', #{myLikeStart_payRate,jdbcType=DOUBLE})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND rp_pay_way.id like CONCAT( #{myLikeEnd_id,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_version != null and myLikeEnd_version != ''">
+         AND rp_pay_way.version like CONCAT( #{myLikeEnd_version,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_createTime != null and myLikeEnd_createTime != ''">
+         AND rp_pay_way.create_time like CONCAT( #{myLikeEnd_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeEnd_editTime != null and myLikeEnd_editTime != ''">
+         AND rp_pay_way.edit_time like CONCAT( #{myLikeEnd_editTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLikeEnd_payWayCode != null and myLikeEnd_payWayCode != ''">
+         AND rp_pay_way.pay_way_code like CONCAT( #{myLikeEnd_payWayCode,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_payWayName != null and myLikeEnd_payWayName != ''">
+         AND rp_pay_way.pay_way_name like CONCAT( #{myLikeEnd_payWayName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_payTypeCode != null and myLikeEnd_payTypeCode != ''">
+         AND rp_pay_way.pay_type_code like CONCAT( #{myLikeEnd_payTypeCode,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_payTypeName != null and myLikeEnd_payTypeName != ''">
+         AND rp_pay_way.pay_type_name like CONCAT( #{myLikeEnd_payTypeName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_payProductCode != null and myLikeEnd_payProductCode != ''">
+         AND rp_pay_way.pay_product_code like CONCAT( #{myLikeEnd_payProductCode,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_status != null and myLikeEnd_status != ''">
+         AND rp_pay_way.status like CONCAT( #{myLikeEnd_status,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_sorts != null and myLikeEnd_sorts != ''">
+         AND rp_pay_way.sorts like CONCAT( #{myLikeEnd_sorts,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_payRate != null and myLikeEnd_payRate != ''">
+         AND rp_pay_way.pay_rate like CONCAT( #{myLikeEnd_payRate,jdbcType=DOUBLE},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND rp_pay_way.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_version != null and myIn_version != ''">
+         AND rp_pay_way.version in <foreach item="item" index="index" collection="myIn_version" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createTime != null and myIn_createTime != ''">
+         AND rp_pay_way.create_time in <foreach item="item" index="index" collection="myIn_createTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_editTime != null and myIn_editTime != ''">
+         AND rp_pay_way.edit_time in <foreach item="item" index="index" collection="myIn_editTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_payWayCode != null and myIn_payWayCode != ''">
+         AND rp_pay_way.pay_way_code in <foreach item="item" index="index" collection="myIn_payWayCode" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_payWayName != null and myIn_payWayName != ''">
+         AND rp_pay_way.pay_way_name in <foreach item="item" index="index" collection="myIn_payWayName" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_payTypeCode != null and myIn_payTypeCode != ''">
+         AND rp_pay_way.pay_type_code in <foreach item="item" index="index" collection="myIn_payTypeCode" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_payTypeName != null and myIn_payTypeName != ''">
+         AND rp_pay_way.pay_type_name in <foreach item="item" index="index" collection="myIn_payTypeName" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_payProductCode != null and myIn_payProductCode != ''">
+         AND rp_pay_way.pay_product_code in <foreach item="item" index="index" collection="myIn_payProductCode" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_status != null and myIn_status != ''">
+         AND rp_pay_way.status in <foreach item="item" index="index" collection="myIn_status" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_sorts != null and myIn_sorts != ''">
+         AND rp_pay_way.sorts in <foreach item="item" index="index" collection="myIn_sorts" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_payRate != null and myIn_payRate != ''">
+         AND rp_pay_way.pay_rate in <foreach item="item" index="index" collection="myIn_payRate" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKeyAndTableName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${dynamicTableName}  rp_pay_way where rp_pay_way.id = #{id, jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKeyAndTableName" parameterType="String">
+    delete from ${dynamicTableName} where id = #{id, jdbcType=VARCHAR}
+  </delete>
+</mapper>

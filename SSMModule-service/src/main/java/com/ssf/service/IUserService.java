@@ -31,6 +31,8 @@ public interface IUserService {
 	 */
 	List<User> selectListByMap(Map<Object, Object> map);
 
+	List<User> listPage(int offset,int limit,Map<Object, Object> map);
+
 	User selectByPrimaryKey(Long id);
     
     //写部分

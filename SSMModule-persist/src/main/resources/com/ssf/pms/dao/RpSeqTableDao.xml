@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.pms.dao.RpSeqTableDao">
+  <resultMap id="BaseResultMap" type="com.ssf.pms.model.RpSeqTable">
+    <id column="rp_seq_table_SEQ_NAME" jdbcType="VARCHAR" property="seqName" />
+    <result column="rp_seq_table_CURRENT_VALUE" jdbcType="BIGINT" property="currentValue" />
+    <result column="rp_seq_table_INCREMENT" jdbcType="SMALLINT" property="increment" />
+    <result column="rp_seq_table_REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    rp_seq_table.SEQ_NAME as rp_seq_table_SEQ_NAME, rp_seq_table.CURRENT_VALUE as rp_seq_table_CURRENT_VALUE, 
+    rp_seq_table.INCREMENT as rp_seq_table_INCREMENT, rp_seq_table.REMARK as rp_seq_table_REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rp_seq_table rp_seq_table
+    where rp_seq_table.SEQ_NAME = #{seqName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from rp_seq_table
+    where SEQ_NAME = #{seqName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.pms.model.RpSeqTable">
+    insert into ${dynamicTableName} (SEQ_NAME, CURRENT_VALUE, INCREMENT,
+      REMARK)
+    values (#{seqName,jdbcType=VARCHAR}, #{currentValue,jdbcType=BIGINT}, #{increment,jdbcType=SMALLINT}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.pms.model.RpSeqTable">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="seqName != null">
+        SEQ_NAME,
+      </if>
+      <if test="currentValue != null">
+        CURRENT_VALUE,
+      </if>
+      <if test="increment != null">
+        INCREMENT,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="seqName != null">
+        #{seqName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentValue != null">
+        #{currentValue,jdbcType=BIGINT},
+      </if>
+      <if test="increment != null">
+        #{increment,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.pms.model.RpSeqTable">
+    update ${dynamicTableName}
+    <set>
+      <if test="currentValue != null">
+        CURRENT_VALUE = #{currentValue,jdbcType=BIGINT},
+      </if>
+      <if test="increment != null">
+        INCREMENT = #{increment,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SEQ_NAME = #{seqName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.pms.model.RpSeqTable">
+    update ${dynamicTableName}
+    set CURRENT_VALUE = #{currentValue,jdbcType=BIGINT},
+      INCREMENT = #{increment,jdbcType=SMALLINT},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where SEQ_NAME = #{seqName,jdbcType=VARCHAR}
+  </update>
+  <update id="deleteLogicByIds">
+    update rp_seq_table rp_seq_table set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  rp_seq_table </if><if test="dynamicTableName == null or dynamicTableName == ''"> rp_seq_table rp_seq_table</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  rp_seq_table </if><if test="dynamicTableName == null or dynamicTableName == ''"> rp_seq_table rp_seq_table</if> <include refid="Base_Query_Map_Condition" />  order by  SEQ_NAME desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="seqName != null and seqName != ''">
+         AND rp_seq_table.SEQ_NAME = #{seqName,jdbcType=VARCHAR}
+      </if>
+      <if test="currentValue != null and currentValue != ''">
+         AND rp_seq_table.CURRENT_VALUE = #{currentValue,jdbcType=BIGINT}
+      </if>
+      <if test="increment != null and increment != ''">
+         AND rp_seq_table.INCREMENT = #{increment,jdbcType=SMALLINT}
+      </if>
+      <if test="remark != null and remark != ''">
+         AND rp_seq_table.REMARK = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_seqName != null and myGreater_seqName != ''">
+         AND rp_seq_table.SEQ_NAME &gt; #{myGreater_seqName,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_currentValue != null and myGreater_currentValue != ''">
+         AND rp_seq_table.CURRENT_VALUE &gt; #{myGreater_currentValue,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_increment != null and myGreater_increment != ''">
+         AND rp_seq_table.INCREMENT &gt; #{myGreater_increment,jdbcType=SMALLINT}
+      </if>
+      <if test="myGreater_remark != null and myGreater_remark != ''">
+         AND rp_seq_table.REMARK &gt; #{myGreater_remark,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_seqName != null and myLesser_seqName != ''">
+         AND rp_seq_table.SEQ_NAME &lt; #{myLesser_seqName,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_currentValue != null and myLesser_currentValue != ''">
+         AND rp_seq_table.CURRENT_VALUE &lt; #{myLesser_currentValue,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_increment != null and myLesser_increment != ''">
+         AND rp_seq_table.INCREMENT &lt; #{myLesser_increment,jdbcType=SMALLINT}
+      </if>
+      <if test="myLesser_remark != null and myLesser_remark != ''">
+         AND rp_seq_table.REMARK &lt; #{myLesser_remark,jdbcType=VARCHAR}
+      </if>
+      <if test="myLike_seqName != null and myLike_seqName != ''">
+         AND rp_seq_table.SEQ_NAME like CONCAT('%', #{myLike_seqName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_currentValue != null and myLike_currentValue != ''">
+         AND rp_seq_table.CURRENT_VALUE like CONCAT('%', #{myLike_currentValue,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_increment != null and myLike_increment != ''">
+         AND rp_seq_table.INCREMENT like CONCAT('%', #{myLike_increment,jdbcType=SMALLINT},'%' )
+      </if>
+      <if test="myLike_remark != null and myLike_remark != ''">
+         AND rp_seq_table.REMARK like CONCAT('%', #{myLike_remark,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeStart_seqName != null and myLikeStart_seqName != ''">
+         AND rp_seq_table.SEQ_NAME like CONCAT('%', #{myLikeStart_seqName,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_currentValue != null and myLikeStart_currentValue != ''">
+         AND rp_seq_table.CURRENT_VALUE like CONCAT('%', #{myLikeStart_currentValue,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_increment != null and myLikeStart_increment != ''">
+         AND rp_seq_table.INCREMENT like CONCAT('%', #{myLikeStart_increment,jdbcType=SMALLINT})
+      </if>
+      <if test="myLikeStart_remark != null and myLikeStart_remark != ''">
+         AND rp_seq_table.REMARK like CONCAT('%', #{myLikeStart_remark,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeEnd_seqName != null and myLikeEnd_seqName != ''">
+         AND rp_seq_table.SEQ_NAME like CONCAT( #{myLikeEnd_seqName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_currentValue != null and myLikeEnd_currentValue != ''">
+         AND rp_seq_table.CURRENT_VALUE like CONCAT( #{myLikeEnd_currentValue,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_increment != null and myLikeEnd_increment != ''">
+         AND rp_seq_table.INCREMENT like CONCAT( #{myLikeEnd_increment,jdbcType=SMALLINT},'%' )
+      </if>
+      <if test="myLikeEnd_remark != null and myLikeEnd_remark != ''">
+         AND rp_seq_table.REMARK like CONCAT( #{myLikeEnd_remark,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myIn_seqName != null and myIn_seqName != ''">
+         AND rp_seq_table.SEQ_NAME in <foreach item="item" index="index" collection="myIn_seqName" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_currentValue != null and myIn_currentValue != ''">
+         AND rp_seq_table.CURRENT_VALUE in <foreach item="item" index="index" collection="myIn_currentValue" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_increment != null and myIn_increment != ''">
+         AND rp_seq_table.INCREMENT in <foreach item="item" index="index" collection="myIn_increment" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_remark != null and myIn_remark != ''">
+         AND rp_seq_table.REMARK in <foreach item="item" index="index" collection="myIn_remark" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKeyAndTableName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${dynamicTableName}  rp_seq_table where rp_seq_table.SEQ_NAME = #{id, jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKeyAndTableName" parameterType="String">
+    delete from ${dynamicTableName} where SEQ_NAME = #{id, jdbcType=VARCHAR}
+  </delete>
+</mapper>

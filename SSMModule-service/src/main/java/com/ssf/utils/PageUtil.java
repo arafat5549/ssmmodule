@@ -20,10 +20,10 @@ public class PageUtil {
 	}
 	
 	public static Map<Object , Object> getPageParamMap(int offset,int limit){
-		return  getPageParamMap(null, offset, limit);
+		return  getPageParamMap(offset, limit,null);
 	}
 	
-	public static Map<Object , Object> getPageParamMap(HashMap<Object, Object> paramMap,int offset,int limit){
+	public static Map<Object , Object> getPageParamMap(int offset,int limit,Map<Object, Object> paramMap){
 		if(paramMap==null){
 			paramMap = new HashMap<Object, Object>();
 		}

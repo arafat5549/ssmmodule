@@ -31,6 +31,8 @@ public interface IProductPropertyValueService {
 	 */
 	List<ProductPropertyValue> selectListByMap(Map<Object, Object> map);
 
+	List<ProductPropertyValue> listPage(int offset,int limit,Map<Object, Object> map);
+
 	ProductPropertyValue selectByPrimaryKey(Long id);
     
     //写部分

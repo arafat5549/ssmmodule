@@ -75,8 +75,8 @@
             password="${jdbc.password}" />
             
         <javaModelGenerator targetPackage="${myModelPackage}" targetProject="${targetProject}src\main\java" >
-        	<!-- alexgaoyh 20160602 增加基础bean的继承操作，将通用属性集成到BaseEntity内部 -->
-        	<property name="rootClass" value="com.ssf.common.mybatis.base.BaseEntity"/>
+        	<!-- alexgaoyh 20160602 增加基础bean的继承操作，将通用属性集成到BaseEntity内部 
+        	<property name="rootClass" value="com.ssf.common.mybatis.base.BaseEntity"/>-->
         </javaModelGenerator>
         
         <sqlMapGenerator targetPackage="${myBussinessPackage}" targetProject="${targetProject}src\main\resources" />

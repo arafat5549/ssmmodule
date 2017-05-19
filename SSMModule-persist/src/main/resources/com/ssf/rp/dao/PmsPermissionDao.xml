@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.rp.dao.PmsPermissionDao">
+  <resultMap id="BaseResultMap" type="com.ssf.rp.model.PmsPermission">
+    <id column="pms_permission_id" jdbcType="BIGINT" property="id" />
+    <result column="pms_permission_version" jdbcType="BIGINT" property="version" />
+    <result column="pms_permission_creater" jdbcType="VARCHAR" property="creater" />
+    <result column="pms_permission_create_time" jdbcType="TIMESTAMP" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+    <result column="pms_permission_editor" jdbcType="VARCHAR" property="editor" />
+    <result column="pms_permission_edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="pms_permission_status" jdbcType="VARCHAR" property="status" />
+    <result column="pms_permission_remark" jdbcType="VARCHAR" property="remark" />
+    <result column="pms_permission_permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="pms_permission_permission" jdbcType="VARCHAR" property="permission" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pms_permission.id as pms_permission_id, pms_permission.version as pms_permission_version, 
+    pms_permission.creater as pms_permission_creater, pms_permission.create_time as pms_permission_create_time, 
+    pms_permission.editor as pms_permission_editor, pms_permission.edit_time as pms_permission_edit_time, 
+    pms_permission.status as pms_permission_status, pms_permission.remark as pms_permission_remark, 
+    pms_permission.permission_name as pms_permission_permission_name, pms_permission.permission as pms_permission_permission
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pms_permission pms_permission
+    where pms_permission.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pms_permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.rp.model.PmsPermission">
+    insert into ${dynamicTableName} (id, version, creater,
+      create_time, 
+      editor, edit_time, status, 
+      remark, permission_name, permission
+      )
+    values (#{id,jdbcType=BIGINT}, #{version,jdbcType=BIGINT}, #{creater,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}, 
+      #{editor,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.rp.model.PmsPermission">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="creater != null">
+        creater,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="editor != null">
+        editor,
+      </if>
+      <if test="editTime != null">
+        edit_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="permissionName != null">
+        permission_name,
+      </if>
+      <if test="permission != null">
+        permission,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.rp.model.PmsPermission">
+    update ${dynamicTableName}
+    <set>
+      <if test="version != null">
+        version = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="creater != null">
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="editor != null">
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        edit_time = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        permission = #{permission,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.rp.model.PmsPermission">
+    update ${dynamicTableName}
+    set version = #{version,jdbcType=BIGINT},
+      creater = #{creater,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      editor = #{editor,jdbcType=VARCHAR},
+      edit_time = #{editTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      permission_name = #{permissionName,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByIds">
+    update pms_permission pms_permission set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  pms_permission </if><if test="dynamicTableName == null or dynamicTableName == ''"> pms_permission pms_permission</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  pms_permission </if><if test="dynamicTableName == null or dynamicTableName == ''"> pms_permission pms_permission</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND pms_permission.id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="version != null and version != ''">
+         AND pms_permission.version = #{version,jdbcType=BIGINT}
+      </if>
+      <if test="creater != null and creater != ''">
+         AND pms_permission.creater = #{creater,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null and createTime != ''">
+         AND pms_permission.create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="editor != null and editor != ''">
+         AND pms_permission.editor = #{editor,jdbcType=VARCHAR}
+      </if>
+      <if test="editTime != null and editTime != ''">
+         AND pms_permission.edit_time = #{editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="status != null and status != ''">
+         AND pms_permission.status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="remark != null and remark != ''">
+         AND pms_permission.remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="permissionName != null and permissionName != ''">
+         AND pms_permission.permission_name = #{permissionName,jdbcType=VARCHAR}
+      </if>
+      <if test="permission != null and permission != ''">
+         AND pms_permission.permission = #{permission,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND pms_permission.id &gt; #{myGreater_id,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_version != null and myGreater_version != ''">
+         AND pms_permission.version &gt; #{myGreater_version,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_creater != null and myGreater_creater != ''">
+         AND pms_permission.creater &gt; #{myGreater_creater,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_createTime != null and myGreater_createTime != ''">
+         AND pms_permission.create_time &gt; #{myGreater_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_editor != null and myGreater_editor != ''">
+         AND pms_permission.editor &gt; #{myGreater_editor,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_editTime != null and myGreater_editTime != ''">
+         AND pms_permission.edit_time &gt; #{myGreater_editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myGreater_status != null and myGreater_status != ''">
+         AND pms_permission.status &gt; #{myGreater_status,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_remark != null and myGreater_remark != ''">
+         AND pms_permission.remark &gt; #{myGreater_remark,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_permissionName != null and myGreater_permissionName != ''">
+         AND pms_permission.permission_name &gt; #{myGreater_permissionName,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_permission != null and myGreater_permission != ''">
+         AND pms_permission.permission &gt; #{myGreater_permission,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND pms_permission.id &lt; #{myLesser_id,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_version != null and myLesser_version != ''">
+         AND pms_permission.version &lt; #{myLesser_version,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_creater != null and myLesser_creater != ''">
+         AND pms_permission.creater &lt; #{myLesser_creater,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_createTime != null and myLesser_createTime != ''">
+         AND pms_permission.create_time &lt; #{myLesser_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_editor != null and myLesser_editor != ''">
+         AND pms_permission.editor &lt; #{myLesser_editor,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_editTime != null and myLesser_editTime != ''">
+         AND pms_permission.edit_time &lt; #{myLesser_editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myLesser_status != null and myLesser_status != ''">
+         AND pms_permission.status &lt; #{myLesser_status,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_remark != null and myLesser_remark != ''">
+         AND pms_permission.remark &lt; #{myLesser_remark,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_permissionName != null and myLesser_permissionName != ''">
+         AND pms_permission.permission_name &lt; #{myLesser_permissionName,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_permission != null and myLesser_permission != ''">
+         AND pms_permission.permission &lt; #{myLesser_permission,jdbcType=VARCHAR}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND pms_permission.id like CONCAT('%', #{myLike_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_version != null and myLike_version != ''">
+         AND pms_permission.version like CONCAT('%', #{myLike_version,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_creater != null and myLike_creater != ''">
+         AND pms_permission.creater like CONCAT('%', #{myLike_creater,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_createTime != null and myLike_createTime != ''">
+         AND pms_permission.create_time like CONCAT('%', #{myLike_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLike_editor != null and myLike_editor != ''">
+         AND pms_permission.editor like CONCAT('%', #{myLike_editor,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_editTime != null and myLike_editTime != ''">
+         AND pms_permission.edit_time like CONCAT('%', #{myLike_editTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLike_status != null and myLike_status != ''">
+         AND pms_permission.status like CONCAT('%', #{myLike_status,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_remark != null and myLike_remark != ''">
+         AND pms_permission.remark like CONCAT('%', #{myLike_remark,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_permissionName != null and myLike_permissionName != ''">
+         AND pms_permission.permission_name like CONCAT('%', #{myLike_permissionName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_permission != null and myLike_permission != ''">
+         AND pms_permission.permission like CONCAT('%', #{myLike_permission,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND pms_permission.id like CONCAT('%', #{myLikeStart_id,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_version != null and myLikeStart_version != ''">
+         AND pms_permission.version like CONCAT('%', #{myLikeStart_version,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_creater != null and myLikeStart_creater != ''">
+         AND pms_permission.creater like CONCAT('%', #{myLikeStart_creater,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_createTime != null and myLikeStart_createTime != ''">
+         AND pms_permission.create_time like CONCAT('%', #{myLikeStart_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeStart_editor != null and myLikeStart_editor != ''">
+         AND pms_permission.editor like CONCAT('%', #{myLikeStart_editor,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_editTime != null and myLikeStart_editTime != ''">
+         AND pms_permission.edit_time like CONCAT('%', #{myLikeStart_editTime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="myLikeStart_status != null and myLikeStart_status != ''">
+         AND pms_permission.status like CONCAT('%', #{myLikeStart_status,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_remark != null and myLikeStart_remark != ''">
+         AND pms_permission.remark like CONCAT('%', #{myLikeStart_remark,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_permissionName != null and myLikeStart_permissionName != ''">
+         AND pms_permission.permission_name like CONCAT('%', #{myLikeStart_permissionName,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_permission != null and myLikeStart_permission != ''">
+         AND pms_permission.permission like CONCAT('%', #{myLikeStart_permission,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND pms_permission.id like CONCAT( #{myLikeEnd_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_version != null and myLikeEnd_version != ''">
+         AND pms_permission.version like CONCAT( #{myLikeEnd_version,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_creater != null and myLikeEnd_creater != ''">
+         AND pms_permission.creater like CONCAT( #{myLikeEnd_creater,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_createTime != null and myLikeEnd_createTime != ''">
+         AND pms_permission.create_time like CONCAT( #{myLikeEnd_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeEnd_editor != null and myLikeEnd_editor != ''">
+         AND pms_permission.editor like CONCAT( #{myLikeEnd_editor,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_editTime != null and myLikeEnd_editTime != ''">
+         AND pms_permission.edit_time like CONCAT( #{myLikeEnd_editTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLikeEnd_status != null and myLikeEnd_status != ''">
+         AND pms_permission.status like CONCAT( #{myLikeEnd_status,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_remark != null and myLikeEnd_remark != ''">
+         AND pms_permission.remark like CONCAT( #{myLikeEnd_remark,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_permissionName != null and myLikeEnd_permissionName != ''">
+         AND pms_permission.permission_name like CONCAT( #{myLikeEnd_permissionName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_permission != null and myLikeEnd_permission != ''">
+         AND pms_permission.permission like CONCAT( #{myLikeEnd_permission,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND pms_permission.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_version != null and myIn_version != ''">
+         AND pms_permission.version in <foreach item="item" index="index" collection="myIn_version" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_creater != null and myIn_creater != ''">
+         AND pms_permission.creater in <foreach item="item" index="index" collection="myIn_creater" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createTime != null and myIn_createTime != ''">
+         AND pms_permission.create_time in <foreach item="item" index="index" collection="myIn_createTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_editor != null and myIn_editor != ''">
+         AND pms_permission.editor in <foreach item="item" index="index" collection="myIn_editor" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_editTime != null and myIn_editTime != ''">
+         AND pms_permission.edit_time in <foreach item="item" index="index" collection="myIn_editTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_status != null and myIn_status != ''">
+         AND pms_permission.status in <foreach item="item" index="index" collection="myIn_status" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_remark != null and myIn_remark != ''">
+         AND pms_permission.remark in <foreach item="item" index="index" collection="myIn_remark" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_permissionName != null and myIn_permissionName != ''">
+         AND pms_permission.permission_name in <foreach item="item" index="index" collection="myIn_permissionName" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_permission != null and myIn_permission != ''">
+         AND pms_permission.permission in <foreach item="item" index="index" collection="myIn_permission" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKeyAndTableName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${dynamicTableName}  pms_permission where pms_permission.id = #{id, jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKeyAndTableName" parameterType="String">
+    delete from ${dynamicTableName} where id = #{id, jdbcType=VARCHAR}
+  </delete>
+</mapper>

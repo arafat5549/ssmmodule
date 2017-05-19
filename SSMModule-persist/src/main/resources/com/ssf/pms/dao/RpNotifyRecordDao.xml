@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.pms.dao.RpNotifyRecordDao">
+  <resultMap id="BaseResultMap" type="com.ssf.pms.model.RpNotifyRecord">
+    <id column="rp_notify_record_id" jdbcType="VARCHAR" property="id" />
+    <result column="rp_notify_record_version" jdbcType="INTEGER" property="version" />
+    <result column="rp_notify_record_create_time" jdbcType="TIMESTAMP" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+    <result column="rp_notify_record_editor" jdbcType="VARCHAR" property="editor" />
+    <result column="rp_notify_record_creater" jdbcType="VARCHAR" property="creater" />
+    <result column="rp_notify_record_edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="rp_notify_record_notify_times" jdbcType="INTEGER" property="notifyTimes" />
+    <result column="rp_notify_record_limit_notify_times" jdbcType="INTEGER" property="limitNotifyTimes" />
+    <result column="rp_notify_record_url" jdbcType="VARCHAR" property="url" />
+    <result column="rp_notify_record_merchant_order_no" jdbcType="VARCHAR" property="merchantOrderNo" />
+    <result column="rp_notify_record_merchant_no" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="rp_notify_record_status" jdbcType="VARCHAR" property="status" />
+    <result column="rp_notify_record_notify_type" jdbcType="VARCHAR" property="notifyType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    rp_notify_record.id as rp_notify_record_id, rp_notify_record.version as rp_notify_record_version, 
+    rp_notify_record.create_time as rp_notify_record_create_time, rp_notify_record.editor as rp_notify_record_editor, 
+    rp_notify_record.creater as rp_notify_record_creater, rp_notify_record.edit_time as rp_notify_record_edit_time, 
+    rp_notify_record.notify_times as rp_notify_record_notify_times, rp_notify_record.limit_notify_times as rp_notify_record_limit_notify_times, 
+    rp_notify_record.url as rp_notify_record_url, rp_notify_record.merchant_order_no as rp_notify_record_merchant_order_no, 
+    rp_notify_record.merchant_no as rp_notify_record_merchant_no, rp_notify_record.status as rp_notify_record_status, 
+    rp_notify_record.notify_type as rp_notify_record_notify_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rp_notify_record rp_notify_record
+    where rp_notify_record.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from rp_notify_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.pms.model.RpNotifyRecord">
+    insert into ${dynamicTableName} (id, version, create_time,
+      editor, creater, edit_time, 
+      notify_times, limit_notify_times, url, 
+      merchant_order_no, merchant_no, status, 
+      notify_type)
+    values (#{id,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}, 
+      #{editor,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{notifyTimes,jdbcType=INTEGER}, #{limitNotifyTimes,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
+      #{merchantOrderNo,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{notifyType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.pms.model.RpNotifyRecord">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="editor != null">
+        editor,
+      </if>
+      <if test="creater != null">
+        creater,
+      </if>
+      <if test="editTime != null">
+        edit_time,
+      </if>
+      <if test="notifyTimes != null">
+        notify_times,
+      </if>
+      <if test="limitNotifyTimes != null">
+        limit_notify_times,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="merchantOrderNo != null">
+        merchant_order_no,
+      </if>
+      <if test="merchantNo != null">
+        merchant_no,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="notifyType != null">
+        notify_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notifyTimes != null">
+        #{notifyTimes,jdbcType=INTEGER},
+      </if>
+      <if test="limitNotifyTimes != null">
+        #{limitNotifyTimes,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantOrderNo != null">
+        #{merchantOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyType != null">
+        #{notifyType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.pms.model.RpNotifyRecord">
+    update ${dynamicTableName}
+    <set>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="editor != null">
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null">
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        edit_time = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notifyTimes != null">
+        notify_times = #{notifyTimes,jdbcType=INTEGER},
+      </if>
+      <if test="limitNotifyTimes != null">
+        limit_notify_times = #{limitNotifyTimes,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantOrderNo != null">
+        merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyType != null">
+        notify_type = #{notifyType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.pms.model.RpNotifyRecord">
+    update ${dynamicTableName}
+    set version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      editor = #{editor,jdbcType=VARCHAR},
+      creater = #{creater,jdbcType=VARCHAR},
+      edit_time = #{editTime,jdbcType=TIMESTAMP},
+      notify_times = #{notifyTimes,jdbcType=INTEGER},
+      limit_notify_times = #{limitNotifyTimes,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR},
+      merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      notify_type = #{notifyType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="deleteLogicByIds">
+    update rp_notify_record rp_notify_record set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  rp_notify_record </if><if test="dynamicTableName == null or dynamicTableName == ''"> rp_notify_record rp_notify_record</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  rp_notify_record </if><if test="dynamicTableName == null or dynamicTableName == ''"> rp_notify_record rp_notify_record</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND rp_notify_record.id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="version != null and version != ''">
+         AND rp_notify_record.version = #{version,jdbcType=INTEGER}
+      </if>
+      <if test="createTime != null and createTime != ''">
+         AND rp_notify_record.create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="editor != null and editor != ''">
+         AND rp_notify_record.editor = #{editor,jdbcType=VARCHAR}
+      </if>
+      <if test="creater != null and creater != ''">
+         AND rp_notify_record.creater = #{creater,jdbcType=VARCHAR}
+      </if>
+      <if test="editTime != null and editTime != ''">
+         AND rp_notify_record.edit_time = #{editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="notifyTimes != null and notifyTimes != ''">
+         AND rp_notify_record.notify_times = #{notifyTimes,jdbcType=INTEGER}
+      </if>
+      <if test="limitNotifyTimes != null and limitNotifyTimes != ''">
+         AND rp_notify_record.limit_notify_times = #{limitNotifyTimes,jdbcType=INTEGER}
+      </if>
+      <if test="url != null and url != ''">
+         AND rp_notify_record.url = #{url,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantOrderNo != null and merchantOrderNo != ''">
+         AND rp_notify_record.merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantNo != null and merchantNo != ''">
+         AND rp_notify_record.merchant_no = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != ''">
+         AND rp_notify_record.status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="notifyType != null and notifyType != ''">
+         AND rp_notify_record.notify_type = #{notifyType,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND rp_notify_record.id &gt; #{myGreater_id,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_version != null and myGreater_version != ''">
+         AND rp_notify_record.version &gt; #{myGreater_version,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_createTime != null and myGreater_createTime != ''">
+         AND rp_notify_record.create_time &gt; #{myGreater_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_editor != null and myGreater_editor != ''">
+         AND rp_notify_record.editor &gt; #{myGreater_editor,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_creater != null and myGreater_creater != ''">
+         AND rp_notify_record.creater &gt; #{myGreater_creater,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_editTime != null and myGreater_editTime != ''">
+         AND rp_notify_record.edit_time &gt; #{myGreater_editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myGreater_notifyTimes != null and myGreater_notifyTimes != ''">
+         AND rp_notify_record.notify_times &gt; #{myGreater_notifyTimes,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_limitNotifyTimes != null and myGreater_limitNotifyTimes != ''">
+         AND rp_notify_record.limit_notify_times &gt; #{myGreater_limitNotifyTimes,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_url != null and myGreater_url != ''">
+         AND rp_notify_record.url &gt; #{myGreater_url,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_merchantOrderNo != null and myGreater_merchantOrderNo != ''">
+         AND rp_notify_record.merchant_order_no &gt; #{myGreater_merchantOrderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_merchantNo != null and myGreater_merchantNo != ''">
+         AND rp_notify_record.merchant_no &gt; #{myGreater_merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_status != null and myGreater_status != ''">
+         AND rp_notify_record.status &gt; #{myGreater_status,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_notifyType != null and myGreater_notifyType != ''">
+         AND rp_notify_record.notify_type &gt; #{myGreater_notifyType,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND rp_notify_record.id &lt; #{myLesser_id,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_version != null and myLesser_version != ''">
+         AND rp_notify_record.version &lt; #{myLesser_version,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_createTime != null and myLesser_createTime != ''">
+         AND rp_notify_record.create_time &lt; #{myLesser_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_editor != null and myLesser_editor != ''">
+         AND rp_notify_record.editor &lt; #{myLesser_editor,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_creater != null and myLesser_creater != ''">
+         AND rp_notify_record.creater &lt; #{myLesser_creater,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_editTime != null and myLesser_editTime != ''">
+         AND rp_notify_record.edit_time &lt; #{myLesser_editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myLesser_notifyTimes != null and myLesser_notifyTimes != ''">
+         AND rp_notify_record.notify_times &lt; #{myLesser_notifyTimes,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_limitNotifyTimes != null and myLesser_limitNotifyTimes != ''">
+         AND rp_notify_record.limit_notify_times &lt; #{myLesser_limitNotifyTimes,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_url != null and myLesser_url != ''">
+         AND rp_notify_record.url &lt; #{myLesser_url,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_merchantOrderNo != null and myLesser_merchantOrderNo != ''">
+         AND rp_notify_record.merchant_order_no &lt; #{myLesser_merchantOrderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_merchantNo != null and myLesser_merchantNo != ''">
+         AND rp_notify_record.merchant_no &lt; #{myLesser_merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_status != null and myLesser_status != ''">
+         AND rp_notify_record.status &lt; #{myLesser_status,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_notifyType != null and myLesser_notifyType != ''">
+         AND rp_notify_record.notify_type &lt; #{myLesser_notifyType,jdbcType=VARCHAR}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND rp_notify_record.id like CONCAT('%', #{myLike_id,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_version != null and myLike_version != ''">
+         AND rp_notify_record.version like CONCAT('%', #{myLike_version,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_createTime != null and myLike_createTime != ''">
+         AND rp_notify_record.create_time like CONCAT('%', #{myLike_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLike_editor != null and myLike_editor != ''">
+         AND rp_notify_record.editor like CONCAT('%', #{myLike_editor,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_creater != null and myLike_creater != ''">
+         AND rp_notify_record.creater like CONCAT('%', #{myLike_creater,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_editTime != null and myLike_editTime != ''">
+         AND rp_notify_record.edit_time like CONCAT('%', #{myLike_editTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLike_notifyTimes != null and myLike_notifyTimes != ''">
+         AND rp_notify_record.notify_times like CONCAT('%', #{myLike_notifyTimes,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_limitNotifyTimes != null and myLike_limitNotifyTimes != ''">
+         AND rp_notify_record.limit_notify_times like CONCAT('%', #{myLike_limitNotifyTimes,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_url != null and myLike_url != ''">
+         AND rp_notify_record.url like CONCAT('%', #{myLike_url,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_merchantOrderNo != null and myLike_merchantOrderNo != ''">
+         AND rp_notify_record.merchant_order_no like CONCAT('%', #{myLike_merchantOrderNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_merchantNo != null and myLike_merchantNo != ''">
+         AND rp_notify_record.merchant_no like CONCAT('%', #{myLike_merchantNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_status != null and myLike_status != ''">
+         AND rp_notify_record.status like CONCAT('%', #{myLike_status,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_notifyType != null and myLike_notifyType != ''">
+         AND rp_notify_record.notify_type like CONCAT('%', #{myLike_notifyType,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND rp_notify_record.id like CONCAT('%', #{myLikeStart_id,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_version != null and myLikeStart_version != ''">
+         AND rp_notify_record.version like CONCAT('%', #{myLikeStart_version,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_createTime != null and myLikeStart_createTime != ''">
+         AND rp_notify_record.create_time like CONCAT('%', #{myLikeStart_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeStart_editor != null and myLikeStart_editor != ''">
+         AND rp_notify_record.editor like CONCAT('%', #{myLikeStart_editor,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_creater != null and myLikeStart_creater != ''">
+         AND rp_notify_record.creater like CONCAT('%', #{myLikeStart_creater,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_editTime != null and myLikeStart_editTime != ''">
+         AND rp_notify_record.edit_time like CONCAT('%', #{myLikeStart_editTime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="myLikeStart_notifyTimes != null and myLikeStart_notifyTimes != ''">
+         AND rp_notify_record.notify_times like CONCAT('%', #{myLikeStart_notifyTimes,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_limitNotifyTimes != null and myLikeStart_limitNotifyTimes != ''">
+         AND rp_notify_record.limit_notify_times like CONCAT('%', #{myLikeStart_limitNotifyTimes,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_url != null and myLikeStart_url != ''">
+         AND rp_notify_record.url like CONCAT('%', #{myLikeStart_url,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_merchantOrderNo != null and myLikeStart_merchantOrderNo != ''">
+         AND rp_notify_record.merchant_order_no like CONCAT('%', #{myLikeStart_merchantOrderNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_merchantNo != null and myLikeStart_merchantNo != ''">
+         AND rp_notify_record.merchant_no like CONCAT('%', #{myLikeStart_merchantNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_status != null and myLikeStart_status != ''">
+         AND rp_notify_record.status like CONCAT('%', #{myLikeStart_status,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_notifyType != null and myLikeStart_notifyType != ''">
+         AND rp_notify_record.notify_type like CONCAT('%', #{myLikeStart_notifyType,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND rp_notify_record.id like CONCAT( #{myLikeEnd_id,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_version != null and myLikeEnd_version != ''">
+         AND rp_notify_record.version like CONCAT( #{myLikeEnd_version,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_createTime != null and myLikeEnd_createTime != ''">
+         AND rp_notify_record.create_time like CONCAT( #{myLikeEnd_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeEnd_editor != null and myLikeEnd_editor != ''">
+         AND rp_notify_record.editor like CONCAT( #{myLikeEnd_editor,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_creater != null and myLikeEnd_creater != ''">
+         AND rp_notify_record.creater like CONCAT( #{myLikeEnd_creater,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_editTime != null and myLikeEnd_editTime != ''">
+         AND rp_notify_record.edit_time like CONCAT( #{myLikeEnd_editTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLikeEnd_notifyTimes != null and myLikeEnd_notifyTimes != ''">
+         AND rp_notify_record.notify_times like CONCAT( #{myLikeEnd_notifyTimes,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_limitNotifyTimes != null and myLikeEnd_limitNotifyTimes != ''">
+         AND rp_notify_record.limit_notify_times like CONCAT( #{myLikeEnd_limitNotifyTimes,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_url != null and myLikeEnd_url != ''">
+         AND rp_notify_record.url like CONCAT( #{myLikeEnd_url,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_merchantOrderNo != null and myLikeEnd_merchantOrderNo != ''">
+         AND rp_notify_record.merchant_order_no like CONCAT( #{myLikeEnd_merchantOrderNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_merchantNo != null and myLikeEnd_merchantNo != ''">
+         AND rp_notify_record.merchant_no like CONCAT( #{myLikeEnd_merchantNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_status != null and myLikeEnd_status != ''">
+         AND rp_notify_record.status like CONCAT( #{myLikeEnd_status,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_notifyType != null and myLikeEnd_notifyType != ''">
+         AND rp_notify_record.notify_type like CONCAT( #{myLikeEnd_notifyType,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND rp_notify_record.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_version != null and myIn_version != ''">
+         AND rp_notify_record.version in <foreach item="item" index="index" collection="myIn_version" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createTime != null and myIn_createTime != ''">
+         AND rp_notify_record.create_time in <foreach item="item" index="index" collection="myIn_createTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_editor != null and myIn_editor != ''">
+         AND rp_notify_record.editor in <foreach item="item" index="index" collection="myIn_editor" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_creater != null and myIn_creater != ''">
+         AND rp_notify_record.creater in <foreach item="item" index="index" collection="myIn_creater" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_editTime != null and myIn_editTime != ''">
+         AND rp_notify_record.edit_time in <foreach item="item" index="index" collection="myIn_editTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_notifyTimes != null and myIn_notifyTimes != ''">
+         AND rp_notify_record.notify_times in <foreach item="item" index="index" collection="myIn_notifyTimes" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_limitNotifyTimes != null and myIn_limitNotifyTimes != ''">
+         AND rp_notify_record.limit_notify_times in <foreach item="item" index="index" collection="myIn_limitNotifyTimes" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_url != null and myIn_url != ''">
+         AND rp_notify_record.url in <foreach item="item" index="index" collection="myIn_url" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_merchantOrderNo != null and myIn_merchantOrderNo != ''">
+         AND rp_notify_record.merchant_order_no in <foreach item="item" index="index" collection="myIn_merchantOrderNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_merchantNo != null and myIn_merchantNo != ''">
+         AND rp_notify_record.merchant_no in <foreach item="item" index="index" collection="myIn_merchantNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_status != null and myIn_status != ''">
+         AND rp_notify_record.status in <foreach item="item" index="index" collection="myIn_status" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_notifyType != null and myIn_notifyType != ''">
+         AND rp_notify_record.notify_type in <foreach item="item" index="index" collection="myIn_notifyType" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKeyAndTableName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${dynamicTableName}  rp_notify_record where rp_notify_record.id = #{id, jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKeyAndTableName" parameterType="String">
+    delete from ${dynamicTableName} where id = #{id, jdbcType=VARCHAR}
+  </delete>
+</mapper>

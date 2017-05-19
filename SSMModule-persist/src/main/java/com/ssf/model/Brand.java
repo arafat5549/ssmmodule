@@ -1,9 +1,13 @@
 package com.ssf.model;
 
-import com.ssf.common.mybatis.base.BaseEntity;
 import java.io.Serializable;
 
-public class Brand extends BaseEntity implements Serializable {
+public class Brand implements Serializable {
+    /**
+     *  主键自增长,所属表字段为sys_brand.id
+     */
+    private Long id;
+
     /**
      *  品牌名称,所属表字段为sys_brand.name
      */
@@ -15,11 +19,29 @@ public class Brand extends BaseEntity implements Serializable {
     private String logo;
 
     /**
+     *  创建时间,所属表字段为sys_brand.create_time
+     */
+    private String createTime;
+
+    /**
+     *  更新时间,所属表字段为sys_brand.update_time
+     */
+    private String updateTime;
+
+    /**
      *  品牌介绍,所属表字段为sys_brand.describe
      */
     private String describe;
 
     private static final long serialVersionUID = 1L;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -37,6 +59,22 @@ public class Brand extends BaseEntity implements Serializable {
         this.logo = logo;
     }
 
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
     public String getDescribe() {
         return describe;
     }
@@ -51,8 +89,11 @@ public class Brand extends BaseEntity implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
         sb.append(", name=").append(name);
         sb.append(", logo=").append(logo);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append(", describe=").append(describe);
         sb.append("]");
         return sb.toString();

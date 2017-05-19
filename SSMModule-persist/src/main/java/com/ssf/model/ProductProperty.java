@@ -1,9 +1,13 @@
 package com.ssf.model;
 
-import com.ssf.common.mybatis.base.BaseEntity;
 import java.io.Serializable;
 
-public class ProductProperty extends BaseEntity implements Serializable {
+public class ProductProperty implements Serializable {
+    /**
+     *  主键自增长,所属表字段为sys_product_property.id
+     */
+    private Long id;
+
     /**
      *  主键自增长,所属表字段为sys_product_property.category_id
      */
@@ -14,7 +18,20 @@ public class ProductProperty extends BaseEntity implements Serializable {
      */
     private String name;
 
+    /**
+     *  创建时间,所属表字段为sys_product_property.create_time
+     */
+    private String createTime;
+
     private static final long serialVersionUID = 1L;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getCategoryId() {
         return categoryId;
@@ -32,14 +49,24 @@ public class ProductProperty extends BaseEntity implements Serializable {
         this.name = name;
     }
 
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
         sb.append(", categoryId=").append(categoryId);
         sb.append(", name=").append(name);
+        sb.append(", createTime=").append(createTime);
         sb.append("]");
         return sb.toString();
     }

@@ -31,6 +31,8 @@ public interface IProductImageService {
 	 */
 	List<ProductImage> selectListByMap(Map<Object, Object> map);
 
+	List<ProductImage> listPage(int offset,int limit,Map<Object, Object> map);
+
 	ProductImage selectByPrimaryKey(Long id);
     
     //写部分
