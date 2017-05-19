@@ -68,5 +68,23 @@
   </dependencies>
   <build>
     <finalName>SSMModule-web-admin</finalName>
+        <plugins>
+    		 <!-- maven-tomcat7服务器插件 --> 	
+	          <plugin>
+	                <groupId>org.apache.tomcat.maven</groupId>
+	                <artifactId>tomcat7-maven-plugin</artifactId>
+	                <version>2.1</version>
+	                <configuration>
+	                    <!-- <serverXml>src/main/resources/tomcatconf/server_cluster_8081.xml</serverXml> -->
+	                    <port>9999</port>      <!-- 参数maven.tomcat.ajp.port   默认8080-->
+	                    <ajpPort>8010</ajpPort><!-- 参数maven.tomcat.port 默认0 -->
+	                    <path>/</path>
+	                    <uriEncoding>UTF-8</uriEncoding>
+	                    <finalName>${project.artifactId}</finalName>
+	                    <server>tomcat7</server>
+						<ignorePackaging>true</ignorePackaging>
+	                </configuration>
+	            </plugin>
+    </plugins>
   </build>
 </project>

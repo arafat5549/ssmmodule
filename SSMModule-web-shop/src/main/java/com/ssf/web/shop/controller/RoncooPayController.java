@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springside.modules.utils.base.PropertiesUtil;
 
 import com.ssf.web.shop.utils.MerchantApiUtil;
 import com.ssf.web.shop.utils.PayConfigUtil;
@@ -39,10 +40,12 @@ import com.ssf.web.shop.utils.PayConfigUtil;
 @Controller
 @RequestMapping(value = "/roncooPay")
 public class RoncooPayController  extends BaseController{
-
+	
         @RequestMapping("/scanPay")
         public String scanPay(HttpServletRequest httpServletRequest , HttpServletResponse httpServletResponse ,Model model){
-            Map<String , Object> paramMap = new HashMap<String , Object>();
+            //PropertiesUtil.loadFromString(content)
+        	
+        	Map<String , Object> paramMap = new HashMap<String , Object>();
 
             String orderPriceStr = getString_UrlDecode_UTF8("orderPrice"); // 订单金额 , 单位:元
             paramMap.put("orderPrice",orderPriceStr);

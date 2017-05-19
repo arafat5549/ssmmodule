@@ -26,8 +26,11 @@ public class MyTest
 		
 		//List<String> lists = Lists.newArrayList("sql/finalssm.sql","sql/finalssm.sql","sql/alipay.sql");
 		//MybatisGenerator.runSql(props,lists);
+		//
 		
-		List<String> configs = MybatisGenerator.generateConfigXML(props, BASE_PREFIX);
+		List<String> configs = Lists.newArrayList("generator/generatorConfig_sys.xml", 
+				"generator/generatorConfig_pms.xml","generator/generatorConfig_rp.xml");
+				//MybatisGenerator.generateConfigXML(props, BASE_PREFIX);
 		System.out.println(configs);
 		
 		for (String conf : configs) {

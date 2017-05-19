@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.utils.CloneUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -101,7 +102,8 @@ public class GeneratorConfigXMLUtil {
 		Element ele = selectElement("//table",document);
         //生成所有table节点
         for (String tname : tableNames) {
-			Element newele = (Element) 	BeanUtils.cloneBean(ele);
+			Element newele = (Element) CloneUtils.clone(ele);
+			
 			String base = StringUtils.capitalize(StringUtilss.toCamelCase(tname));
 			newele.addAttribute("mapperName", base +"Dao");
 			newele.addAttribute("tableName",  tname);
@@ -197,6 +199,7 @@ public class GeneratorConfigXMLUtil {
 		Multimap<String, String> multimap = ArrayListMultimap.create();
 		for (String tname : tableNames)  
 		{
+			String base = tname;
 			Matcher macther = pattern.matcher(tname);
 			String find = "";
 			if(macther.find())
@@ -205,8 +208,9 @@ public class GeneratorConfigXMLUtil {
 				tname = tname.replace(find, "");
 			}
 			String packageName = (find).replace("_", ".");
-			multimap.put(packageName, tname);
+			multimap.put(packageName, base);
 		}
+		
 		int srcidx = src.lastIndexOf(".");
 		String outBaseName =  src.substring(0,srcidx);
 		for (String key : multimap.keySet()) {
@@ -230,7 +234,7 @@ public class GeneratorConfigXMLUtil {
 				configs.add(out);
 			}
 			out = "src/main/resources/"+  out;
-		    generteConfigBase(tableNames, src, out ,pName,mName);
+		    generteConfigBase((List<String>)multimap.get(key), src, out ,pName,mName);
 		}
 		
 		return configs;

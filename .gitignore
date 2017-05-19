@@ -27,5 +27,6 @@ velocity.log
 src/main/webapp/WEB-INF/lib/
 src/main/webapp/WEB-INF/lib/*
 
-src/main/webapp/assets/frontend/pages/img/products/*/
-src/main/webapp/assets/frontend/pages/img/products/*/*
+
+SSMModule-web-admin/src/main/webapp/assets/
+SSMModule-web-admin/src/main/webapp/assets/*
