@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.ssf.common.spring.SpringContextHelper;
 
-import com.ssf.service.I${className}Service;
-import com.ssf.dao.${className}Dao;
-import com.ssf.model.${className};
+import ${packageName}.I${className}Service;
+import ${daoPackageName}.${className}Dao;
+import ${modelPackageName}.${className};
 import com.ssf.cache.RedisCache;
 import com.ssf.utils.PageUtil;
 
@@ -65,7 +65,7 @@ public class ${className}ServiceImpl implements I${className}Service {
 	}
 
 	@Override
-	public ${className} selectByPrimaryKey(Long id) {
+	public ${className} selectByPrimaryKey(${idField} id) {
 		String cache_key = PREFIX_CAHCE + "selectByPrimaryKey|" + id;
 		if(springContextHelper.getRedisAcaliable())
 		{
@@ -90,7 +90,7 @@ public class ${className}ServiceImpl implements I${className}Service {
 	
 	//
 	@Override
-	public int deleteByPrimaryKey(Long id) {
+	public int deleteByPrimaryKey(${idField} id) {
 		return mapper.deleteByPrimaryKey(id);
 	}
 	

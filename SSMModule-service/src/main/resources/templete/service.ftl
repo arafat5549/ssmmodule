@@ -3,7 +3,7 @@ package ${packageName};
 import java.util.List;
 import java.util.Map;
 
-import com.ssf.model.${className};
+import ${modelPackageName}.${className};
 
 /**
  * 
@@ -33,7 +33,7 @@ public interface I${className}Service {
 
 	List<${className}> listPage(int offset,int limit,Map<Object, Object> map);
 
-	${className} selectByPrimaryKey(Long id);
+	${className} selectByPrimaryKey(${idField} id);
     
     //写部分
     /**
@@ -41,7 +41,7 @@ public interface I${className}Service {
 	 * @param id
 	 * @return
 	 */
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(${idField} id);
     
 	/**
 	 * 根据ids数组，逻辑删除对象(逻辑删除 置delete标志位)

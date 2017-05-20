@@ -1,0 +1,1199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.rp.dao.RpAccountCheckMistakeDao">
+  <resultMap id="BaseResultMap" type="com.ssf.rp.model.RpAccountCheckMistake">
+    <id column="rp_account_check_mistake_id" jdbcType="VARCHAR" property="id" />
+    <result column="rp_account_check_mistake_version" jdbcType="INTEGER" property="version" />
+    <result column="rp_account_check_mistake_create_time" jdbcType="TIMESTAMP" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+    <result column="rp_account_check_mistake_editor" jdbcType="VARCHAR" property="editor" />
+    <result column="rp_account_check_mistake_creater" jdbcType="VARCHAR" property="creater" />
+    <result column="rp_account_check_mistake_edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="rp_account_check_mistake_status" jdbcType="VARCHAR" property="status" />
+    <result column="rp_account_check_mistake_remark" jdbcType="VARCHAR" property="remark" />
+    <result column="rp_account_check_mistake_account_check_batch_no" jdbcType="VARCHAR" property="accountCheckBatchNo" />
+    <result column="rp_account_check_mistake_bill_date" jdbcType="DATE" property="billDate" />
+    <result column="rp_account_check_mistake_bank_type" jdbcType="VARCHAR" property="bankType" />
+    <result column="rp_account_check_mistake_order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="rp_account_check_mistake_merchant_name" jdbcType="VARCHAR" property="merchantName" />
+    <result column="rp_account_check_mistake_merchant_no" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="rp_account_check_mistake_order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="rp_account_check_mistake_trade_time" jdbcType="TIMESTAMP" property="tradeTime" />
+    <result column="rp_account_check_mistake_trx_no" jdbcType="VARCHAR" property="trxNo" />
+    <result column="rp_account_check_mistake_order_amount" jdbcType="DECIMAL" property="orderAmount" />
+    <result column="rp_account_check_mistake_refund_amount" jdbcType="DECIMAL" property="refundAmount" />
+    <result column="rp_account_check_mistake_trade_status" jdbcType="VARCHAR" property="tradeStatus" />
+    <result column="rp_account_check_mistake_fee" jdbcType="DECIMAL" property="fee" />
+    <result column="rp_account_check_mistake_bank_trade_time" jdbcType="TIMESTAMP" property="bankTradeTime" />
+    <result column="rp_account_check_mistake_bank_order_no" jdbcType="VARCHAR" property="bankOrderNo" />
+    <result column="rp_account_check_mistake_bank_trx_no" jdbcType="VARCHAR" property="bankTrxNo" />
+    <result column="rp_account_check_mistake_bank_trade_status" jdbcType="VARCHAR" property="bankTradeStatus" />
+    <result column="rp_account_check_mistake_bank_amount" jdbcType="DECIMAL" property="bankAmount" />
+    <result column="rp_account_check_mistake_bank_refund_amount" jdbcType="DECIMAL" property="bankRefundAmount" />
+    <result column="rp_account_check_mistake_bank_fee" jdbcType="DECIMAL" property="bankFee" />
+    <result column="rp_account_check_mistake_err_type" jdbcType="VARCHAR" property="errType" />
+    <result column="rp_account_check_mistake_handle_status" jdbcType="VARCHAR" property="handleStatus" />
+    <result column="rp_account_check_mistake_handle_value" jdbcType="VARCHAR" property="handleValue" />
+    <result column="rp_account_check_mistake_handle_remark" jdbcType="VARCHAR" property="handleRemark" />
+    <result column="rp_account_check_mistake_operator_name" jdbcType="VARCHAR" property="operatorName" />
+    <result column="rp_account_check_mistake_operator_account_no" jdbcType="VARCHAR" property="operatorAccountNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    rp_account_check_mistake.id as rp_account_check_mistake_id, rp_account_check_mistake.version as rp_account_check_mistake_version, 
+    rp_account_check_mistake.create_time as rp_account_check_mistake_create_time, rp_account_check_mistake.editor as rp_account_check_mistake_editor, 
+    rp_account_check_mistake.creater as rp_account_check_mistake_creater, rp_account_check_mistake.edit_time as rp_account_check_mistake_edit_time, 
+    rp_account_check_mistake.status as rp_account_check_mistake_status, rp_account_check_mistake.remark as rp_account_check_mistake_remark, 
+    rp_account_check_mistake.account_check_batch_no as rp_account_check_mistake_account_check_batch_no, 
+    rp_account_check_mistake.bill_date as rp_account_check_mistake_bill_date, rp_account_check_mistake.bank_type as rp_account_check_mistake_bank_type, 
+    rp_account_check_mistake.order_time as rp_account_check_mistake_order_time, rp_account_check_mistake.merchant_name as rp_account_check_mistake_merchant_name, 
+    rp_account_check_mistake.merchant_no as rp_account_check_mistake_merchant_no, rp_account_check_mistake.order_no as rp_account_check_mistake_order_no, 
+    rp_account_check_mistake.trade_time as rp_account_check_mistake_trade_time, rp_account_check_mistake.trx_no as rp_account_check_mistake_trx_no, 
+    rp_account_check_mistake.order_amount as rp_account_check_mistake_order_amount, rp_account_check_mistake.refund_amount as rp_account_check_mistake_refund_amount, 
+    rp_account_check_mistake.trade_status as rp_account_check_mistake_trade_status, rp_account_check_mistake.fee as rp_account_check_mistake_fee, 
+    rp_account_check_mistake.bank_trade_time as rp_account_check_mistake_bank_trade_time, 
+    rp_account_check_mistake.bank_order_no as rp_account_check_mistake_bank_order_no, 
+    rp_account_check_mistake.bank_trx_no as rp_account_check_mistake_bank_trx_no, rp_account_check_mistake.bank_trade_status as rp_account_check_mistake_bank_trade_status, 
+    rp_account_check_mistake.bank_amount as rp_account_check_mistake_bank_amount, rp_account_check_mistake.bank_refund_amount as rp_account_check_mistake_bank_refund_amount, 
+    rp_account_check_mistake.bank_fee as rp_account_check_mistake_bank_fee, rp_account_check_mistake.err_type as rp_account_check_mistake_err_type, 
+    rp_account_check_mistake.handle_status as rp_account_check_mistake_handle_status, 
+    rp_account_check_mistake.handle_value as rp_account_check_mistake_handle_value, rp_account_check_mistake.handle_remark as rp_account_check_mistake_handle_remark, 
+    rp_account_check_mistake.operator_name as rp_account_check_mistake_operator_name, 
+    rp_account_check_mistake.operator_account_no as rp_account_check_mistake_operator_account_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rp_account_check_mistake rp_account_check_mistake
+    where rp_account_check_mistake.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from rp_account_check_mistake
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.rp.model.RpAccountCheckMistake">
+    insert into ${dynamicTableName} (id, version, create_time,
+      editor, creater, edit_time, 
+      status, remark, account_check_batch_no, 
+      bill_date, bank_type, order_time, 
+      merchant_name, merchant_no, order_no, 
+      trade_time, trx_no, order_amount, 
+      refund_amount, trade_status, fee, 
+      bank_trade_time, bank_order_no, bank_trx_no, 
+      bank_trade_status, bank_amount, bank_refund_amount, 
+      bank_fee, err_type, handle_status, 
+      handle_value, handle_remark, operator_name, 
+      operator_account_no)
+    values (#{id,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}, 
+      #{editor,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{accountCheckBatchNo,jdbcType=VARCHAR}, 
+      #{billDate,jdbcType=DATE}, #{bankType,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, 
+      #{merchantName,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{tradeTime,jdbcType=TIMESTAMP}, #{trxNo,jdbcType=VARCHAR}, #{orderAmount,jdbcType=DECIMAL}, 
+      #{refundAmount,jdbcType=DECIMAL}, #{tradeStatus,jdbcType=VARCHAR}, #{fee,jdbcType=DECIMAL}, 
+      #{bankTradeTime,jdbcType=TIMESTAMP}, #{bankOrderNo,jdbcType=VARCHAR}, #{bankTrxNo,jdbcType=VARCHAR}, 
+      #{bankTradeStatus,jdbcType=VARCHAR}, #{bankAmount,jdbcType=DECIMAL}, #{bankRefundAmount,jdbcType=DECIMAL}, 
+      #{bankFee,jdbcType=DECIMAL}, #{errType,jdbcType=VARCHAR}, #{handleStatus,jdbcType=VARCHAR}, 
+      #{handleValue,jdbcType=VARCHAR}, #{handleRemark,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, 
+      #{operatorAccountNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.rp.model.RpAccountCheckMistake">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="editor != null">
+        editor,
+      </if>
+      <if test="creater != null">
+        creater,
+      </if>
+      <if test="editTime != null">
+        edit_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="accountCheckBatchNo != null">
+        account_check_batch_no,
+      </if>
+      <if test="billDate != null">
+        bill_date,
+      </if>
+      <if test="bankType != null">
+        bank_type,
+      </if>
+      <if test="orderTime != null">
+        order_time,
+      </if>
+      <if test="merchantName != null">
+        merchant_name,
+      </if>
+      <if test="merchantNo != null">
+        merchant_no,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="tradeTime != null">
+        trade_time,
+      </if>
+      <if test="trxNo != null">
+        trx_no,
+      </if>
+      <if test="orderAmount != null">
+        order_amount,
+      </if>
+      <if test="refundAmount != null">
+        refund_amount,
+      </if>
+      <if test="tradeStatus != null">
+        trade_status,
+      </if>
+      <if test="fee != null">
+        fee,
+      </if>
+      <if test="bankTradeTime != null">
+        bank_trade_time,
+      </if>
+      <if test="bankOrderNo != null">
+        bank_order_no,
+      </if>
+      <if test="bankTrxNo != null">
+        bank_trx_no,
+      </if>
+      <if test="bankTradeStatus != null">
+        bank_trade_status,
+      </if>
+      <if test="bankAmount != null">
+        bank_amount,
+      </if>
+      <if test="bankRefundAmount != null">
+        bank_refund_amount,
+      </if>
+      <if test="bankFee != null">
+        bank_fee,
+      </if>
+      <if test="errType != null">
+        err_type,
+      </if>
+      <if test="handleStatus != null">
+        handle_status,
+      </if>
+      <if test="handleValue != null">
+        handle_value,
+      </if>
+      <if test="handleRemark != null">
+        handle_remark,
+      </if>
+      <if test="operatorName != null">
+        operator_name,
+      </if>
+      <if test="operatorAccountNo != null">
+        operator_account_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="accountCheckBatchNo != null">
+        #{accountCheckBatchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billDate != null">
+        #{billDate,jdbcType=DATE},
+      </if>
+      <if test="bankType != null">
+        #{bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeTime != null">
+        #{tradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trxNo != null">
+        #{trxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null">
+        #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="refundAmount != null">
+        #{refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeStatus != null">
+        #{tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null">
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="bankTradeTime != null">
+        #{bankTradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankOrderNo != null">
+        #{bankOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankTrxNo != null">
+        #{bankTrxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankTradeStatus != null">
+        #{bankTradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAmount != null">
+        #{bankAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="bankRefundAmount != null">
+        #{bankRefundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="bankFee != null">
+        #{bankFee,jdbcType=DECIMAL},
+      </if>
+      <if test="errType != null">
+        #{errType,jdbcType=VARCHAR},
+      </if>
+      <if test="handleStatus != null">
+        #{handleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="handleValue != null">
+        #{handleValue,jdbcType=VARCHAR},
+      </if>
+      <if test="handleRemark != null">
+        #{handleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorAccountNo != null">
+        #{operatorAccountNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.rp.model.RpAccountCheckMistake">
+    update ${dynamicTableName}
+    <set>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="editor != null">
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null">
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        edit_time = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="accountCheckBatchNo != null">
+        account_check_batch_no = #{accountCheckBatchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billDate != null">
+        bill_date = #{billDate,jdbcType=DATE},
+      </if>
+      <if test="bankType != null">
+        bank_type = #{bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantName != null">
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeTime != null">
+        trade_time = #{tradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trxNo != null">
+        trx_no = #{trxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null">
+        order_amount = #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="refundAmount != null">
+        refund_amount = #{refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeStatus != null">
+        trade_status = #{tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null">
+        fee = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="bankTradeTime != null">
+        bank_trade_time = #{bankTradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankOrderNo != null">
+        bank_order_no = #{bankOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankTrxNo != null">
+        bank_trx_no = #{bankTrxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankTradeStatus != null">
+        bank_trade_status = #{bankTradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAmount != null">
+        bank_amount = #{bankAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="bankRefundAmount != null">
+        bank_refund_amount = #{bankRefundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="bankFee != null">
+        bank_fee = #{bankFee,jdbcType=DECIMAL},
+      </if>
+      <if test="errType != null">
+        err_type = #{errType,jdbcType=VARCHAR},
+      </if>
+      <if test="handleStatus != null">
+        handle_status = #{handleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="handleValue != null">
+        handle_value = #{handleValue,jdbcType=VARCHAR},
+      </if>
+      <if test="handleRemark != null">
+        handle_remark = #{handleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        operator_name = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorAccountNo != null">
+        operator_account_no = #{operatorAccountNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.rp.model.RpAccountCheckMistake">
+    update ${dynamicTableName}
+    set version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      editor = #{editor,jdbcType=VARCHAR},
+      creater = #{creater,jdbcType=VARCHAR},
+      edit_time = #{editTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      account_check_batch_no = #{accountCheckBatchNo,jdbcType=VARCHAR},
+      bill_date = #{billDate,jdbcType=DATE},
+      bank_type = #{bankType,jdbcType=VARCHAR},
+      order_time = #{orderTime,jdbcType=TIMESTAMP},
+      merchant_name = #{merchantName,jdbcType=VARCHAR},
+      merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      trade_time = #{tradeTime,jdbcType=TIMESTAMP},
+      trx_no = #{trxNo,jdbcType=VARCHAR},
+      order_amount = #{orderAmount,jdbcType=DECIMAL},
+      refund_amount = #{refundAmount,jdbcType=DECIMAL},
+      trade_status = #{tradeStatus,jdbcType=VARCHAR},
+      fee = #{fee,jdbcType=DECIMAL},
+      bank_trade_time = #{bankTradeTime,jdbcType=TIMESTAMP},
+      bank_order_no = #{bankOrderNo,jdbcType=VARCHAR},
+      bank_trx_no = #{bankTrxNo,jdbcType=VARCHAR},
+      bank_trade_status = #{bankTradeStatus,jdbcType=VARCHAR},
+      bank_amount = #{bankAmount,jdbcType=DECIMAL},
+      bank_refund_amount = #{bankRefundAmount,jdbcType=DECIMAL},
+      bank_fee = #{bankFee,jdbcType=DECIMAL},
+      err_type = #{errType,jdbcType=VARCHAR},
+      handle_status = #{handleStatus,jdbcType=VARCHAR},
+      handle_value = #{handleValue,jdbcType=VARCHAR},
+      handle_remark = #{handleRemark,jdbcType=VARCHAR},
+      operator_name = #{operatorName,jdbcType=VARCHAR},
+      operator_account_no = #{operatorAccountNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="deleteLogicByIds">
+    update rp_account_check_mistake rp_account_check_mistake set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  rp_account_check_mistake </if><if test="dynamicTableName == null or dynamicTableName == ''"> rp_account_check_mistake rp_account_check_mistake</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  rp_account_check_mistake </if><if test="dynamicTableName == null or dynamicTableName == ''"> rp_account_check_mistake rp_account_check_mistake</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND rp_account_check_mistake.id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="version != null and version != ''">
+         AND rp_account_check_mistake.version = #{version,jdbcType=INTEGER}
+      </if>
+      <if test="createTime != null and createTime != ''">
+         AND rp_account_check_mistake.create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="editor != null and editor != ''">
+         AND rp_account_check_mistake.editor = #{editor,jdbcType=VARCHAR}
+      </if>
+      <if test="creater != null and creater != ''">
+         AND rp_account_check_mistake.creater = #{creater,jdbcType=VARCHAR}
+      </if>
+      <if test="editTime != null and editTime != ''">
+         AND rp_account_check_mistake.edit_time = #{editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="status != null and status != ''">
+         AND rp_account_check_mistake.status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="remark != null and remark != ''">
+         AND rp_account_check_mistake.remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="accountCheckBatchNo != null and accountCheckBatchNo != ''">
+         AND rp_account_check_mistake.account_check_batch_no = #{accountCheckBatchNo,jdbcType=VARCHAR}
+      </if>
+      <if test="billDate != null and billDate != ''">
+         AND rp_account_check_mistake.bill_date = #{billDate,jdbcType=DATE}
+      </if>
+      <if test="bankType != null and bankType != ''">
+         AND rp_account_check_mistake.bank_type = #{bankType,jdbcType=VARCHAR}
+      </if>
+      <if test="orderTime != null and orderTime != ''">
+         AND rp_account_check_mistake.order_time = #{orderTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="merchantName != null and merchantName != ''">
+         AND rp_account_check_mistake.merchant_name = #{merchantName,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantNo != null and merchantNo != ''">
+         AND rp_account_check_mistake.merchant_no = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="orderNo != null and orderNo != ''">
+         AND rp_account_check_mistake.order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="tradeTime != null and tradeTime != ''">
+         AND rp_account_check_mistake.trade_time = #{tradeTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="trxNo != null and trxNo != ''">
+         AND rp_account_check_mistake.trx_no = #{trxNo,jdbcType=VARCHAR}
+      </if>
+      <if test="orderAmount != null and orderAmount != ''">
+         AND rp_account_check_mistake.order_amount = #{orderAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="refundAmount != null and refundAmount != ''">
+         AND rp_account_check_mistake.refund_amount = #{refundAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="tradeStatus != null and tradeStatus != ''">
+         AND rp_account_check_mistake.trade_status = #{tradeStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="fee != null and fee != ''">
+         AND rp_account_check_mistake.fee = #{fee,jdbcType=DECIMAL}
+      </if>
+      <if test="bankTradeTime != null and bankTradeTime != ''">
+         AND rp_account_check_mistake.bank_trade_time = #{bankTradeTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="bankOrderNo != null and bankOrderNo != ''">
+         AND rp_account_check_mistake.bank_order_no = #{bankOrderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="bankTrxNo != null and bankTrxNo != ''">
+         AND rp_account_check_mistake.bank_trx_no = #{bankTrxNo,jdbcType=VARCHAR}
+      </if>
+      <if test="bankTradeStatus != null and bankTradeStatus != ''">
+         AND rp_account_check_mistake.bank_trade_status = #{bankTradeStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="bankAmount != null and bankAmount != ''">
+         AND rp_account_check_mistake.bank_amount = #{bankAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="bankRefundAmount != null and bankRefundAmount != ''">
+         AND rp_account_check_mistake.bank_refund_amount = #{bankRefundAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="bankFee != null and bankFee != ''">
+         AND rp_account_check_mistake.bank_fee = #{bankFee,jdbcType=DECIMAL}
+      </if>
+      <if test="errType != null and errType != ''">
+         AND rp_account_check_mistake.err_type = #{errType,jdbcType=VARCHAR}
+      </if>
+      <if test="handleStatus != null and handleStatus != ''">
+         AND rp_account_check_mistake.handle_status = #{handleStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="handleValue != null and handleValue != ''">
+         AND rp_account_check_mistake.handle_value = #{handleValue,jdbcType=VARCHAR}
+      </if>
+      <if test="handleRemark != null and handleRemark != ''">
+         AND rp_account_check_mistake.handle_remark = #{handleRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="operatorName != null and operatorName != ''">
+         AND rp_account_check_mistake.operator_name = #{operatorName,jdbcType=VARCHAR}
+      </if>
+      <if test="operatorAccountNo != null and operatorAccountNo != ''">
+         AND rp_account_check_mistake.operator_account_no = #{operatorAccountNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND rp_account_check_mistake.id &gt; #{myGreater_id,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_version != null and myGreater_version != ''">
+         AND rp_account_check_mistake.version &gt; #{myGreater_version,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_createTime != null and myGreater_createTime != ''">
+         AND rp_account_check_mistake.create_time &gt; #{myGreater_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_editor != null and myGreater_editor != ''">
+         AND rp_account_check_mistake.editor &gt; #{myGreater_editor,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_creater != null and myGreater_creater != ''">
+         AND rp_account_check_mistake.creater &gt; #{myGreater_creater,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_editTime != null and myGreater_editTime != ''">
+         AND rp_account_check_mistake.edit_time &gt; #{myGreater_editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myGreater_status != null and myGreater_status != ''">
+         AND rp_account_check_mistake.status &gt; #{myGreater_status,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_remark != null and myGreater_remark != ''">
+         AND rp_account_check_mistake.remark &gt; #{myGreater_remark,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_accountCheckBatchNo != null and myGreater_accountCheckBatchNo != ''">
+         AND rp_account_check_mistake.account_check_batch_no &gt; #{myGreater_accountCheckBatchNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_billDate != null and myGreater_billDate != ''">
+         AND rp_account_check_mistake.bill_date &gt; #{myGreater_billDate,jdbcType=DATE}
+      </if>
+      <if test="myGreater_bankType != null and myGreater_bankType != ''">
+         AND rp_account_check_mistake.bank_type &gt; #{myGreater_bankType,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_orderTime != null and myGreater_orderTime != ''">
+         AND rp_account_check_mistake.order_time &gt; #{myGreater_orderTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myGreater_merchantName != null and myGreater_merchantName != ''">
+         AND rp_account_check_mistake.merchant_name &gt; #{myGreater_merchantName,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_merchantNo != null and myGreater_merchantNo != ''">
+         AND rp_account_check_mistake.merchant_no &gt; #{myGreater_merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_orderNo != null and myGreater_orderNo != ''">
+         AND rp_account_check_mistake.order_no &gt; #{myGreater_orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_tradeTime != null and myGreater_tradeTime != ''">
+         AND rp_account_check_mistake.trade_time &gt; #{myGreater_tradeTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myGreater_trxNo != null and myGreater_trxNo != ''">
+         AND rp_account_check_mistake.trx_no &gt; #{myGreater_trxNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_orderAmount != null and myGreater_orderAmount != ''">
+         AND rp_account_check_mistake.order_amount &gt; #{myGreater_orderAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="myGreater_refundAmount != null and myGreater_refundAmount != ''">
+         AND rp_account_check_mistake.refund_amount &gt; #{myGreater_refundAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="myGreater_tradeStatus != null and myGreater_tradeStatus != ''">
+         AND rp_account_check_mistake.trade_status &gt; #{myGreater_tradeStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_fee != null and myGreater_fee != ''">
+         AND rp_account_check_mistake.fee &gt; #{myGreater_fee,jdbcType=DECIMAL}
+      </if>
+      <if test="myGreater_bankTradeTime != null and myGreater_bankTradeTime != ''">
+         AND rp_account_check_mistake.bank_trade_time &gt; #{myGreater_bankTradeTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myGreater_bankOrderNo != null and myGreater_bankOrderNo != ''">
+         AND rp_account_check_mistake.bank_order_no &gt; #{myGreater_bankOrderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_bankTrxNo != null and myGreater_bankTrxNo != ''">
+         AND rp_account_check_mistake.bank_trx_no &gt; #{myGreater_bankTrxNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_bankTradeStatus != null and myGreater_bankTradeStatus != ''">
+         AND rp_account_check_mistake.bank_trade_status &gt; #{myGreater_bankTradeStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_bankAmount != null and myGreater_bankAmount != ''">
+         AND rp_account_check_mistake.bank_amount &gt; #{myGreater_bankAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="myGreater_bankRefundAmount != null and myGreater_bankRefundAmount != ''">
+         AND rp_account_check_mistake.bank_refund_amount &gt; #{myGreater_bankRefundAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="myGreater_bankFee != null and myGreater_bankFee != ''">
+         AND rp_account_check_mistake.bank_fee &gt; #{myGreater_bankFee,jdbcType=DECIMAL}
+      </if>
+      <if test="myGreater_errType != null and myGreater_errType != ''">
+         AND rp_account_check_mistake.err_type &gt; #{myGreater_errType,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_handleStatus != null and myGreater_handleStatus != ''">
+         AND rp_account_check_mistake.handle_status &gt; #{myGreater_handleStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_handleValue != null and myGreater_handleValue != ''">
+         AND rp_account_check_mistake.handle_value &gt; #{myGreater_handleValue,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_handleRemark != null and myGreater_handleRemark != ''">
+         AND rp_account_check_mistake.handle_remark &gt; #{myGreater_handleRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_operatorName != null and myGreater_operatorName != ''">
+         AND rp_account_check_mistake.operator_name &gt; #{myGreater_operatorName,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_operatorAccountNo != null and myGreater_operatorAccountNo != ''">
+         AND rp_account_check_mistake.operator_account_no &gt; #{myGreater_operatorAccountNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND rp_account_check_mistake.id &lt; #{myLesser_id,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_version != null and myLesser_version != ''">
+         AND rp_account_check_mistake.version &lt; #{myLesser_version,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_createTime != null and myLesser_createTime != ''">
+         AND rp_account_check_mistake.create_time &lt; #{myLesser_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_editor != null and myLesser_editor != ''">
+         AND rp_account_check_mistake.editor &lt; #{myLesser_editor,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_creater != null and myLesser_creater != ''">
+         AND rp_account_check_mistake.creater &lt; #{myLesser_creater,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_editTime != null and myLesser_editTime != ''">
+         AND rp_account_check_mistake.edit_time &lt; #{myLesser_editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myLesser_status != null and myLesser_status != ''">
+         AND rp_account_check_mistake.status &lt; #{myLesser_status,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_remark != null and myLesser_remark != ''">
+         AND rp_account_check_mistake.remark &lt; #{myLesser_remark,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_accountCheckBatchNo != null and myLesser_accountCheckBatchNo != ''">
+         AND rp_account_check_mistake.account_check_batch_no &lt; #{myLesser_accountCheckBatchNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_billDate != null and myLesser_billDate != ''">
+         AND rp_account_check_mistake.bill_date &lt; #{myLesser_billDate,jdbcType=DATE}
+      </if>
+      <if test="myLesser_bankType != null and myLesser_bankType != ''">
+         AND rp_account_check_mistake.bank_type &lt; #{myLesser_bankType,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_orderTime != null and myLesser_orderTime != ''">
+         AND rp_account_check_mistake.order_time &lt; #{myLesser_orderTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myLesser_merchantName != null and myLesser_merchantName != ''">
+         AND rp_account_check_mistake.merchant_name &lt; #{myLesser_merchantName,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_merchantNo != null and myLesser_merchantNo != ''">
+         AND rp_account_check_mistake.merchant_no &lt; #{myLesser_merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_orderNo != null and myLesser_orderNo != ''">
+         AND rp_account_check_mistake.order_no &lt; #{myLesser_orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_tradeTime != null and myLesser_tradeTime != ''">
+         AND rp_account_check_mistake.trade_time &lt; #{myLesser_tradeTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myLesser_trxNo != null and myLesser_trxNo != ''">
+         AND rp_account_check_mistake.trx_no &lt; #{myLesser_trxNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_orderAmount != null and myLesser_orderAmount != ''">
+         AND rp_account_check_mistake.order_amount &lt; #{myLesser_orderAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="myLesser_refundAmount != null and myLesser_refundAmount != ''">
+         AND rp_account_check_mistake.refund_amount &lt; #{myLesser_refundAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="myLesser_tradeStatus != null and myLesser_tradeStatus != ''">
+         AND rp_account_check_mistake.trade_status &lt; #{myLesser_tradeStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_fee != null and myLesser_fee != ''">
+         AND rp_account_check_mistake.fee &lt; #{myLesser_fee,jdbcType=DECIMAL}
+      </if>
+      <if test="myLesser_bankTradeTime != null and myLesser_bankTradeTime != ''">
+         AND rp_account_check_mistake.bank_trade_time &lt; #{myLesser_bankTradeTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myLesser_bankOrderNo != null and myLesser_bankOrderNo != ''">
+         AND rp_account_check_mistake.bank_order_no &lt; #{myLesser_bankOrderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_bankTrxNo != null and myLesser_bankTrxNo != ''">
+         AND rp_account_check_mistake.bank_trx_no &lt; #{myLesser_bankTrxNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_bankTradeStatus != null and myLesser_bankTradeStatus != ''">
+         AND rp_account_check_mistake.bank_trade_status &lt; #{myLesser_bankTradeStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_bankAmount != null and myLesser_bankAmount != ''">
+         AND rp_account_check_mistake.bank_amount &lt; #{myLesser_bankAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="myLesser_bankRefundAmount != null and myLesser_bankRefundAmount != ''">
+         AND rp_account_check_mistake.bank_refund_amount &lt; #{myLesser_bankRefundAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="myLesser_bankFee != null and myLesser_bankFee != ''">
+         AND rp_account_check_mistake.bank_fee &lt; #{myLesser_bankFee,jdbcType=DECIMAL}
+      </if>
+      <if test="myLesser_errType != null and myLesser_errType != ''">
+         AND rp_account_check_mistake.err_type &lt; #{myLesser_errType,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_handleStatus != null and myLesser_handleStatus != ''">
+         AND rp_account_check_mistake.handle_status &lt; #{myLesser_handleStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_handleValue != null and myLesser_handleValue != ''">
+         AND rp_account_check_mistake.handle_value &lt; #{myLesser_handleValue,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_handleRemark != null and myLesser_handleRemark != ''">
+         AND rp_account_check_mistake.handle_remark &lt; #{myLesser_handleRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_operatorName != null and myLesser_operatorName != ''">
+         AND rp_account_check_mistake.operator_name &lt; #{myLesser_operatorName,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_operatorAccountNo != null and myLesser_operatorAccountNo != ''">
+         AND rp_account_check_mistake.operator_account_no &lt; #{myLesser_operatorAccountNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND rp_account_check_mistake.id like CONCAT('%', #{myLike_id,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_version != null and myLike_version != ''">
+         AND rp_account_check_mistake.version like CONCAT('%', #{myLike_version,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_createTime != null and myLike_createTime != ''">
+         AND rp_account_check_mistake.create_time like CONCAT('%', #{myLike_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLike_editor != null and myLike_editor != ''">
+         AND rp_account_check_mistake.editor like CONCAT('%', #{myLike_editor,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_creater != null and myLike_creater != ''">
+         AND rp_account_check_mistake.creater like CONCAT('%', #{myLike_creater,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_editTime != null and myLike_editTime != ''">
+         AND rp_account_check_mistake.edit_time like CONCAT('%', #{myLike_editTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLike_status != null and myLike_status != ''">
+         AND rp_account_check_mistake.status like CONCAT('%', #{myLike_status,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_remark != null and myLike_remark != ''">
+         AND rp_account_check_mistake.remark like CONCAT('%', #{myLike_remark,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_accountCheckBatchNo != null and myLike_accountCheckBatchNo != ''">
+         AND rp_account_check_mistake.account_check_batch_no like CONCAT('%', #{myLike_accountCheckBatchNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_billDate != null and myLike_billDate != ''">
+         AND rp_account_check_mistake.bill_date like CONCAT('%', #{myLike_billDate,jdbcType=DATE},'%' )
+      </if>
+      <if test="myLike_bankType != null and myLike_bankType != ''">
+         AND rp_account_check_mistake.bank_type like CONCAT('%', #{myLike_bankType,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_orderTime != null and myLike_orderTime != ''">
+         AND rp_account_check_mistake.order_time like CONCAT('%', #{myLike_orderTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLike_merchantName != null and myLike_merchantName != ''">
+         AND rp_account_check_mistake.merchant_name like CONCAT('%', #{myLike_merchantName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_merchantNo != null and myLike_merchantNo != ''">
+         AND rp_account_check_mistake.merchant_no like CONCAT('%', #{myLike_merchantNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_orderNo != null and myLike_orderNo != ''">
+         AND rp_account_check_mistake.order_no like CONCAT('%', #{myLike_orderNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_tradeTime != null and myLike_tradeTime != ''">
+         AND rp_account_check_mistake.trade_time like CONCAT('%', #{myLike_tradeTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLike_trxNo != null and myLike_trxNo != ''">
+         AND rp_account_check_mistake.trx_no like CONCAT('%', #{myLike_trxNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_orderAmount != null and myLike_orderAmount != ''">
+         AND rp_account_check_mistake.order_amount like CONCAT('%', #{myLike_orderAmount,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLike_refundAmount != null and myLike_refundAmount != ''">
+         AND rp_account_check_mistake.refund_amount like CONCAT('%', #{myLike_refundAmount,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLike_tradeStatus != null and myLike_tradeStatus != ''">
+         AND rp_account_check_mistake.trade_status like CONCAT('%', #{myLike_tradeStatus,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_fee != null and myLike_fee != ''">
+         AND rp_account_check_mistake.fee like CONCAT('%', #{myLike_fee,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLike_bankTradeTime != null and myLike_bankTradeTime != ''">
+         AND rp_account_check_mistake.bank_trade_time like CONCAT('%', #{myLike_bankTradeTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLike_bankOrderNo != null and myLike_bankOrderNo != ''">
+         AND rp_account_check_mistake.bank_order_no like CONCAT('%', #{myLike_bankOrderNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_bankTrxNo != null and myLike_bankTrxNo != ''">
+         AND rp_account_check_mistake.bank_trx_no like CONCAT('%', #{myLike_bankTrxNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_bankTradeStatus != null and myLike_bankTradeStatus != ''">
+         AND rp_account_check_mistake.bank_trade_status like CONCAT('%', #{myLike_bankTradeStatus,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_bankAmount != null and myLike_bankAmount != ''">
+         AND rp_account_check_mistake.bank_amount like CONCAT('%', #{myLike_bankAmount,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLike_bankRefundAmount != null and myLike_bankRefundAmount != ''">
+         AND rp_account_check_mistake.bank_refund_amount like CONCAT('%', #{myLike_bankRefundAmount,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLike_bankFee != null and myLike_bankFee != ''">
+         AND rp_account_check_mistake.bank_fee like CONCAT('%', #{myLike_bankFee,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLike_errType != null and myLike_errType != ''">
+         AND rp_account_check_mistake.err_type like CONCAT('%', #{myLike_errType,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_handleStatus != null and myLike_handleStatus != ''">
+         AND rp_account_check_mistake.handle_status like CONCAT('%', #{myLike_handleStatus,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_handleValue != null and myLike_handleValue != ''">
+         AND rp_account_check_mistake.handle_value like CONCAT('%', #{myLike_handleValue,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_handleRemark != null and myLike_handleRemark != ''">
+         AND rp_account_check_mistake.handle_remark like CONCAT('%', #{myLike_handleRemark,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_operatorName != null and myLike_operatorName != ''">
+         AND rp_account_check_mistake.operator_name like CONCAT('%', #{myLike_operatorName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_operatorAccountNo != null and myLike_operatorAccountNo != ''">
+         AND rp_account_check_mistake.operator_account_no like CONCAT('%', #{myLike_operatorAccountNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND rp_account_check_mistake.id like CONCAT('%', #{myLikeStart_id,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_version != null and myLikeStart_version != ''">
+         AND rp_account_check_mistake.version like CONCAT('%', #{myLikeStart_version,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_createTime != null and myLikeStart_createTime != ''">
+         AND rp_account_check_mistake.create_time like CONCAT('%', #{myLikeStart_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeStart_editor != null and myLikeStart_editor != ''">
+         AND rp_account_check_mistake.editor like CONCAT('%', #{myLikeStart_editor,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_creater != null and myLikeStart_creater != ''">
+         AND rp_account_check_mistake.creater like CONCAT('%', #{myLikeStart_creater,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_editTime != null and myLikeStart_editTime != ''">
+         AND rp_account_check_mistake.edit_time like CONCAT('%', #{myLikeStart_editTime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="myLikeStart_status != null and myLikeStart_status != ''">
+         AND rp_account_check_mistake.status like CONCAT('%', #{myLikeStart_status,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_remark != null and myLikeStart_remark != ''">
+         AND rp_account_check_mistake.remark like CONCAT('%', #{myLikeStart_remark,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_accountCheckBatchNo != null and myLikeStart_accountCheckBatchNo != ''">
+         AND rp_account_check_mistake.account_check_batch_no like CONCAT('%', #{myLikeStart_accountCheckBatchNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_billDate != null and myLikeStart_billDate != ''">
+         AND rp_account_check_mistake.bill_date like CONCAT('%', #{myLikeStart_billDate,jdbcType=DATE})
+      </if>
+      <if test="myLikeStart_bankType != null and myLikeStart_bankType != ''">
+         AND rp_account_check_mistake.bank_type like CONCAT('%', #{myLikeStart_bankType,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_orderTime != null and myLikeStart_orderTime != ''">
+         AND rp_account_check_mistake.order_time like CONCAT('%', #{myLikeStart_orderTime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="myLikeStart_merchantName != null and myLikeStart_merchantName != ''">
+         AND rp_account_check_mistake.merchant_name like CONCAT('%', #{myLikeStart_merchantName,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_merchantNo != null and myLikeStart_merchantNo != ''">
+         AND rp_account_check_mistake.merchant_no like CONCAT('%', #{myLikeStart_merchantNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_orderNo != null and myLikeStart_orderNo != ''">
+         AND rp_account_check_mistake.order_no like CONCAT('%', #{myLikeStart_orderNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_tradeTime != null and myLikeStart_tradeTime != ''">
+         AND rp_account_check_mistake.trade_time like CONCAT('%', #{myLikeStart_tradeTime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="myLikeStart_trxNo != null and myLikeStart_trxNo != ''">
+         AND rp_account_check_mistake.trx_no like CONCAT('%', #{myLikeStart_trxNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_orderAmount != null and myLikeStart_orderAmount != ''">
+         AND rp_account_check_mistake.order_amount like CONCAT('%', #{myLikeStart_orderAmount,jdbcType=DECIMAL})
+      </if>
+      <if test="myLikeStart_refundAmount != null and myLikeStart_refundAmount != ''">
+         AND rp_account_check_mistake.refund_amount like CONCAT('%', #{myLikeStart_refundAmount,jdbcType=DECIMAL})
+      </if>
+      <if test="myLikeStart_tradeStatus != null and myLikeStart_tradeStatus != ''">
+         AND rp_account_check_mistake.trade_status like CONCAT('%', #{myLikeStart_tradeStatus,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_fee != null and myLikeStart_fee != ''">
+         AND rp_account_check_mistake.fee like CONCAT('%', #{myLikeStart_fee,jdbcType=DECIMAL})
+      </if>
+      <if test="myLikeStart_bankTradeTime != null and myLikeStart_bankTradeTime != ''">
+         AND rp_account_check_mistake.bank_trade_time like CONCAT('%', #{myLikeStart_bankTradeTime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="myLikeStart_bankOrderNo != null and myLikeStart_bankOrderNo != ''">
+         AND rp_account_check_mistake.bank_order_no like CONCAT('%', #{myLikeStart_bankOrderNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_bankTrxNo != null and myLikeStart_bankTrxNo != ''">
+         AND rp_account_check_mistake.bank_trx_no like CONCAT('%', #{myLikeStart_bankTrxNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_bankTradeStatus != null and myLikeStart_bankTradeStatus != ''">
+         AND rp_account_check_mistake.bank_trade_status like CONCAT('%', #{myLikeStart_bankTradeStatus,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_bankAmount != null and myLikeStart_bankAmount != ''">
+         AND rp_account_check_mistake.bank_amount like CONCAT('%', #{myLikeStart_bankAmount,jdbcType=DECIMAL})
+      </if>
+      <if test="myLikeStart_bankRefundAmount != null and myLikeStart_bankRefundAmount != ''">
+         AND rp_account_check_mistake.bank_refund_amount like CONCAT('%', #{myLikeStart_bankRefundAmount,jdbcType=DECIMAL})
+      </if>
+      <if test="myLikeStart_bankFee != null and myLikeStart_bankFee != ''">
+         AND rp_account_check_mistake.bank_fee like CONCAT('%', #{myLikeStart_bankFee,jdbcType=DECIMAL})
+      </if>
+      <if test="myLikeStart_errType != null and myLikeStart_errType != ''">
+         AND rp_account_check_mistake.err_type like CONCAT('%', #{myLikeStart_errType,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_handleStatus != null and myLikeStart_handleStatus != ''">
+         AND rp_account_check_mistake.handle_status like CONCAT('%', #{myLikeStart_handleStatus,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_handleValue != null and myLikeStart_handleValue != ''">
+         AND rp_account_check_mistake.handle_value like CONCAT('%', #{myLikeStart_handleValue,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_handleRemark != null and myLikeStart_handleRemark != ''">
+         AND rp_account_check_mistake.handle_remark like CONCAT('%', #{myLikeStart_handleRemark,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_operatorName != null and myLikeStart_operatorName != ''">
+         AND rp_account_check_mistake.operator_name like CONCAT('%', #{myLikeStart_operatorName,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_operatorAccountNo != null and myLikeStart_operatorAccountNo != ''">
+         AND rp_account_check_mistake.operator_account_no like CONCAT('%', #{myLikeStart_operatorAccountNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND rp_account_check_mistake.id like CONCAT( #{myLikeEnd_id,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_version != null and myLikeEnd_version != ''">
+         AND rp_account_check_mistake.version like CONCAT( #{myLikeEnd_version,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_createTime != null and myLikeEnd_createTime != ''">
+         AND rp_account_check_mistake.create_time like CONCAT( #{myLikeEnd_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeEnd_editor != null and myLikeEnd_editor != ''">
+         AND rp_account_check_mistake.editor like CONCAT( #{myLikeEnd_editor,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_creater != null and myLikeEnd_creater != ''">
+         AND rp_account_check_mistake.creater like CONCAT( #{myLikeEnd_creater,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_editTime != null and myLikeEnd_editTime != ''">
+         AND rp_account_check_mistake.edit_time like CONCAT( #{myLikeEnd_editTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLikeEnd_status != null and myLikeEnd_status != ''">
+         AND rp_account_check_mistake.status like CONCAT( #{myLikeEnd_status,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_remark != null and myLikeEnd_remark != ''">
+         AND rp_account_check_mistake.remark like CONCAT( #{myLikeEnd_remark,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_accountCheckBatchNo != null and myLikeEnd_accountCheckBatchNo != ''">
+         AND rp_account_check_mistake.account_check_batch_no like CONCAT( #{myLikeEnd_accountCheckBatchNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_billDate != null and myLikeEnd_billDate != ''">
+         AND rp_account_check_mistake.bill_date like CONCAT( #{myLikeEnd_billDate,jdbcType=DATE},'%' )
+      </if>
+      <if test="myLikeEnd_bankType != null and myLikeEnd_bankType != ''">
+         AND rp_account_check_mistake.bank_type like CONCAT( #{myLikeEnd_bankType,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_orderTime != null and myLikeEnd_orderTime != ''">
+         AND rp_account_check_mistake.order_time like CONCAT( #{myLikeEnd_orderTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLikeEnd_merchantName != null and myLikeEnd_merchantName != ''">
+         AND rp_account_check_mistake.merchant_name like CONCAT( #{myLikeEnd_merchantName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_merchantNo != null and myLikeEnd_merchantNo != ''">
+         AND rp_account_check_mistake.merchant_no like CONCAT( #{myLikeEnd_merchantNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_orderNo != null and myLikeEnd_orderNo != ''">
+         AND rp_account_check_mistake.order_no like CONCAT( #{myLikeEnd_orderNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_tradeTime != null and myLikeEnd_tradeTime != ''">
+         AND rp_account_check_mistake.trade_time like CONCAT( #{myLikeEnd_tradeTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLikeEnd_trxNo != null and myLikeEnd_trxNo != ''">
+         AND rp_account_check_mistake.trx_no like CONCAT( #{myLikeEnd_trxNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_orderAmount != null and myLikeEnd_orderAmount != ''">
+         AND rp_account_check_mistake.order_amount like CONCAT( #{myLikeEnd_orderAmount,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLikeEnd_refundAmount != null and myLikeEnd_refundAmount != ''">
+         AND rp_account_check_mistake.refund_amount like CONCAT( #{myLikeEnd_refundAmount,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLikeEnd_tradeStatus != null and myLikeEnd_tradeStatus != ''">
+         AND rp_account_check_mistake.trade_status like CONCAT( #{myLikeEnd_tradeStatus,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_fee != null and myLikeEnd_fee != ''">
+         AND rp_account_check_mistake.fee like CONCAT( #{myLikeEnd_fee,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLikeEnd_bankTradeTime != null and myLikeEnd_bankTradeTime != ''">
+         AND rp_account_check_mistake.bank_trade_time like CONCAT( #{myLikeEnd_bankTradeTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLikeEnd_bankOrderNo != null and myLikeEnd_bankOrderNo != ''">
+         AND rp_account_check_mistake.bank_order_no like CONCAT( #{myLikeEnd_bankOrderNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_bankTrxNo != null and myLikeEnd_bankTrxNo != ''">
+         AND rp_account_check_mistake.bank_trx_no like CONCAT( #{myLikeEnd_bankTrxNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_bankTradeStatus != null and myLikeEnd_bankTradeStatus != ''">
+         AND rp_account_check_mistake.bank_trade_status like CONCAT( #{myLikeEnd_bankTradeStatus,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_bankAmount != null and myLikeEnd_bankAmount != ''">
+         AND rp_account_check_mistake.bank_amount like CONCAT( #{myLikeEnd_bankAmount,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLikeEnd_bankRefundAmount != null and myLikeEnd_bankRefundAmount != ''">
+         AND rp_account_check_mistake.bank_refund_amount like CONCAT( #{myLikeEnd_bankRefundAmount,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLikeEnd_bankFee != null and myLikeEnd_bankFee != ''">
+         AND rp_account_check_mistake.bank_fee like CONCAT( #{myLikeEnd_bankFee,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLikeEnd_errType != null and myLikeEnd_errType != ''">
+         AND rp_account_check_mistake.err_type like CONCAT( #{myLikeEnd_errType,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_handleStatus != null and myLikeEnd_handleStatus != ''">
+         AND rp_account_check_mistake.handle_status like CONCAT( #{myLikeEnd_handleStatus,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_handleValue != null and myLikeEnd_handleValue != ''">
+         AND rp_account_check_mistake.handle_value like CONCAT( #{myLikeEnd_handleValue,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_handleRemark != null and myLikeEnd_handleRemark != ''">
+         AND rp_account_check_mistake.handle_remark like CONCAT( #{myLikeEnd_handleRemark,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_operatorName != null and myLikeEnd_operatorName != ''">
+         AND rp_account_check_mistake.operator_name like CONCAT( #{myLikeEnd_operatorName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_operatorAccountNo != null and myLikeEnd_operatorAccountNo != ''">
+         AND rp_account_check_mistake.operator_account_no like CONCAT( #{myLikeEnd_operatorAccountNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND rp_account_check_mistake.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_version != null and myIn_version != ''">
+         AND rp_account_check_mistake.version in <foreach item="item" index="index" collection="myIn_version" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createTime != null and myIn_createTime != ''">
+         AND rp_account_check_mistake.create_time in <foreach item="item" index="index" collection="myIn_createTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_editor != null and myIn_editor != ''">
+         AND rp_account_check_mistake.editor in <foreach item="item" index="index" collection="myIn_editor" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_creater != null and myIn_creater != ''">
+         AND rp_account_check_mistake.creater in <foreach item="item" index="index" collection="myIn_creater" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_editTime != null and myIn_editTime != ''">
+         AND rp_account_check_mistake.edit_time in <foreach item="item" index="index" collection="myIn_editTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_status != null and myIn_status != ''">
+         AND rp_account_check_mistake.status in <foreach item="item" index="index" collection="myIn_status" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_remark != null and myIn_remark != ''">
+         AND rp_account_check_mistake.remark in <foreach item="item" index="index" collection="myIn_remark" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_accountCheckBatchNo != null and myIn_accountCheckBatchNo != ''">
+         AND rp_account_check_mistake.account_check_batch_no in <foreach item="item" index="index" collection="myIn_accountCheckBatchNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_billDate != null and myIn_billDate != ''">
+         AND rp_account_check_mistake.bill_date in <foreach item="item" index="index" collection="myIn_billDate" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_bankType != null and myIn_bankType != ''">
+         AND rp_account_check_mistake.bank_type in <foreach item="item" index="index" collection="myIn_bankType" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_orderTime != null and myIn_orderTime != ''">
+         AND rp_account_check_mistake.order_time in <foreach item="item" index="index" collection="myIn_orderTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_merchantName != null and myIn_merchantName != ''">
+         AND rp_account_check_mistake.merchant_name in <foreach item="item" index="index" collection="myIn_merchantName" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_merchantNo != null and myIn_merchantNo != ''">
+         AND rp_account_check_mistake.merchant_no in <foreach item="item" index="index" collection="myIn_merchantNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_orderNo != null and myIn_orderNo != ''">
+         AND rp_account_check_mistake.order_no in <foreach item="item" index="index" collection="myIn_orderNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_tradeTime != null and myIn_tradeTime != ''">
+         AND rp_account_check_mistake.trade_time in <foreach item="item" index="index" collection="myIn_tradeTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_trxNo != null and myIn_trxNo != ''">
+         AND rp_account_check_mistake.trx_no in <foreach item="item" index="index" collection="myIn_trxNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_orderAmount != null and myIn_orderAmount != ''">
+         AND rp_account_check_mistake.order_amount in <foreach item="item" index="index" collection="myIn_orderAmount" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_refundAmount != null and myIn_refundAmount != ''">
+         AND rp_account_check_mistake.refund_amount in <foreach item="item" index="index" collection="myIn_refundAmount" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_tradeStatus != null and myIn_tradeStatus != ''">
+         AND rp_account_check_mistake.trade_status in <foreach item="item" index="index" collection="myIn_tradeStatus" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_fee != null and myIn_fee != ''">
+         AND rp_account_check_mistake.fee in <foreach item="item" index="index" collection="myIn_fee" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_bankTradeTime != null and myIn_bankTradeTime != ''">
+         AND rp_account_check_mistake.bank_trade_time in <foreach item="item" index="index" collection="myIn_bankTradeTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_bankOrderNo != null and myIn_bankOrderNo != ''">
+         AND rp_account_check_mistake.bank_order_no in <foreach item="item" index="index" collection="myIn_bankOrderNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_bankTrxNo != null and myIn_bankTrxNo != ''">
+         AND rp_account_check_mistake.bank_trx_no in <foreach item="item" index="index" collection="myIn_bankTrxNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_bankTradeStatus != null and myIn_bankTradeStatus != ''">
+         AND rp_account_check_mistake.bank_trade_status in <foreach item="item" index="index" collection="myIn_bankTradeStatus" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_bankAmount != null and myIn_bankAmount != ''">
+         AND rp_account_check_mistake.bank_amount in <foreach item="item" index="index" collection="myIn_bankAmount" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_bankRefundAmount != null and myIn_bankRefundAmount != ''">
+         AND rp_account_check_mistake.bank_refund_amount in <foreach item="item" index="index" collection="myIn_bankRefundAmount" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_bankFee != null and myIn_bankFee != ''">
+         AND rp_account_check_mistake.bank_fee in <foreach item="item" index="index" collection="myIn_bankFee" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_errType != null and myIn_errType != ''">
+         AND rp_account_check_mistake.err_type in <foreach item="item" index="index" collection="myIn_errType" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_handleStatus != null and myIn_handleStatus != ''">
+         AND rp_account_check_mistake.handle_status in <foreach item="item" index="index" collection="myIn_handleStatus" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_handleValue != null and myIn_handleValue != ''">
+         AND rp_account_check_mistake.handle_value in <foreach item="item" index="index" collection="myIn_handleValue" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_handleRemark != null and myIn_handleRemark != ''">
+         AND rp_account_check_mistake.handle_remark in <foreach item="item" index="index" collection="myIn_handleRemark" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_operatorName != null and myIn_operatorName != ''">
+         AND rp_account_check_mistake.operator_name in <foreach item="item" index="index" collection="myIn_operatorName" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_operatorAccountNo != null and myIn_operatorAccountNo != ''">
+         AND rp_account_check_mistake.operator_account_no in <foreach item="item" index="index" collection="myIn_operatorAccountNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKeyAndTableName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${dynamicTableName}  rp_account_check_mistake where rp_account_check_mistake.id = #{id, jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKeyAndTableName" parameterType="String">
+    delete from ${dynamicTableName} where id = #{id, jdbcType=VARCHAR}
+  </delete>
+</mapper>

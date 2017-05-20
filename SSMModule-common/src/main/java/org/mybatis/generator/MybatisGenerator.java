@@ -12,7 +12,16 @@ import org.xml.sax.SAXException;
 
 import com.google.common.collect.Lists;
 
-
+/**
+ * BASE_PREFIX的作用 所有表名前缀为这个List里面的表 比如rp_user rp_text都会放到这个包底下
+ * 以基础包名为com.ssf.dao为例子,生成包名为com.ssf.rp.dao
+ * 如果都不符合则生成到默认包名com.ssf.dao底下
+ * 
+ * 基础包名在mybatis-generator.properties配置文件里面
+ * ORIGIN_CONFIG为基础配置xml文件 生成的xml文件是以他有模板的  
+ * @author wyy
+ *
+ */
 public class MybatisGenerator {
 	public static final String ORIGIN_CONFIG    = "generatorConfig.xml";
 	public static final String OUT_CONFIG       = "generatorConfigBak.xml";
@@ -93,7 +102,7 @@ public class MybatisGenerator {
 	 * prefixs ==null 生成路径为generatorConfigBak.xml 统一生在一个包下面com.ssf.model
 	 * 默认使用BASE_PREFIX
 	 */
-	public static List<String> generateConfigXML(Properties props,List<String> prefixs){
+	public static List<String> generateConfigXML(Properties props,List<String> tableNames,List<String> prefixs){
 		String dbName = props.getProperty("dbName");
 		String dbType = props.getProperty("dbType");
 		if(dbName==null || "".equals(dbName)){
@@ -103,7 +112,7 @@ public class MybatisGenerator {
 			dbType="mysql";
 			System.out.println("dbType为空设为默认值mysql");
 		}
-		 List<String> tableNames = getTableNames(props);
+		 //List<String> tableNames = getTableNames(props);
 		 String myBussinessPackage = props.getProperty("myBussinessPackage");
 		 String myModelPackage 	   = props.getProperty("myModelPackage");
 		 

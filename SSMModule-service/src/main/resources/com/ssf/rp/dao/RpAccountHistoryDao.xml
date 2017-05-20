@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.rp.dao.RpAccountHistoryDao">
+  <resultMap id="BaseResultMap" type="com.ssf.rp.model.RpAccountHistory">
+    <id column="rp_account_history_id" jdbcType="VARCHAR" property="id" />
+    <result column="rp_account_history_create_time" jdbcType="TIMESTAMP" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+    <result column="rp_account_history_edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="rp_account_history_version" jdbcType="BIGINT" property="version" />
+    <result column="rp_account_history_remark" jdbcType="VARCHAR" property="remark" />
+    <result column="rp_account_history_account_no" jdbcType="VARCHAR" property="accountNo" />
+    <result column="rp_account_history_amount" jdbcType="DECIMAL" property="amount" />
+    <result column="rp_account_history_balance" jdbcType="DECIMAL" property="balance" />
+    <result column="rp_account_history_fund_direction" jdbcType="VARCHAR" property="fundDirection" />
+    <result column="rp_account_history_is_allow_sett" jdbcType="VARCHAR" property="isAllowSett" />
+    <result column="rp_account_history_is_complete_sett" jdbcType="VARCHAR" property="isCompleteSett" />
+    <result column="rp_account_history_request_no" jdbcType="VARCHAR" property="requestNo" />
+    <result column="rp_account_history_bank_trx_no" jdbcType="VARCHAR" property="bankTrxNo" />
+    <result column="rp_account_history_trx_type" jdbcType="VARCHAR" property="trxType" />
+    <result column="rp_account_history_risk_day" jdbcType="INTEGER" property="riskDay" />
+    <result column="rp_account_history_user_no" jdbcType="VARCHAR" property="userNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    rp_account_history.id as rp_account_history_id, rp_account_history.create_time as rp_account_history_create_time, 
+    rp_account_history.edit_time as rp_account_history_edit_time, rp_account_history.version as rp_account_history_version, 
+    rp_account_history.remark as rp_account_history_remark, rp_account_history.account_no as rp_account_history_account_no, 
+    rp_account_history.amount as rp_account_history_amount, rp_account_history.balance as rp_account_history_balance, 
+    rp_account_history.fund_direction as rp_account_history_fund_direction, rp_account_history.is_allow_sett as rp_account_history_is_allow_sett, 
+    rp_account_history.is_complete_sett as rp_account_history_is_complete_sett, rp_account_history.request_no as rp_account_history_request_no, 
+    rp_account_history.bank_trx_no as rp_account_history_bank_trx_no, rp_account_history.trx_type as rp_account_history_trx_type, 
+    rp_account_history.risk_day as rp_account_history_risk_day, rp_account_history.user_no as rp_account_history_user_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rp_account_history rp_account_history
+    where rp_account_history.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from rp_account_history
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.rp.model.RpAccountHistory">
+    insert into ${dynamicTableName} (id, create_time,
+      edit_time, version, remark, 
+      account_no, amount, balance, 
+      fund_direction, is_allow_sett, is_complete_sett, 
+      request_no, bank_trx_no, trx_type, 
+      risk_day, user_no)
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}, 
+      #{editTime,jdbcType=TIMESTAMP}, #{version,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}, 
+      #{accountNo,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{balance,jdbcType=DECIMAL}, 
+      #{fundDirection,jdbcType=VARCHAR}, #{isAllowSett,jdbcType=VARCHAR}, #{isCompleteSett,jdbcType=VARCHAR}, 
+      #{requestNo,jdbcType=VARCHAR}, #{bankTrxNo,jdbcType=VARCHAR}, #{trxType,jdbcType=VARCHAR}, 
+      #{riskDay,jdbcType=INTEGER}, #{userNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.rp.model.RpAccountHistory">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="editTime != null">
+        edit_time,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="accountNo != null">
+        account_no,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="fundDirection != null">
+        fund_direction,
+      </if>
+      <if test="isAllowSett != null">
+        is_allow_sett,
+      </if>
+      <if test="isCompleteSett != null">
+        is_complete_sett,
+      </if>
+      <if test="requestNo != null">
+        request_no,
+      </if>
+      <if test="bankTrxNo != null">
+        bank_trx_no,
+      </if>
+      <if test="trxType != null">
+        trx_type,
+      </if>
+      <if test="riskDay != null">
+        risk_day,
+      </if>
+      <if test="userNo != null">
+        user_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null">
+        #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="fundDirection != null">
+        #{fundDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="isAllowSett != null">
+        #{isAllowSett,jdbcType=VARCHAR},
+      </if>
+      <if test="isCompleteSett != null">
+        #{isCompleteSett,jdbcType=VARCHAR},
+      </if>
+      <if test="requestNo != null">
+        #{requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankTrxNo != null">
+        #{bankTrxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="trxType != null">
+        #{trxType,jdbcType=VARCHAR},
+      </if>
+      <if test="riskDay != null">
+        #{riskDay,jdbcType=INTEGER},
+      </if>
+      <if test="userNo != null">
+        #{userNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.rp.model.RpAccountHistory">
+    update ${dynamicTableName}
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="editTime != null">
+        edit_time = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null">
+        account_no = #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="fundDirection != null">
+        fund_direction = #{fundDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="isAllowSett != null">
+        is_allow_sett = #{isAllowSett,jdbcType=VARCHAR},
+      </if>
+      <if test="isCompleteSett != null">
+        is_complete_sett = #{isCompleteSett,jdbcType=VARCHAR},
+      </if>
+      <if test="requestNo != null">
+        request_no = #{requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankTrxNo != null">
+        bank_trx_no = #{bankTrxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="trxType != null">
+        trx_type = #{trxType,jdbcType=VARCHAR},
+      </if>
+      <if test="riskDay != null">
+        risk_day = #{riskDay,jdbcType=INTEGER},
+      </if>
+      <if test="userNo != null">
+        user_no = #{userNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.rp.model.RpAccountHistory">
+    update ${dynamicTableName}
+    set create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      edit_time = #{editTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=BIGINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      account_no = #{accountNo,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      balance = #{balance,jdbcType=DECIMAL},
+      fund_direction = #{fundDirection,jdbcType=VARCHAR},
+      is_allow_sett = #{isAllowSett,jdbcType=VARCHAR},
+      is_complete_sett = #{isCompleteSett,jdbcType=VARCHAR},
+      request_no = #{requestNo,jdbcType=VARCHAR},
+      bank_trx_no = #{bankTrxNo,jdbcType=VARCHAR},
+      trx_type = #{trxType,jdbcType=VARCHAR},
+      risk_day = #{riskDay,jdbcType=INTEGER},
+      user_no = #{userNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="deleteLogicByIds">
+    update rp_account_history rp_account_history set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  rp_account_history </if><if test="dynamicTableName == null or dynamicTableName == ''"> rp_account_history rp_account_history</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  rp_account_history </if><if test="dynamicTableName == null or dynamicTableName == ''"> rp_account_history rp_account_history</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND rp_account_history.id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null and createTime != ''">
+         AND rp_account_history.create_time = #{createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="editTime != null and editTime != ''">
+         AND rp_account_history.edit_time = #{editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="version != null and version != ''">
+         AND rp_account_history.version = #{version,jdbcType=BIGINT}
+      </if>
+      <if test="remark != null and remark != ''">
+         AND rp_account_history.remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="accountNo != null and accountNo != ''">
+         AND rp_account_history.account_no = #{accountNo,jdbcType=VARCHAR}
+      </if>
+      <if test="amount != null and amount != ''">
+         AND rp_account_history.amount = #{amount,jdbcType=DECIMAL}
+      </if>
+      <if test="balance != null and balance != ''">
+         AND rp_account_history.balance = #{balance,jdbcType=DECIMAL}
+      </if>
+      <if test="fundDirection != null and fundDirection != ''">
+         AND rp_account_history.fund_direction = #{fundDirection,jdbcType=VARCHAR}
+      </if>
+      <if test="isAllowSett != null and isAllowSett != ''">
+         AND rp_account_history.is_allow_sett = #{isAllowSett,jdbcType=VARCHAR}
+      </if>
+      <if test="isCompleteSett != null and isCompleteSett != ''">
+         AND rp_account_history.is_complete_sett = #{isCompleteSett,jdbcType=VARCHAR}
+      </if>
+      <if test="requestNo != null and requestNo != ''">
+         AND rp_account_history.request_no = #{requestNo,jdbcType=VARCHAR}
+      </if>
+      <if test="bankTrxNo != null and bankTrxNo != ''">
+         AND rp_account_history.bank_trx_no = #{bankTrxNo,jdbcType=VARCHAR}
+      </if>
+      <if test="trxType != null and trxType != ''">
+         AND rp_account_history.trx_type = #{trxType,jdbcType=VARCHAR}
+      </if>
+      <if test="riskDay != null and riskDay != ''">
+         AND rp_account_history.risk_day = #{riskDay,jdbcType=INTEGER}
+      </if>
+      <if test="userNo != null and userNo != ''">
+         AND rp_account_history.user_no = #{userNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND rp_account_history.id &gt; #{myGreater_id,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_createTime != null and myGreater_createTime != ''">
+         AND rp_account_history.create_time &gt; #{myGreater_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_editTime != null and myGreater_editTime != ''">
+         AND rp_account_history.edit_time &gt; #{myGreater_editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myGreater_version != null and myGreater_version != ''">
+         AND rp_account_history.version &gt; #{myGreater_version,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_remark != null and myGreater_remark != ''">
+         AND rp_account_history.remark &gt; #{myGreater_remark,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_accountNo != null and myGreater_accountNo != ''">
+         AND rp_account_history.account_no &gt; #{myGreater_accountNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_amount != null and myGreater_amount != ''">
+         AND rp_account_history.amount &gt; #{myGreater_amount,jdbcType=DECIMAL}
+      </if>
+      <if test="myGreater_balance != null and myGreater_balance != ''">
+         AND rp_account_history.balance &gt; #{myGreater_balance,jdbcType=DECIMAL}
+      </if>
+      <if test="myGreater_fundDirection != null and myGreater_fundDirection != ''">
+         AND rp_account_history.fund_direction &gt; #{myGreater_fundDirection,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_isAllowSett != null and myGreater_isAllowSett != ''">
+         AND rp_account_history.is_allow_sett &gt; #{myGreater_isAllowSett,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_isCompleteSett != null and myGreater_isCompleteSett != ''">
+         AND rp_account_history.is_complete_sett &gt; #{myGreater_isCompleteSett,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_requestNo != null and myGreater_requestNo != ''">
+         AND rp_account_history.request_no &gt; #{myGreater_requestNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_bankTrxNo != null and myGreater_bankTrxNo != ''">
+         AND rp_account_history.bank_trx_no &gt; #{myGreater_bankTrxNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_trxType != null and myGreater_trxType != ''">
+         AND rp_account_history.trx_type &gt; #{myGreater_trxType,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_riskDay != null and myGreater_riskDay != ''">
+         AND rp_account_history.risk_day &gt; #{myGreater_riskDay,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_userNo != null and myGreater_userNo != ''">
+         AND rp_account_history.user_no &gt; #{myGreater_userNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND rp_account_history.id &lt; #{myLesser_id,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_createTime != null and myLesser_createTime != ''">
+         AND rp_account_history.create_time &lt; #{myLesser_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_editTime != null and myLesser_editTime != ''">
+         AND rp_account_history.edit_time &lt; #{myLesser_editTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myLesser_version != null and myLesser_version != ''">
+         AND rp_account_history.version &lt; #{myLesser_version,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_remark != null and myLesser_remark != ''">
+         AND rp_account_history.remark &lt; #{myLesser_remark,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_accountNo != null and myLesser_accountNo != ''">
+         AND rp_account_history.account_no &lt; #{myLesser_accountNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_amount != null and myLesser_amount != ''">
+         AND rp_account_history.amount &lt; #{myLesser_amount,jdbcType=DECIMAL}
+      </if>
+      <if test="myLesser_balance != null and myLesser_balance != ''">
+         AND rp_account_history.balance &lt; #{myLesser_balance,jdbcType=DECIMAL}
+      </if>
+      <if test="myLesser_fundDirection != null and myLesser_fundDirection != ''">
+         AND rp_account_history.fund_direction &lt; #{myLesser_fundDirection,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_isAllowSett != null and myLesser_isAllowSett != ''">
+         AND rp_account_history.is_allow_sett &lt; #{myLesser_isAllowSett,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_isCompleteSett != null and myLesser_isCompleteSett != ''">
+         AND rp_account_history.is_complete_sett &lt; #{myLesser_isCompleteSett,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_requestNo != null and myLesser_requestNo != ''">
+         AND rp_account_history.request_no &lt; #{myLesser_requestNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_bankTrxNo != null and myLesser_bankTrxNo != ''">
+         AND rp_account_history.bank_trx_no &lt; #{myLesser_bankTrxNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_trxType != null and myLesser_trxType != ''">
+         AND rp_account_history.trx_type &lt; #{myLesser_trxType,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_riskDay != null and myLesser_riskDay != ''">
+         AND rp_account_history.risk_day &lt; #{myLesser_riskDay,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_userNo != null and myLesser_userNo != ''">
+         AND rp_account_history.user_no &lt; #{myLesser_userNo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND rp_account_history.id like CONCAT('%', #{myLike_id,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_createTime != null and myLike_createTime != ''">
+         AND rp_account_history.create_time like CONCAT('%', #{myLike_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLike_editTime != null and myLike_editTime != ''">
+         AND rp_account_history.edit_time like CONCAT('%', #{myLike_editTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLike_version != null and myLike_version != ''">
+         AND rp_account_history.version like CONCAT('%', #{myLike_version,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_remark != null and myLike_remark != ''">
+         AND rp_account_history.remark like CONCAT('%', #{myLike_remark,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_accountNo != null and myLike_accountNo != ''">
+         AND rp_account_history.account_no like CONCAT('%', #{myLike_accountNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_amount != null and myLike_amount != ''">
+         AND rp_account_history.amount like CONCAT('%', #{myLike_amount,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLike_balance != null and myLike_balance != ''">
+         AND rp_account_history.balance like CONCAT('%', #{myLike_balance,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLike_fundDirection != null and myLike_fundDirection != ''">
+         AND rp_account_history.fund_direction like CONCAT('%', #{myLike_fundDirection,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_isAllowSett != null and myLike_isAllowSett != ''">
+         AND rp_account_history.is_allow_sett like CONCAT('%', #{myLike_isAllowSett,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_isCompleteSett != null and myLike_isCompleteSett != ''">
+         AND rp_account_history.is_complete_sett like CONCAT('%', #{myLike_isCompleteSett,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_requestNo != null and myLike_requestNo != ''">
+         AND rp_account_history.request_no like CONCAT('%', #{myLike_requestNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_bankTrxNo != null and myLike_bankTrxNo != ''">
+         AND rp_account_history.bank_trx_no like CONCAT('%', #{myLike_bankTrxNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_trxType != null and myLike_trxType != ''">
+         AND rp_account_history.trx_type like CONCAT('%', #{myLike_trxType,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_riskDay != null and myLike_riskDay != ''">
+         AND rp_account_history.risk_day like CONCAT('%', #{myLike_riskDay,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_userNo != null and myLike_userNo != ''">
+         AND rp_account_history.user_no like CONCAT('%', #{myLike_userNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND rp_account_history.id like CONCAT('%', #{myLikeStart_id,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_createTime != null and myLikeStart_createTime != ''">
+         AND rp_account_history.create_time like CONCAT('%', #{myLikeStart_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeStart_editTime != null and myLikeStart_editTime != ''">
+         AND rp_account_history.edit_time like CONCAT('%', #{myLikeStart_editTime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="myLikeStart_version != null and myLikeStart_version != ''">
+         AND rp_account_history.version like CONCAT('%', #{myLikeStart_version,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_remark != null and myLikeStart_remark != ''">
+         AND rp_account_history.remark like CONCAT('%', #{myLikeStart_remark,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_accountNo != null and myLikeStart_accountNo != ''">
+         AND rp_account_history.account_no like CONCAT('%', #{myLikeStart_accountNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_amount != null and myLikeStart_amount != ''">
+         AND rp_account_history.amount like CONCAT('%', #{myLikeStart_amount,jdbcType=DECIMAL})
+      </if>
+      <if test="myLikeStart_balance != null and myLikeStart_balance != ''">
+         AND rp_account_history.balance like CONCAT('%', #{myLikeStart_balance,jdbcType=DECIMAL})
+      </if>
+      <if test="myLikeStart_fundDirection != null and myLikeStart_fundDirection != ''">
+         AND rp_account_history.fund_direction like CONCAT('%', #{myLikeStart_fundDirection,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_isAllowSett != null and myLikeStart_isAllowSett != ''">
+         AND rp_account_history.is_allow_sett like CONCAT('%', #{myLikeStart_isAllowSett,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_isCompleteSett != null and myLikeStart_isCompleteSett != ''">
+         AND rp_account_history.is_complete_sett like CONCAT('%', #{myLikeStart_isCompleteSett,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_requestNo != null and myLikeStart_requestNo != ''">
+         AND rp_account_history.request_no like CONCAT('%', #{myLikeStart_requestNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_bankTrxNo != null and myLikeStart_bankTrxNo != ''">
+         AND rp_account_history.bank_trx_no like CONCAT('%', #{myLikeStart_bankTrxNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_trxType != null and myLikeStart_trxType != ''">
+         AND rp_account_history.trx_type like CONCAT('%', #{myLikeStart_trxType,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_riskDay != null and myLikeStart_riskDay != ''">
+         AND rp_account_history.risk_day like CONCAT('%', #{myLikeStart_riskDay,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_userNo != null and myLikeStart_userNo != ''">
+         AND rp_account_history.user_no like CONCAT('%', #{myLikeStart_userNo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND rp_account_history.id like CONCAT( #{myLikeEnd_id,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_createTime != null and myLikeEnd_createTime != ''">
+         AND rp_account_history.create_time like CONCAT( #{myLikeEnd_createTime,jdbcType=TIMESTAMP,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeEnd_editTime != null and myLikeEnd_editTime != ''">
+         AND rp_account_history.edit_time like CONCAT( #{myLikeEnd_editTime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLikeEnd_version != null and myLikeEnd_version != ''">
+         AND rp_account_history.version like CONCAT( #{myLikeEnd_version,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_remark != null and myLikeEnd_remark != ''">
+         AND rp_account_history.remark like CONCAT( #{myLikeEnd_remark,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_accountNo != null and myLikeEnd_accountNo != ''">
+         AND rp_account_history.account_no like CONCAT( #{myLikeEnd_accountNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_amount != null and myLikeEnd_amount != ''">
+         AND rp_account_history.amount like CONCAT( #{myLikeEnd_amount,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLikeEnd_balance != null and myLikeEnd_balance != ''">
+         AND rp_account_history.balance like CONCAT( #{myLikeEnd_balance,jdbcType=DECIMAL},'%' )
+      </if>
+      <if test="myLikeEnd_fundDirection != null and myLikeEnd_fundDirection != ''">
+         AND rp_account_history.fund_direction like CONCAT( #{myLikeEnd_fundDirection,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_isAllowSett != null and myLikeEnd_isAllowSett != ''">
+         AND rp_account_history.is_allow_sett like CONCAT( #{myLikeEnd_isAllowSett,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_isCompleteSett != null and myLikeEnd_isCompleteSett != ''">
+         AND rp_account_history.is_complete_sett like CONCAT( #{myLikeEnd_isCompleteSett,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_requestNo != null and myLikeEnd_requestNo != ''">
+         AND rp_account_history.request_no like CONCAT( #{myLikeEnd_requestNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_bankTrxNo != null and myLikeEnd_bankTrxNo != ''">
+         AND rp_account_history.bank_trx_no like CONCAT( #{myLikeEnd_bankTrxNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_trxType != null and myLikeEnd_trxType != ''">
+         AND rp_account_history.trx_type like CONCAT( #{myLikeEnd_trxType,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_riskDay != null and myLikeEnd_riskDay != ''">
+         AND rp_account_history.risk_day like CONCAT( #{myLikeEnd_riskDay,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_userNo != null and myLikeEnd_userNo != ''">
+         AND rp_account_history.user_no like CONCAT( #{myLikeEnd_userNo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND rp_account_history.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createTime != null and myIn_createTime != ''">
+         AND rp_account_history.create_time in <foreach item="item" index="index" collection="myIn_createTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_editTime != null and myIn_editTime != ''">
+         AND rp_account_history.edit_time in <foreach item="item" index="index" collection="myIn_editTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_version != null and myIn_version != ''">
+         AND rp_account_history.version in <foreach item="item" index="index" collection="myIn_version" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_remark != null and myIn_remark != ''">
+         AND rp_account_history.remark in <foreach item="item" index="index" collection="myIn_remark" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_accountNo != null and myIn_accountNo != ''">
+         AND rp_account_history.account_no in <foreach item="item" index="index" collection="myIn_accountNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_amount != null and myIn_amount != ''">
+         AND rp_account_history.amount in <foreach item="item" index="index" collection="myIn_amount" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_balance != null and myIn_balance != ''">
+         AND rp_account_history.balance in <foreach item="item" index="index" collection="myIn_balance" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_fundDirection != null and myIn_fundDirection != ''">
+         AND rp_account_history.fund_direction in <foreach item="item" index="index" collection="myIn_fundDirection" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_isAllowSett != null and myIn_isAllowSett != ''">
+         AND rp_account_history.is_allow_sett in <foreach item="item" index="index" collection="myIn_isAllowSett" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_isCompleteSett != null and myIn_isCompleteSett != ''">
+         AND rp_account_history.is_complete_sett in <foreach item="item" index="index" collection="myIn_isCompleteSett" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_requestNo != null and myIn_requestNo != ''">
+         AND rp_account_history.request_no in <foreach item="item" index="index" collection="myIn_requestNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_bankTrxNo != null and myIn_bankTrxNo != ''">
+         AND rp_account_history.bank_trx_no in <foreach item="item" index="index" collection="myIn_bankTrxNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_trxType != null and myIn_trxType != ''">
+         AND rp_account_history.trx_type in <foreach item="item" index="index" collection="myIn_trxType" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_riskDay != null and myIn_riskDay != ''">
+         AND rp_account_history.risk_day in <foreach item="item" index="index" collection="myIn_riskDay" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_userNo != null and myIn_userNo != ''">
+         AND rp_account_history.user_no in <foreach item="item" index="index" collection="myIn_userNo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKeyAndTableName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${dynamicTableName}  rp_account_history where rp_account_history.id = #{id, jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKeyAndTableName" parameterType="String">
+    delete from ${dynamicTableName} where id = #{id, jdbcType=VARCHAR}
+  </delete>
+</mapper>

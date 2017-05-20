@@ -565,11 +565,15 @@
 
 
 	<modules>
+	    <!-- 基础包 -->
 		<module>SSMModule-common</module>
-		<module>SSMModule-persist</module>
+		<!-- <module>SSMModule-persist</module> -->
+		<!-- 包括service层和dao层 以及自动代码生成和测试 -->
 		<module>SSMModule-service</module>
+		<!-- web层之前台商城 -->
 		<module>SSMModule-web-shop</module>
-    <module>SSMModule-web-admin</module>
+		<!-- web层之后台管理模块 -->
+   		<module>SSMModule-web-admin</module>
   </modules>
 
 	<!-- 提供pluginManagement 帮助管理插件 -->

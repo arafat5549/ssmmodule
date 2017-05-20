@@ -1,4 +1,4 @@
-package ${packageName};
+package ${daoPackageName};
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,8 +8,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.List;
 import java.util.Map;
 
-import com.ssf.dao.${className}Dao;
-import com.ssf.model.${className};
+import ${daoPackageName}.${className}Dao;
+import ${modelPackageName}.${className};
 
 /**
  * 
@@ -24,7 +24,7 @@ public class ${className}DaoTest {
 	@Before
     public void prepare() throws Exception {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring/spring-dao.xml");
-        mapper = (${className}Dao) ctx.getBean("${smallClassName}");
+        mapper = (${className}Dao) ctx.getBean("${smallClassName}Dao");
     }
 
 	@Test
@@ -35,7 +35,13 @@ public class ${className}DaoTest {
 
 	@Test
 	public void selectByPrimaryKeyTest() {
-		Long id =1L;
+		 <#if idField == "Long">
+   			 Long id = 1L;
+		</#if>
+		<#if idField == "String">
+   			 String id = "1";
+		</#if>
+		
 		${className} ret = mapper.selectByPrimaryKey(id);
 		System.out.println("测试selectByPrimaryKey："+ret);
 	}
@@ -43,7 +49,12 @@ public class ${className}DaoTest {
 	//
 	@Test
 	public void deleteByPrimaryKeyTest() {
-	    Long id = 1L;
+	    <#if idField == "Long">
+   			 Long id = 1L;
+		</#if>
+		<#if idField == "String">
+   			 String id = "1";
+		</#if>
 		int ret = mapper.deleteByPrimaryKey(id);
 		System.out.println("测试deleteByPrimaryKeyTest："+ret);
 	}

@@ -169,6 +169,29 @@ public class GeneratorConfigXMLUtil {
         }
     }
 	
+    
+    public static Multimap<String, String> getTableMultimap(List<String> tableNames,List<String> prefixs){
+    	String regex = "";
+		if(prefixs != null)
+			regex = "("+Joiner.on("|").join(prefixs)+")";
+		
+		Pattern pattern = Pattern.compile(regex);
+		Multimap<String, String> multimap = ArrayListMultimap.create();
+		for (String tname : tableNames)  
+		{
+			String base = tname;
+			Matcher macther = pattern.matcher(tname);
+			String find = "";
+			if(macther.find())
+			{
+				find = macther.group();
+				tname = tname.replace(find, "");
+			}
+			String packageName = (find).replace("_", ".");
+			multimap.put(packageName, base);
+		}
+		return multimap;
+    }
     /**
 	 * 读取数据库 生成所有table标签<p>
 	 * 
@@ -191,25 +214,27 @@ public class GeneratorConfigXMLUtil {
 		
 		List<String> configs =  Lists.newArrayList();
 		
-		String regex = "";
-		if(prefixs != null)
-			regex = "("+Joiner.on("|").join(prefixs)+")";
+//		String regex = "";
+//		if(prefixs != null)
+//			regex = "("+Joiner.on("|").join(prefixs)+")";
+//		
+//		Pattern pattern = Pattern.compile(regex);
+//		Multimap<String, String> multimap = ArrayListMultimap.create();
+//		for (String tname : tableNames)  
+//		{
+//			String base = tname;
+//			Matcher macther = pattern.matcher(tname);
+//			String find = "";
+//			if(macther.find())
+//			{
+//				find = macther.group();
+//				tname = tname.replace(find, "");
+//			}
+//			String packageName = (find).replace("_", ".");
+//			multimap.put(packageName, base);
+//		}
 		
-		Pattern pattern = Pattern.compile(regex);
-		Multimap<String, String> multimap = ArrayListMultimap.create();
-		for (String tname : tableNames)  
-		{
-			String base = tname;
-			Matcher macther = pattern.matcher(tname);
-			String find = "";
-			if(macther.find())
-			{
-				find = macther.group();
-				tname = tname.replace(find, "");
-			}
-			String packageName = (find).replace("_", ".");
-			multimap.put(packageName, base);
-		}
+		Multimap<String, String> multimap = getTableMultimap(tableNames,prefixs);
 		
 		int srcidx = src.lastIndexOf(".");
 		String outBaseName =  src.substring(0,srcidx);

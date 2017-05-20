@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -12,13 +13,14 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
-import org.mybatis.generator.MybatisGenerator;
-import org.springside.modules.utils.base.PropertiesUtil;
+import org.mybatis.generator.GeneratorConfigXMLUtil;
 
-import com.google.common.collect.Lists;
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Multimap;
 import com.ssf.common.utils.StringUtilss;
 
-import freemarker.template.Configuration;	
+import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 /**
@@ -54,16 +56,7 @@ public class CodeGeneratorUtil {
     }
 	 
 	public static void main(String[] args) {
-		String packageName = "com.ssf.service";
-		Properties props =PropertiesUtil.loadFromFile("classpath://jdbc.properties");
-		List<String> lists =MybatisGenerator.getTableNames(props);
-		for (String tname : lists) {
-			String clsName = StringUtilss.toCamelCase(tname.replace("sys_", ""));
-			clsName = StringUtils.capitalize(clsName);
-			System.out.println(clsName);
-			createTemplate(packageName,clsName);
-			System.out.println("生成Service模板:"+packageName+"."+clsName+"ServiceImpl");
-		}
+		
 		
 //		String packageName    = "com.ssf.dao";
 //		String clsName = "User";
@@ -71,33 +64,51 @@ public class CodeGeneratorUtil {
 //		System.out.println("生成DaoTest模板:"+packageName+"."+clsName+"Test");
 		
 	}
+	
+	/**
+	 * 
+	 * @param config 位于classpath路径底下的配置文件
+	 */
+	public static void codeGenerator(Properties props,List<String> tableNames,List<String> prefixs){
+		
+		Multimap<String, String> multimap = GeneratorConfigXMLUtil.getTableMultimap(tableNames, prefixs);
+		String servicePackge = "com.ssf.service";
+		String daoPackage    = props.getProperty("myBussinessPackage");
+		String modelPackage  = props.getProperty("myModelPackage"); 
+		//获取主键类型
+		
+		for (String key : multimap.keySet()) {
+			int idx = servicePackge.lastIndexOf(".");
+			String packageName = servicePackge.substring(0,idx)+"." + key+"."+servicePackge.substring(idx+1);
+			packageName = Joiner.on(".").join(Splitter.on(".").omitEmptyStrings().split(packageName));
+			
+			String modelPackageName = modelPackage.substring(0,idx)+"." + key+"."+modelPackage.substring(idx+1);
+			modelPackageName = Joiner.on(".").join(Splitter.on(".").omitEmptyStrings().split(modelPackageName));
+			
+			String daoPackageName = daoPackage.substring(0,idx)+"." + key+"."+daoPackage.substring(idx+1);
+			daoPackageName = Joiner.on(".").join(Splitter.on(".").omitEmptyStrings().split(daoPackageName));
+			
+			for (String tname : multimap.get(key)) {
+				String clsName = StringUtils.capitalize(StringUtilss.toCamelCase(tname));
+				//System.out.println(clsName);
+				createTemplate(packageName,daoPackageName,modelPackageName,clsName);
+			}
+		}
+		
+	}
 
 	
-	private static void createTemplateDaoTest(String packageName,String clsName){
-		Map<String, Object> root = new HashMap<String, Object>();
-		root.put("packageName", packageName);
-		//实体类名称
-		root.put("className", clsName);// 类名称
-		//实体类名称首字母小写，驼峰式
-		root.put("smallClassName", lowerCapital(clsName));// 类名称的首字母小写
-		
-		String workDir = (String) System.getProperties().get("user.dir");
-		try {
-			daoTest(workDir, root);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
+	
 	
 	/**
 	 * -------------------生成模板---------------------
 	 */
-	private static void createTemplate(String packageName,String clsName) {
+	private static void createTemplate(String packageName,String daoPackageName,String modelPackageName,String clsName) {
 		Map<String, Object> root = new HashMap<String, Object>();
 		//子文件的包名
 		root.put("packageName", packageName);
-		
-		
+		root.put("modelPackageName", modelPackageName);
+		root.put("daoPackageName", daoPackageName);
 		//实体类名称
 		root.put("className", clsName);// 类名称
 		//实体类名称首字母小写，驼峰式
@@ -105,27 +116,44 @@ public class CodeGeneratorUtil {
 		
 		String workDir = (String) System.getProperties().get("user.dir");
 		try {
+			Field field = Class.forName(modelPackageName+"."+clsName).getDeclaredField("id");
+			if(field!=null){
+				String idField = field.getType().getName();
+				int idx = idField.lastIndexOf(".");
+				idField = idField.substring(idx+1);
+				root.put("idField", idField);
+			}
 			service(workDir, root);
 			serviceImpl(workDir, root);
+			
+			daoTest(workDir, root, "daoPackageName");
+		} catch (NoSuchFieldException | SecurityException
+				| ClassNotFoundException e) {
+			System.out.println("没有主键id无法生成:["+clsName+"]");
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
+		} finally{
+			
 		}
+//		catch (Exception e) {
+//			System.out.println("没有主键id无法生成:["+clsName+"]");
+//		}
 	}
 	
 	
-	private static void daoTest(String workDir, Map<String, Object> input) throws Exception{
-		String packageName = input.get("packageName").toString().replaceAll("\\.", "/");
+	private static void daoTest(String workDir, Map<String, Object> root,String pName) throws Exception{
+		String packageName = root.get(pName).toString().replaceAll("\\.", "/");
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append(workDir).append("/src/test/java/")
 		.append("/"+packageName+"/")
-		.append(input.get("className").toString()+"DaoTest.java");
+		.append(root.get("className").toString()+"DaoTest.java");
 		
 		String fileName = sb.toString();
 		File myFile = new File(fileName);
 		myFile.getParentFile().mkdirs();
 		myFile.createNewFile();
-		buildFile("templete/daoTest.ftl", fileName, input);
+		buildFile("templete/daoTest.ftl", fileName, root);
 	}
 	
 	private static void service(String workDir, Map<String, Object> input) throws Exception {

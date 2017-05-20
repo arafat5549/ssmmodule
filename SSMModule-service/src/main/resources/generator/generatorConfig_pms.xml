@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!--  每次修改的部分为替换  targetPackage tableName 部分，对应数据库不同的表结构，不同的包名，自动映射出来相关的类文件  -->
+<!--  注意如果是单表结构的逻辑，增加 两个自定义插件，并且必须有 id deleteFlag createTime 表字段   -->
+<!--  如果为关联关系的表结构，注释掉两个自定义插件，并且关联关系的两个表字段，设定为复合主键，之后生成的实体类型，默认为 Key 后缀的主键名称   -->
+<generatorConfiguration>
+  <properties resource="jdbc.properties"/>
+  <context id="context1" targetRuntime="MyBatis3">
+    <property name="javaFileEncoding" value="UTF-8"/>
+    <property name="beginningDelimiter" value=""/>
+    <property name="endingDelimiter" value=""/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <plugin type="com.ssf.common.mybatis.plugin.PaginationPlugin"/>
+    <plugin type="com.ssf.common.mybatis.plugin.DeleteLogicByIdsPlugin"/>
+    <plugin type="com.ssf.common.mybatis.plugin.serializable.SerializablePlugin"/>
+    <plugin type="com.ssf.common.mybatis.plugin.mutiDatasource.MutiDatasourcePaginationPlugin"/>
+    <plugin type="com.ssf.common.mybatis.plugin.SelectCountAndListByMapPlugin"/>
+    <plugin type="com.ssf.common.mybatis.plugin.MyDynamicTableNamePlugin"/>
+    <plugin type="com.ssf.common.mybatis.plugin.MyInsertUpdateDynamicTableNamePlugin"/>
+    <plugin type="com.ssf.common.mybatis.plugin.InterFaceExtendsPlugin">
+      <property name="mappers" value="com.ssf.common.mybatis.base.BaseMapper"/>
+    </plugin>
+    <plugin type="com.ssf.common.mybatis.plugin.OverIsMergeablePlugin"/>
+    <commentGenerator type="com.ssf.common.mybatis.plugin.MyCommentGeneratorPlugin">
+      <property name="suppressAllComments" value="true"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="${jdbc.driverClassName}" connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}"/>
+    <javaModelGenerator targetPackage="com.ssf.pms.model" targetProject="${targetProject}src\main\java"/>
+    <sqlMapGenerator targetPackage="com.ssf.pms.dao" targetProject="${targetProject}src\main\resources"/>
+    <javaClientGenerator targetPackage="com.ssf.pms.dao" targetProject="${targetProject}src\main\java" type="XMLMAPPER"/>
+    <table mapperName="PmsMenuDao" schema="" tableName="pms_menu" domainObjectName="PmsMenu" delimitAllColumns="true" alias="pms_menu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+      <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
+      <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
+      <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
+    </table>
+    <table mapperName="PmsMenuRoleDao" schema="" tableName="pms_menu_role" domainObjectName="PmsMenuRole" delimitAllColumns="true" alias="pms_menu_role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+      <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
+      <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
+      <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
+    </table>
+    <table mapperName="PmsOperatorDao" schema="" tableName="pms_operator" domainObjectName="PmsOperator" delimitAllColumns="true" alias="pms_operator" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+      <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
+      <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
+      <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
+    </table>
+    <table mapperName="PmsOperatorLogDao" schema="" tableName="pms_operator_log" domainObjectName="PmsOperatorLog" delimitAllColumns="true" alias="pms_operator_log" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+      <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
+      <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
+      <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
+    </table>
+    <table mapperName="PmsPermissionDao" schema="" tableName="pms_permission" domainObjectName="PmsPermission" delimitAllColumns="true" alias="pms_permission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+      <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
+      <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
+      <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
+    </table>
+    <table mapperName="PmsRoleDao" schema="" tableName="pms_role" domainObjectName="PmsRole" delimitAllColumns="true" alias="pms_role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+      <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
+      <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
+      <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
+    </table>
+    <table mapperName="PmsRoleOperatorDao" schema="" tableName="pms_role_operator" domainObjectName="PmsRoleOperator" delimitAllColumns="true" alias="pms_role_operator" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+      <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
+      <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
+      <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
+    </table>
+    <table mapperName="PmsRolePermissionDao" schema="" tableName="pms_role_permission" domainObjectName="PmsRolePermission" delimitAllColumns="true" alias="pms_role_permission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+      <columnOverride column="delete_flag" property="deleteFlag" javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"/>
+      <columnOverride column="create_time" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="update_time" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>
+      <columnOverride column="resource_type" property="resourceType" javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"/>
+      <columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"/>
+    </table>
+  </context>
+</generatorConfiguration>
