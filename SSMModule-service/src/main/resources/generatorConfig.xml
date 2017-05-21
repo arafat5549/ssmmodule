@@ -45,10 +45,9 @@
 		<!-- 取消 Example 类文件的生成，在进行代码生成器的过程中，生成 selectCountByMap selectListByMap 两种方法，代替 Example 方法的生成 -->
 		<plugin type="com.ssf.common.mybatis.plugin.SelectCountAndListByMapPlugin"/>
 		
-		<!-- 自定义注释部分（实体类entity生成过程中，将配置的数据库部分的注释部分生成，关键节点的注解部分生成） 
+		<!-- 自定义注释部分（实体类entity生成过程中，将配置的数据库部分的注释部分生成，关键节点的注解部分生成） -->
+		<plugin type="com.ssf.common.mybatis.plugin.MyTableAnnotationPlugin"/>
 		
-		<plugin type="com.ssf.common.mybatis.plugin.MyTableAnnotationPlugin"></plugin>
-		-->
 		<!-- 动态表名的处理，解决selectByPrimaryKeyAndTableName deleteByPrimaryKeyAndTableName 两个方法 -->
 		<plugin type="com.ssf.common.mybatis.plugin.MyDynamicTableNamePlugin"/>
 		

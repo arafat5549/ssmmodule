@@ -16,6 +16,8 @@ import com.ssf.rp.model.RpSettDailyCollect;
 import com.ssf.cache.RedisCache;
 import com.ssf.utils.PageUtil;
 
+import com.ssf.common.myPage.MyPageView;
+import com.ssf.common.vo.mybatis.pagination.Page;
 /**
  * 
  * IRpSettDailyCollectService 接口实现类
@@ -117,6 +119,29 @@ public class RpSettDailyCollectServiceImpl implements IRpSettDailyCollectService
 	@Override
 	public int updateByPrimaryKey(RpSettDailyCollect record) {
 		return mapper.updateByPrimaryKey(record);
+	}
+	
+	@Override
+	public MyPageView<RpSettDailyCollect> generateMyPageViewVO(Map<Object, Object> map) {
+		
+		int _totalCount = mapper.selectCountByMap(map);
+		
+		List<RpSettDailyCollect> _list = mapper.selectListByMap(map);
+		
+		int recordPerPage = 10;
+		int currentPage = 1;
+		if(map.get("page") != null) {
+			Object _pageObj = map.get("page");
+			if(_pageObj instanceof Page) {
+				Page _page = (Page)_pageObj;
+				currentPage = _page.getPageNo();
+				recordPerPage = _page.getLength();
+			}
+		}
+		MyPageView<RpSettDailyCollect> pageView = MyPageView.generaterMyPageView(recordPerPage, currentPage, _totalCount, _list);
+		
+		return pageView;
+		
 	}
 	
 	/**

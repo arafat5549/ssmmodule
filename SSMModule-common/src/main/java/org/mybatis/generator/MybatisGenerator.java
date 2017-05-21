@@ -4,13 +4,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.mybatis.generator.api.ShellRunner;
 import org.springside.modules.utils.io.URLResourceUtil;
-import org.xml.sax.SAXException;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 
 /**
  * BASE_PREFIX的作用 所有表名前缀为这个List里面的表 比如rp_user rp_text都会放到这个包底下
@@ -25,66 +32,119 @@ import com.google.common.collect.Lists;
 public class MybatisGenerator {
 	public static final String ORIGIN_CONFIG    = "generatorConfig.xml";
 	public static final String OUT_CONFIG       = "generatorConfigBak.xml";
-	public static final String CONFIG_GENERATOR = "mybatis-generator.properties";
+	public static final String CONFIG_GENERATOR = "jdbc.properties";//"mybatis-generator.properties";
 	public static final List<String> BASE_PREFIX = Lists.newArrayList("rp_","pms_","sys_");//也就是包名
 	
 	public static final Properties PROPERTIES = new Properties();
+	//日记字典
+	//public static final Properties DICT_PROPERTIES =new Properties();
+	public static Map<String,String> COMMENT_MAPS = Maps.newHashMap();
 	static
 	{
 		try {
 			InputStream is = URLResourceUtil.asStream("classpath://"+CONFIG_GENERATOR);//DataSourceFactory.class.getResourceAsStream("/jdbc.properties");
 			PROPERTIES.load(is);
+			//PropertiesUtil.loadFromString(content)
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	//工具方法区域
 	public static  List<String> getTableNames(Properties props){
 		String dbName = props.getProperty("dbName");
 		String dbType = props.getProperty("dbType");
 		return DataBasePopulator.getTableNames(props, dbName,dbType);
 	}
+	public static  Map<String,String> getTableComments(Properties props){
+		if(COMMENT_MAPS.size()>0){
+			return COMMENT_MAPS;
+		}
+		String dbName = props.getProperty("dbName");
+		String dbType = props.getProperty("dbType");
+		return DataBasePopulator.getTableComments(props, dbName,dbType);
+	}
+	/**
+	 * 
+	 * @param key 表名 比如sys_user
+	 * @return
+	 */
+	public static String getTableComment(String key){
+		 Map<String,String> maps = getTableComments(PROPERTIES);
+		 return maps.get(key);
+	}
 	
-	//第一步生成-数据库结构
+	/**
+	 * 首字母小写
+	 * @param str
+	 * @return
+	 */
+	public static String lowerCapital(final String str) {
+        int strLen;
+        if (str == null || (strLen = str.length()) == 0) {
+            return str;
+        }
+
+        char firstChar = str.charAt(0);
+        if (Character.isTitleCase(firstChar)) {
+            return str;
+        }
+
+        return new StringBuilder(strLen)
+            .append(Character.toLowerCase(firstChar))
+            .append(str.substring(1))
+            .toString();
+    }
+	/**
+	 * 将基础包名比如com.ssf.dao 转化为指定的包名
+	 */
+	public static String parsePackageName(String basePackageName,String key){
+		int idx = basePackageName.lastIndexOf(".");
+		String pName = basePackageName.substring(0,idx)+"." + key+"."+basePackageName.substring(idx+1);
+		pName = Joiner.on(".").join(Splitter.on(".").omitEmptyStrings().split(pName));
+		return pName;
+	}
+	
+    public static Multimap<String, String> getTableMultimap(List<String> tableNames,List<String> prefixs){
+    	String regex = "";
+		if(prefixs != null)
+			regex = "("+Joiner.on("|").join(prefixs)+")";
+		
+		Pattern pattern = Pattern.compile(regex);
+		Multimap<String, String> multimap = ArrayListMultimap.create();
+		for (String tname : tableNames)  
+		{
+			String base = tname;
+			Matcher macther = pattern.matcher(tname);
+			String find = "";
+			if(macther.find())
+			{
+				find = macther.group();
+				tname = tname.replace(find, "");
+			}
+			String packageName = (find).replace("_", ".");
+			multimap.put(packageName, base);
+		}
+		return multimap;
+    }
+	
+	
+	/**
+	 * 第一步生成-数据库结构
+	 * @param props
+	 * @param lists
+	 */
 	public static void runSql(Properties props,List<String> lists){
 		
 		DataBasePopulator.initDatabase(props,lists);
 	}
-//	//第二步-生成配置文件
-//	public static void createConfigs(){
-//		createConfigs(PROPERTIES,ORIGIN_CONFIG,OUT_CONFIG);
-//	}
-//	/**
-//	 * 生成model都在同一目录下
-//	 * @param props
-//	 * @param src
-//	 * @param out
-//	 */
-//	public static void createConfigs(Properties props,String src,String out){
-//		String dbName = props.getProperty("dbName");
-//		String dbType = props.getProperty("dbType");
-//		if(dbName==null || "".equals(dbName)){
-//			throw new RuntimeException("dbName没有在配置文件里面设置");
-//		}
-//		if(dbType==null || "".equals(dbType)){
-//			dbType="mysql";
-//			System.out.println("dbType为空设为默认值mysql");
-//		}
-//		try {
-//			GeneratorConfigXMLUtil.convertXmlStrToObjectTest(props,dbName, dbType,src,out);
-//		} catch (SAXException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} catch (CloneNotSupportedException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	//生成-DAO/Mapper映射文件
+	/**
+	 * 第三步 -生成-DAO/Model/Mapper映射文件
+	 * @param config
+	 */
 	public static void generator(String config){
 		System.out.println("开始生成代码...");
 		try {
-			//Resources.getResourceAsFile(config)
 			config = URLResourceUtil.asFile("classpath://"+config).getPath();
 			System.out.println("配置文件:"+config);
 		}  catch (IOException e) {
@@ -112,10 +172,8 @@ public class MybatisGenerator {
 			dbType="mysql";
 			System.out.println("dbType为空设为默认值mysql");
 		}
-		 //List<String> tableNames = getTableNames(props);
 		 String myBussinessPackage = props.getProperty("myBussinessPackage");
 		 String myModelPackage 	   = props.getProperty("myModelPackage");
-		 
 		 
 		 try {
 			return GeneratorConfigXMLUtil.generateConfigXML(tableNames, prefixs, ORIGIN_CONFIG, myBussinessPackage, myModelPackage);
@@ -125,12 +183,4 @@ public class MybatisGenerator {
 		 return Lists.newArrayList();
 	}
 	
-	
-	public static void main(String[] args) 
-	{
-		//List<String> lists = Lists.newArrayList("sql/finalssm.sql","sql/finalssm_data.sql");
-		//runSql(PROPERTIES,lists);
-		//generateConfigXML(PROPERTIES, BASE_PREFIX);
-		//generator(OUT_CONFIG);
-	}
 }

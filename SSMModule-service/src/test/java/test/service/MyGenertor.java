@@ -2,11 +2,12 @@ package test.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
+import org.mybatis.generator.CodeGeneratorUtil;
 import org.mybatis.generator.MybatisGenerator;
 import org.springside.modules.utils.base.PropertiesUtil;
-import org.springside.modules.utils.io.URLResourceUtil;
 import org.xml.sax.SAXException;
 
 import com.google.common.collect.Lists;
@@ -24,9 +25,9 @@ public class MyGenertor
 		List<String> configs = Lists.newArrayList("generator/generatorConfig_sys.xml", 
 				"generator/generatorConfig_pms.xml","generator/generatorConfig_rp.xml");
 		Properties props =PropertiesUtil.loadFromFile("classpath://jdbc.properties");		
-		List<String> tableNames = MybatisGenerator.getTableNames(props);
-		
-		
+		//List<String> tableNames = MybatisGenerator.getTableNames(props);
+		Map<String,String> comments = MybatisGenerator.getTableComments(props);
+		List<String> tableNames = Lists.newArrayList(comments.keySet());
 		
 		//1.执行sql语句
 		//List<String> lists = Lists.newArrayList("sql/finalssm.sql","sql/finalssm.sql","sql/alipay.sql");
@@ -34,15 +35,17 @@ public class MyGenertor
 		
 		//2.生成配置文件
 		//configs =MybatisGenerator.generateConfigXML(props,tableNames, BASE_PREFIX);
-		System.out.println(configs);
+		//System.out.println(configs);
 		
 		//生成dao和映射文件
 //		for (String conf : configs) {
 //			MybatisGenerator.generator(conf);
 //		}
 		
+		MybatisGenerator.generator(MybatisGenerator.ORIGIN_CONFIG);
+		
 		//生成Service  如果没有主键id 则不会生成Service
-		CodeGeneratorUtil.codeGenerator(props, tableNames, BASE_PREFIX);
+		//CodeGeneratorUtil.codeGenerator(props, tableNames, BASE_PREFIX);
 		
 	}
 }

@@ -16,6 +16,8 @@ import com.ssf.rp.model.RpNotifyRecord;
 import com.ssf.cache.RedisCache;
 import com.ssf.utils.PageUtil;
 
+import com.ssf.common.myPage.MyPageView;
+import com.ssf.common.vo.mybatis.pagination.Page;
 /**
  * 
  * IRpNotifyRecordService 接口实现类
@@ -117,6 +119,29 @@ public class RpNotifyRecordServiceImpl implements IRpNotifyRecordService {
 	@Override
 	public int updateByPrimaryKey(RpNotifyRecord record) {
 		return mapper.updateByPrimaryKey(record);
+	}
+	
+	@Override
+	public MyPageView<RpNotifyRecord> generateMyPageViewVO(Map<Object, Object> map) {
+		
+		int _totalCount = mapper.selectCountByMap(map);
+		
+		List<RpNotifyRecord> _list = mapper.selectListByMap(map);
+		
+		int recordPerPage = 10;
+		int currentPage = 1;
+		if(map.get("page") != null) {
+			Object _pageObj = map.get("page");
+			if(_pageObj instanceof Page) {
+				Page _page = (Page)_pageObj;
+				currentPage = _page.getPageNo();
+				recordPerPage = _page.getLength();
+			}
+		}
+		MyPageView<RpNotifyRecord> pageView = MyPageView.generaterMyPageView(recordPerPage, currentPage, _totalCount, _list);
+		
+		return pageView;
+		
 	}
 	
 	/**

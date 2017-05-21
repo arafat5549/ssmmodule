@@ -35,7 +35,7 @@ public class SysCategoryDaoTest {
 
 	@Test
 	public void selectByPrimaryKeyTest() {
-   			 Long id = 1L;
+   		Long id = 1L;
 		
 		SysCategory ret = mapper.selectByPrimaryKey(id);
 		System.out.println("测试selectByPrimaryKey："+ret);
@@ -44,7 +44,7 @@ public class SysCategoryDaoTest {
 	//
 	@Test
 	public void deleteByPrimaryKeyTest() {
-   			 Long id = 1L;
+   		Long id = 1L;
 		int ret = mapper.deleteByPrimaryKey(id);
 		System.out.println("测试deleteByPrimaryKeyTest："+ret);
 	}

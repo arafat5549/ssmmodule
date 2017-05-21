@@ -16,6 +16,7 @@
     <plugin type="com.ssf.common.mybatis.plugin.serializable.SerializablePlugin"/>
     <plugin type="com.ssf.common.mybatis.plugin.mutiDatasource.MutiDatasourcePaginationPlugin"/>
     <plugin type="com.ssf.common.mybatis.plugin.SelectCountAndListByMapPlugin"/>
+    <plugin type="com.ssf.common.mybatis.plugin.MyTableAnnotationPlugin"/>
     <plugin type="com.ssf.common.mybatis.plugin.MyDynamicTableNamePlugin"/>
     <plugin type="com.ssf.common.mybatis.plugin.MyInsertUpdateDynamicTableNamePlugin"/>
     <plugin type="com.ssf.common.mybatis.plugin.InterFaceExtendsPlugin">

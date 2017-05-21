@@ -16,6 +16,8 @@ import com.ssf.sys.model.SysCategory;
 import com.ssf.cache.RedisCache;
 import com.ssf.utils.PageUtil;
 
+import com.ssf.common.myPage.MyPageView;
+import com.ssf.common.vo.mybatis.pagination.Page;
 /**
  * 
  * ISysCategoryService 接口实现类
@@ -117,6 +119,29 @@ public class SysCategoryServiceImpl implements ISysCategoryService {
 	@Override
 	public int updateByPrimaryKey(SysCategory record) {
 		return mapper.updateByPrimaryKey(record);
+	}
+	
+	@Override
+	public MyPageView<SysCategory> generateMyPageViewVO(Map<Object, Object> map) {
+		
+		int _totalCount = mapper.selectCountByMap(map);
+		
+		List<SysCategory> _list = mapper.selectListByMap(map);
+		
+		int recordPerPage = 10;
+		int currentPage = 1;
+		if(map.get("page") != null) {
+			Object _pageObj = map.get("page");
+			if(_pageObj instanceof Page) {
+				Page _page = (Page)_pageObj;
+				currentPage = _page.getPageNo();
+				recordPerPage = _page.getLength();
+			}
+		}
+		MyPageView<SysCategory> pageView = MyPageView.generaterMyPageView(recordPerPage, currentPage, _totalCount, _list);
+		
+		return pageView;
+		
 	}
 	
 	/**

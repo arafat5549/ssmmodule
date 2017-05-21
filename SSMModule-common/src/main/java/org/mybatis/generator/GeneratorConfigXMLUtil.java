@@ -94,8 +94,12 @@ public class GeneratorConfigXMLUtil {
 	
 	private static void generteConfigBase(List<String> tableNames,String src,String out,String pName,String mName) throws IOException, CloneNotSupportedException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException{
 		InputStream is = URLResourceUtil.asStream("classpath://"+src);
+		//System.out.println(is);
+		//Document is2 = XmlParserUtilss.getDocument("src/main/resources/"+src);
+		//System.out.println(is2.asXML());
 		
 		Document document = XmlParserUtilss.getDocument(is);
+		System.out.println(document);
 		//System.out.println(document.asXML()); 
 		deleteXmlNotation(document.getRootElement());
 		
@@ -125,7 +129,6 @@ public class GeneratorConfigXMLUtil {
         	Element element2 = selectElement("//javaClientGenerator",document);
         	element2.addAttribute("targetPackage", pName);
         }
-        
         
         //String name = Resources.getResourceURL(out).toString();//getResourceAsFile(out).toString();
         System.out.println(out);
@@ -170,28 +173,7 @@ public class GeneratorConfigXMLUtil {
     }
 	
     
-    public static Multimap<String, String> getTableMultimap(List<String> tableNames,List<String> prefixs){
-    	String regex = "";
-		if(prefixs != null)
-			regex = "("+Joiner.on("|").join(prefixs)+")";
-		
-		Pattern pattern = Pattern.compile(regex);
-		Multimap<String, String> multimap = ArrayListMultimap.create();
-		for (String tname : tableNames)  
-		{
-			String base = tname;
-			Matcher macther = pattern.matcher(tname);
-			String find = "";
-			if(macther.find())
-			{
-				find = macther.group();
-				tname = tname.replace(find, "");
-			}
-			String packageName = (find).replace("_", ".");
-			multimap.put(packageName, base);
-		}
-		return multimap;
-    }
+
     /**
 	 * 读取数据库 生成所有table标签<p>
 	 * 
@@ -214,37 +196,20 @@ public class GeneratorConfigXMLUtil {
 		
 		List<String> configs =  Lists.newArrayList();
 		
-//		String regex = "";
-//		if(prefixs != null)
-//			regex = "("+Joiner.on("|").join(prefixs)+")";
-//		
-//		Pattern pattern = Pattern.compile(regex);
-//		Multimap<String, String> multimap = ArrayListMultimap.create();
-//		for (String tname : tableNames)  
-//		{
-//			String base = tname;
-//			Matcher macther = pattern.matcher(tname);
-//			String find = "";
-//			if(macther.find())
-//			{
-//				find = macther.group();
-//				tname = tname.replace(find, "");
-//			}
-//			String packageName = (find).replace("_", ".");
-//			multimap.put(packageName, base);
-//		}
 		
-		Multimap<String, String> multimap = getTableMultimap(tableNames,prefixs);
+		Multimap<String, String> multimap = MybatisGenerator.getTableMultimap(tableNames,prefixs);
 		
 		int srcidx = src.lastIndexOf(".");
 		String outBaseName =  src.substring(0,srcidx);
 		for (String key : multimap.keySet()) {
-			int idx = myBussinessPackage.lastIndexOf(".");
-			String pName = myBussinessPackage.substring(0,idx)+"." + key+"."+myBussinessPackage.substring(idx+1);
-			pName = Joiner.on(".").join(Splitter.on(".").omitEmptyStrings().split(pName));
+//			int idx = myBussinessPackage.lastIndexOf(".");
+//			String pName = myBussinessPackage.substring(0,idx)+"." + key+"."+myBussinessPackage.substring(idx+1);
+//			pName = Joiner.on(".").join(Splitter.on(".").omitEmptyStrings().split(pName));
+//			String mName = myModelPackage.substring(0,idx)+"." + key+"."+myModelPackage.substring(idx+1);
+//			mName = Joiner.on(".").join(Splitter.on(".").omitEmptyStrings().split(mName));
 			
-			String mName = myModelPackage.substring(0,idx)+"." + key+"."+myModelPackage.substring(idx+1);
-			mName = Joiner.on(".").join(Splitter.on(".").omitEmptyStrings().split(mName));
+			String daoPackageName = MybatisGenerator.parsePackageName(myBussinessPackage, key);
+			String modelPackageName = MybatisGenerator.parsePackageName(myModelPackage, key);
 			
 			String out = outBaseName+"Bak.xml";
 			if(prefixs != null){
@@ -259,20 +224,12 @@ public class GeneratorConfigXMLUtil {
 				configs.add(out);
 			}
 			out = "src/main/resources/"+  out;
-		    generteConfigBase((List<String>)multimap.get(key), src, out ,pName,mName);
+			System.out.println(src+","+out);
+		    generteConfigBase((List<String>)multimap.get(key), src, out ,daoPackageName,modelPackageName);
 		}
 		
 		return configs;
 	}
 
-//	public static void main(String[] args) {
-//		 try {
-//			generateConfigXML();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} catch (CloneNotSupportedException e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 }

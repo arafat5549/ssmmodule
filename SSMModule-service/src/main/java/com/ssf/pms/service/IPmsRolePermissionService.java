@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssf.pms.model.PmsRolePermission;
+import com.ssf.common.myPage.MyPageView;
 
 /**
  * 
@@ -59,4 +60,11 @@ public interface IPmsRolePermissionService {
 
 	int updateByPrimaryKey(PmsRolePermission record);
     
+    
+     /**
+     * 获取分页实体信息部分
+     * @param map	参数传递，封装部分过滤参数
+     * @return
+     */
+    MyPageView<PmsRolePermission> generateMyPageViewVO(Map<Object, Object> map);
 }

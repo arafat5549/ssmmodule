@@ -16,6 +16,8 @@ import com.ssf.sys.model.SysProduct;
 import com.ssf.cache.RedisCache;
 import com.ssf.utils.PageUtil;
 
+import com.ssf.common.myPage.MyPageView;
+import com.ssf.common.vo.mybatis.pagination.Page;
 /**
  * 
  * ISysProductService 接口实现类
@@ -117,6 +119,29 @@ public class SysProductServiceImpl implements ISysProductService {
 	@Override
 	public int updateByPrimaryKey(SysProduct record) {
 		return mapper.updateByPrimaryKey(record);
+	}
+	
+	@Override
+	public MyPageView<SysProduct> generateMyPageViewVO(Map<Object, Object> map) {
+		
+		int _totalCount = mapper.selectCountByMap(map);
+		
+		List<SysProduct> _list = mapper.selectListByMap(map);
+		
+		int recordPerPage = 10;
+		int currentPage = 1;
+		if(map.get("page") != null) {
+			Object _pageObj = map.get("page");
+			if(_pageObj instanceof Page) {
+				Page _page = (Page)_pageObj;
+				currentPage = _page.getPageNo();
+				recordPerPage = _page.getLength();
+			}
+		}
+		MyPageView<SysProduct> pageView = MyPageView.generaterMyPageView(recordPerPage, currentPage, _totalCount, _list);
+		
+		return pageView;
+		
 	}
 	
 	/**

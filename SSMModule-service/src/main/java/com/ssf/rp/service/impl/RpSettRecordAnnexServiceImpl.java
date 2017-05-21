@@ -16,6 +16,8 @@ import com.ssf.rp.model.RpSettRecordAnnex;
 import com.ssf.cache.RedisCache;
 import com.ssf.utils.PageUtil;
 
+import com.ssf.common.myPage.MyPageView;
+import com.ssf.common.vo.mybatis.pagination.Page;
 /**
  * 
  * IRpSettRecordAnnexService 接口实现类
@@ -117,6 +119,29 @@ public class RpSettRecordAnnexServiceImpl implements IRpSettRecordAnnexService {
 	@Override
 	public int updateByPrimaryKey(RpSettRecordAnnex record) {
 		return mapper.updateByPrimaryKey(record);
+	}
+	
+	@Override
+	public MyPageView<RpSettRecordAnnex> generateMyPageViewVO(Map<Object, Object> map) {
+		
+		int _totalCount = mapper.selectCountByMap(map);
+		
+		List<RpSettRecordAnnex> _list = mapper.selectListByMap(map);
+		
+		int recordPerPage = 10;
+		int currentPage = 1;
+		if(map.get("page") != null) {
+			Object _pageObj = map.get("page");
+			if(_pageObj instanceof Page) {
+				Page _page = (Page)_pageObj;
+				currentPage = _page.getPageNo();
+				recordPerPage = _page.getLength();
+			}
+		}
+		MyPageView<RpSettRecordAnnex> pageView = MyPageView.generaterMyPageView(recordPerPage, currentPage, _totalCount, _list);
+		
+		return pageView;
+		
 	}
 	
 	/**

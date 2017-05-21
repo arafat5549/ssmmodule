@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssf.rp.model.RpUserBankAccount;
+import com.ssf.common.myPage.MyPageView;
 
 /**
  * 
@@ -59,4 +60,11 @@ public interface IRpUserBankAccountService {
 
 	int updateByPrimaryKey(RpUserBankAccount record);
     
+    
+     /**
+     * 获取分页实体信息部分
+     * @param map	参数传递，封装部分过滤参数
+     * @return
+     */
+    MyPageView<RpUserBankAccount> generateMyPageViewVO(Map<Object, Object> map);
 }

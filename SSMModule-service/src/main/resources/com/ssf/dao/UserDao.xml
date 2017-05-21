@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.dao.UserDao">
+  <resultMap id="BaseResultMap" type="com.ssf.model.User">
+    <id column="sys_user_id" jdbcType="BIGINT" property="id" />
+    <result column="sys_user_name" jdbcType="VARCHAR" property="name" />
+    <result column="sys_user_password" jdbcType="VARCHAR" property="password" />
+    <result column="sys_user_phone" jdbcType="BIGINT" property="phone" />
+    <result column="sys_user_score" jdbcType="INTEGER" property="score" />
+    <result column="sys_user_create_time" jdbcType="VARCHAR" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+    <result column="sys_user_update_time" jdbcType="VARCHAR" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+    <result column="sys_user_DELETE_FLAG" jdbcType="VARCHAR" property="deleteFlag" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sys_user.id as sys_user_id, sys_user.name as sys_user_name, sys_user.password as sys_user_password, 
+    sys_user.phone as sys_user_phone, sys_user.score as sys_user_score, sys_user.create_time as sys_user_create_time, 
+    sys_user.update_time as sys_user_update_time, sys_user.DELETE_FLAG as sys_user_DELETE_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user sys_user
+    where sys_user.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.model.User">
+    insert into ${dynamicTableName} (id, name, password,
+      phone, score, create_time, 
+      update_time, 
+      DELETE_FLAG
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=BIGINT}, #{score,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}, 
+      #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}, 
+      #{deleteFlag,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.model.User">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteFlag != null">
+        DELETE_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.model.User">
+    update ${dynamicTableName}
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="deleteFlag != null">
+        DELETE_FLAG = #{deleteFlag,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.model.User">
+    update ${dynamicTableName}
+    set name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=BIGINT},
+      score = #{score,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      update_time = #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      DELETE_FLAG = #{deleteFlag,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByIds">
+    update sys_user sys_user set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_user </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_user sys_user</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_user </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_user sys_user</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND sys_user.id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="name != null and name != ''">
+         AND sys_user.name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null and password != ''">
+         AND sys_user.password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="phone != null and phone != ''">
+         AND sys_user.phone = #{phone,jdbcType=BIGINT}
+      </if>
+      <if test="score != null and score != ''">
+         AND sys_user.score = #{score,jdbcType=INTEGER}
+      </if>
+      <if test="createTime != null and createTime != ''">
+         AND sys_user.create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+         AND sys_user.update_time = #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="deleteFlag != null and deleteFlag != ''">
+         AND sys_user.DELETE_FLAG = #{deleteFlag,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND sys_user.id &gt; #{myGreater_id,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_name != null and myGreater_name != ''">
+         AND sys_user.name &gt; #{myGreater_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_password != null and myGreater_password != ''">
+         AND sys_user.password &gt; #{myGreater_password,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_phone != null and myGreater_phone != ''">
+         AND sys_user.phone &gt; #{myGreater_phone,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_score != null and myGreater_score != ''">
+         AND sys_user.score &gt; #{myGreater_score,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_createTime != null and myGreater_createTime != ''">
+         AND sys_user.create_time &gt; #{myGreater_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_updateTime != null and myGreater_updateTime != ''">
+         AND sys_user.update_time &gt; #{myGreater_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_deleteFlag != null and myGreater_deleteFlag != ''">
+         AND sys_user.DELETE_FLAG &gt; #{myGreater_deleteFlag,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND sys_user.id &lt; #{myLesser_id,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_name != null and myLesser_name != ''">
+         AND sys_user.name &lt; #{myLesser_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_password != null and myLesser_password != ''">
+         AND sys_user.password &lt; #{myLesser_password,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_phone != null and myLesser_phone != ''">
+         AND sys_user.phone &lt; #{myLesser_phone,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_score != null and myLesser_score != ''">
+         AND sys_user.score &lt; #{myLesser_score,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_createTime != null and myLesser_createTime != ''">
+         AND sys_user.create_time &lt; #{myLesser_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_updateTime != null and myLesser_updateTime != ''">
+         AND sys_user.update_time &lt; #{myLesser_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_deleteFlag != null and myLesser_deleteFlag != ''">
+         AND sys_user.DELETE_FLAG &lt; #{myLesser_deleteFlag,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND sys_user.id like CONCAT('%', #{myLike_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_name != null and myLike_name != ''">
+         AND sys_user.name like CONCAT('%', #{myLike_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_password != null and myLike_password != ''">
+         AND sys_user.password like CONCAT('%', #{myLike_password,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_phone != null and myLike_phone != ''">
+         AND sys_user.phone like CONCAT('%', #{myLike_phone,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_score != null and myLike_score != ''">
+         AND sys_user.score like CONCAT('%', #{myLike_score,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_createTime != null and myLike_createTime != ''">
+         AND sys_user.create_time like CONCAT('%', #{myLike_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLike_updateTime != null and myLike_updateTime != ''">
+         AND sys_user.update_time like CONCAT('%', #{myLike_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLike_deleteFlag != null and myLike_deleteFlag != ''">
+         AND sys_user.DELETE_FLAG like CONCAT('%', #{myLike_deleteFlag,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND sys_user.id like CONCAT('%', #{myLikeStart_id,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_name != null and myLikeStart_name != ''">
+         AND sys_user.name like CONCAT('%', #{myLikeStart_name,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_password != null and myLikeStart_password != ''">
+         AND sys_user.password like CONCAT('%', #{myLikeStart_password,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_phone != null and myLikeStart_phone != ''">
+         AND sys_user.phone like CONCAT('%', #{myLikeStart_phone,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_score != null and myLikeStart_score != ''">
+         AND sys_user.score like CONCAT('%', #{myLikeStart_score,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_createTime != null and myLikeStart_createTime != ''">
+         AND sys_user.create_time like CONCAT('%', #{myLikeStart_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeStart_updateTime != null and myLikeStart_updateTime != ''">
+         AND sys_user.update_time like CONCAT('%', #{myLikeStart_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeStart_deleteFlag != null and myLikeStart_deleteFlag != ''">
+         AND sys_user.DELETE_FLAG like CONCAT('%', #{myLikeStart_deleteFlag,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND sys_user.id like CONCAT( #{myLikeEnd_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_name != null and myLikeEnd_name != ''">
+         AND sys_user.name like CONCAT( #{myLikeEnd_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_password != null and myLikeEnd_password != ''">
+         AND sys_user.password like CONCAT( #{myLikeEnd_password,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_phone != null and myLikeEnd_phone != ''">
+         AND sys_user.phone like CONCAT( #{myLikeEnd_phone,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_score != null and myLikeEnd_score != ''">
+         AND sys_user.score like CONCAT( #{myLikeEnd_score,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_createTime != null and myLikeEnd_createTime != ''">
+         AND sys_user.create_time like CONCAT( #{myLikeEnd_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeEnd_updateTime != null and myLikeEnd_updateTime != ''">
+         AND sys_user.update_time like CONCAT( #{myLikeEnd_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeEnd_deleteFlag != null and myLikeEnd_deleteFlag != ''">
+         AND sys_user.DELETE_FLAG like CONCAT( #{myLikeEnd_deleteFlag,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND sys_user.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_name != null and myIn_name != ''">
+         AND sys_user.name in <foreach item="item" index="index" collection="myIn_name" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_password != null and myIn_password != ''">
+         AND sys_user.password in <foreach item="item" index="index" collection="myIn_password" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_phone != null and myIn_phone != ''">
+         AND sys_user.phone in <foreach item="item" index="index" collection="myIn_phone" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_score != null and myIn_score != ''">
+         AND sys_user.score in <foreach item="item" index="index" collection="myIn_score" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createTime != null and myIn_createTime != ''">
+         AND sys_user.create_time in <foreach item="item" index="index" collection="myIn_createTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_updateTime != null and myIn_updateTime != ''">
+         AND sys_user.update_time in <foreach item="item" index="index" collection="myIn_updateTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_deleteFlag != null and myIn_deleteFlag != ''">
+         AND sys_user.DELETE_FLAG in <foreach item="item" index="index" collection="myIn_deleteFlag" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKeyAndTableName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${dynamicTableName}  sys_user where sys_user.id = #{id, jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKeyAndTableName" parameterType="String">
+    delete from ${dynamicTableName} where id = #{id, jdbcType=VARCHAR}
+  </delete>
+</mapper>

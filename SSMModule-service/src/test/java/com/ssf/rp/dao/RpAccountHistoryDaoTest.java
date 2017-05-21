@@ -35,7 +35,7 @@ public class RpAccountHistoryDaoTest {
 
 	@Test
 	public void selectByPrimaryKeyTest() {
-   			 String id = "1";
+   		String id = "1";
 		
 		RpAccountHistory ret = mapper.selectByPrimaryKey(id);
 		System.out.println("测试selectByPrimaryKey："+ret);
@@ -44,7 +44,7 @@ public class RpAccountHistoryDaoTest {
 	//
 	@Test
 	public void deleteByPrimaryKeyTest() {
-   			 String id = "1";
+   		 String id = "1";
 		int ret = mapper.deleteByPrimaryKey(id);
 		System.out.println("测试deleteByPrimaryKeyTest："+ret);
 	}

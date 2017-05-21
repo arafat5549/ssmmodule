@@ -1,7 +1,5 @@
 package com.ssf.web.admin.controller;
 
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class IndexController {
 	
-	//@Resource
-	//private RpUseri
+	
 	
 	private static final String VIEW_PATH = "";
 	

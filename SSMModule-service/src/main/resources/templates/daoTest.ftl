@@ -36,10 +36,10 @@ public class ${className}DaoTest {
 	@Test
 	public void selectByPrimaryKeyTest() {
 		 <#if idField == "Long">
-   			 Long id = 1L;
+   		Long id = 1L;
 		</#if>
 		<#if idField == "String">
-   			 String id = "1";
+   		String id = "1";
 		</#if>
 		
 		${className} ret = mapper.selectByPrimaryKey(id);
@@ -50,10 +50,10 @@ public class ${className}DaoTest {
 	@Test
 	public void deleteByPrimaryKeyTest() {
 	    <#if idField == "Long">
-   			 Long id = 1L;
+   		Long id = 1L;
 		</#if>
 		<#if idField == "String">
-   			 String id = "1";
+   		 String id = "1";
 		</#if>
 		int ret = mapper.deleteByPrimaryKey(id);
 		System.out.println("测试deleteByPrimaryKeyTest："+ret);

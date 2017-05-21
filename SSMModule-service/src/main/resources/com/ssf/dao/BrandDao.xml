@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.dao.BrandDao">
+  <resultMap id="BaseResultMap" type="com.ssf.model.Brand">
+    <id column="sys_brand_id" jdbcType="BIGINT" property="id" />
+    <result column="sys_brand_name" jdbcType="VARCHAR" property="name" />
+    <result column="sys_brand_logo" jdbcType="VARCHAR" property="logo" />
+    <result column="sys_brand_create_time" jdbcType="VARCHAR" property="createTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+    <result column="sys_brand_update_time" jdbcType="VARCHAR" property="updateTime" typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ssf.model.Brand">
+    <result column="sys_brand_describe" jdbcType="LONGVARCHAR" property="describe" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sys_brand.id as sys_brand_id, sys_brand.name as sys_brand_name, sys_brand.logo as sys_brand_logo, 
+    sys_brand.create_time as sys_brand_create_time, sys_brand.update_time as sys_brand_update_time
+  </sql>
+  <sql id="Blob_Column_List">
+    sys_brand.describe as sys_brand_describe
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_brand sys_brand
+    where sys_brand.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_brand
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.model.Brand">
+    insert into ${dynamicTableName} (id, name, logo,
+      create_time, 
+      update_time, 
+      describe)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}, 
+      #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}, 
+      #{describe,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.model.Brand">
+    insert into ${dynamicTableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="logo != null">
+        logo,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="describe != null">
+        describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null">
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="describe != null">
+        #{describe,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.model.Brand">
+    update ${dynamicTableName}
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null">
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      </if>
+      <if test="describe != null">
+        describe = #{describe,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ssf.model.Brand">
+    update sys_brand
+    set name = #{name,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      update_time = #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      describe = #{describe,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.model.Brand">
+    update ${dynamicTableName}
+    set name = #{name,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},
+      update_time = #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByIds">
+    update sys_brand sys_brand set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_brand </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_brand sys_brand</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_brand </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_brand sys_brand</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND sys_brand.id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="name != null and name != ''">
+         AND sys_brand.name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="logo != null and logo != ''">
+         AND sys_brand.logo = #{logo,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null and createTime != ''">
+         AND sys_brand.create_time = #{createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+         AND sys_brand.update_time = #{updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="describe != null and describe != ''">
+         AND sys_brand.describe = #{describe,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND sys_brand.id &gt; #{myGreater_id,jdbcType=BIGINT}
+      </if>
+      <if test="myGreater_name != null and myGreater_name != ''">
+         AND sys_brand.name &gt; #{myGreater_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_logo != null and myGreater_logo != ''">
+         AND sys_brand.logo &gt; #{myGreater_logo,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_createTime != null and myGreater_createTime != ''">
+         AND sys_brand.create_time &gt; #{myGreater_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_updateTime != null and myGreater_updateTime != ''">
+         AND sys_brand.update_time &gt; #{myGreater_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myGreater_describe != null and myGreater_describe != ''">
+         AND sys_brand.describe &gt; #{myGreater_describe,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND sys_brand.id &lt; #{myLesser_id,jdbcType=BIGINT}
+      </if>
+      <if test="myLesser_name != null and myLesser_name != ''">
+         AND sys_brand.name &lt; #{myLesser_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_logo != null and myLesser_logo != ''">
+         AND sys_brand.logo &lt; #{myLesser_logo,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_createTime != null and myLesser_createTime != ''">
+         AND sys_brand.create_time &lt; #{myLesser_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_updateTime != null and myLesser_updateTime != ''">
+         AND sys_brand.update_time &lt; #{myLesser_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler}
+      </if>
+      <if test="myLesser_describe != null and myLesser_describe != ''">
+         AND sys_brand.describe &lt; #{myLesser_describe,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND sys_brand.id like CONCAT('%', #{myLike_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLike_name != null and myLike_name != ''">
+         AND sys_brand.name like CONCAT('%', #{myLike_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_logo != null and myLike_logo != ''">
+         AND sys_brand.logo like CONCAT('%', #{myLike_logo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_createTime != null and myLike_createTime != ''">
+         AND sys_brand.create_time like CONCAT('%', #{myLike_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLike_updateTime != null and myLike_updateTime != ''">
+         AND sys_brand.update_time like CONCAT('%', #{myLike_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLike_describe != null and myLike_describe != ''">
+         AND sys_brand.describe like CONCAT('%', #{myLike_describe,jdbcType=LONGVARCHAR},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND sys_brand.id like CONCAT('%', #{myLikeStart_id,jdbcType=BIGINT})
+      </if>
+      <if test="myLikeStart_name != null and myLikeStart_name != ''">
+         AND sys_brand.name like CONCAT('%', #{myLikeStart_name,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_logo != null and myLikeStart_logo != ''">
+         AND sys_brand.logo like CONCAT('%', #{myLikeStart_logo,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_createTime != null and myLikeStart_createTime != ''">
+         AND sys_brand.create_time like CONCAT('%', #{myLikeStart_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeStart_updateTime != null and myLikeStart_updateTime != ''">
+         AND sys_brand.update_time like CONCAT('%', #{myLikeStart_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler})
+      </if>
+      <if test="myLikeStart_describe != null and myLikeStart_describe != ''">
+         AND sys_brand.describe like CONCAT('%', #{myLikeStart_describe,jdbcType=LONGVARCHAR})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND sys_brand.id like CONCAT( #{myLikeEnd_id,jdbcType=BIGINT},'%' )
+      </if>
+      <if test="myLikeEnd_name != null and myLikeEnd_name != ''">
+         AND sys_brand.name like CONCAT( #{myLikeEnd_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_logo != null and myLikeEnd_logo != ''">
+         AND sys_brand.logo like CONCAT( #{myLikeEnd_logo,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_createTime != null and myLikeEnd_createTime != ''">
+         AND sys_brand.create_time like CONCAT( #{myLikeEnd_createTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeEnd_updateTime != null and myLikeEnd_updateTime != ''">
+         AND sys_brand.update_time like CONCAT( #{myLikeEnd_updateTime,jdbcType=VARCHAR,typeHandler=com.ssf.common.vo.GMT.handler.GMTDateTransHandler},'%' )
+      </if>
+      <if test="myLikeEnd_describe != null and myLikeEnd_describe != ''">
+         AND sys_brand.describe like CONCAT( #{myLikeEnd_describe,jdbcType=LONGVARCHAR},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND sys_brand.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_name != null and myIn_name != ''">
+         AND sys_brand.name in <foreach item="item" index="index" collection="myIn_name" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_logo != null and myIn_logo != ''">
+         AND sys_brand.logo in <foreach item="item" index="index" collection="myIn_logo" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createTime != null and myIn_createTime != ''">
+         AND sys_brand.create_time in <foreach item="item" index="index" collection="myIn_createTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_updateTime != null and myIn_updateTime != ''">
+         AND sys_brand.update_time in <foreach item="item" index="index" collection="myIn_updateTime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_describe != null and myIn_describe != ''">
+         AND sys_brand.describe in <foreach item="item" index="index" collection="myIn_describe" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKeyAndTableName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${dynamicTableName}  sys_brand where sys_brand.id = #{id, jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKeyAndTableName" parameterType="String">
+    delete from ${dynamicTableName} where id = #{id, jdbcType=VARCHAR}
+  </delete>
+</mapper>
