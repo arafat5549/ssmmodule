@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.sys.dao.SysReUserRoleDao">
+  <resultMap id="BaseResultMap" type="com.ssf.sys.model.SysReUserRole">
+    <id column="sys_re_user_role_id" jdbcType="INTEGER" property="id" />
+    <result column="sys_re_user_role_userId" jdbcType="INTEGER" property="userid" />
+    <result column="sys_re_user_role_roleId" jdbcType="INTEGER" property="roleid" />
+    <result column="sys_re_user_role_appId" jdbcType="INTEGER" property="appid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sys_re_user_role.id as sys_re_user_role_id, sys_re_user_role.userId as sys_re_user_role_userId, 
+    sys_re_user_role.roleId as sys_re_user_role_roleId, sys_re_user_role.appId as sys_re_user_role_appId
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_re_user_role sys_re_user_role
+    where sys_re_user_role.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_re_user_role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.sys.model.SysReUserRole">
+    insert into sys_re_user_role (id, userId, roleId, 
+      appId)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, 
+      #{appid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.sys.model.SysReUserRole">
+    insert into sys_re_user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="roleid != null">
+        roleId,
+      </if>
+      <if test="appid != null">
+        appId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null">
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null">
+        #{appid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.sys.model.SysReUserRole">
+    update sys_re_user_role
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null">
+        roleId = #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null">
+        appId = #{appid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.sys.model.SysReUserRole">
+    update sys_re_user_role
+    set userId = #{userid,jdbcType=INTEGER},
+      roleId = #{roleid,jdbcType=INTEGER},
+      appId = #{appid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="deleteLogicByIds">
+    update sys_re_user_role sys_re_user_role set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_re_user_role </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_re_user_role sys_re_user_role</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_re_user_role </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_re_user_role sys_re_user_role</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND sys_re_user_role.id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="userid != null and userid != ''">
+         AND sys_re_user_role.userId = #{userid,jdbcType=INTEGER}
+      </if>
+      <if test="roleid != null and roleid != ''">
+         AND sys_re_user_role.roleId = #{roleid,jdbcType=INTEGER}
+      </if>
+      <if test="appid != null and appid != ''">
+         AND sys_re_user_role.appId = #{appid,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND sys_re_user_role.id &gt; #{myGreater_id,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_userid != null and myGreater_userid != ''">
+         AND sys_re_user_role.userId &gt; #{myGreater_userid,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_roleid != null and myGreater_roleid != ''">
+         AND sys_re_user_role.roleId &gt; #{myGreater_roleid,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_appid != null and myGreater_appid != ''">
+         AND sys_re_user_role.appId &gt; #{myGreater_appid,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND sys_re_user_role.id &lt; #{myLesser_id,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_userid != null and myLesser_userid != ''">
+         AND sys_re_user_role.userId &lt; #{myLesser_userid,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_roleid != null and myLesser_roleid != ''">
+         AND sys_re_user_role.roleId &lt; #{myLesser_roleid,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_appid != null and myLesser_appid != ''">
+         AND sys_re_user_role.appId &lt; #{myLesser_appid,jdbcType=INTEGER}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND sys_re_user_role.id like CONCAT('%', #{myLike_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_userid != null and myLike_userid != ''">
+         AND sys_re_user_role.userId like CONCAT('%', #{myLike_userid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_roleid != null and myLike_roleid != ''">
+         AND sys_re_user_role.roleId like CONCAT('%', #{myLike_roleid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_appid != null and myLike_appid != ''">
+         AND sys_re_user_role.appId like CONCAT('%', #{myLike_appid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND sys_re_user_role.id like CONCAT('%', #{myLikeStart_id,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_userid != null and myLikeStart_userid != ''">
+         AND sys_re_user_role.userId like CONCAT('%', #{myLikeStart_userid,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_roleid != null and myLikeStart_roleid != ''">
+         AND sys_re_user_role.roleId like CONCAT('%', #{myLikeStart_roleid,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_appid != null and myLikeStart_appid != ''">
+         AND sys_re_user_role.appId like CONCAT('%', #{myLikeStart_appid,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND sys_re_user_role.id like CONCAT( #{myLikeEnd_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_userid != null and myLikeEnd_userid != ''">
+         AND sys_re_user_role.userId like CONCAT( #{myLikeEnd_userid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_roleid != null and myLikeEnd_roleid != ''">
+         AND sys_re_user_role.roleId like CONCAT( #{myLikeEnd_roleid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_appid != null and myLikeEnd_appid != ''">
+         AND sys_re_user_role.appId like CONCAT( #{myLikeEnd_appid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND sys_re_user_role.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_userid != null and myIn_userid != ''">
+         AND sys_re_user_role.userId in <foreach item="item" index="index" collection="myIn_userid" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_roleid != null and myIn_roleid != ''">
+         AND sys_re_user_role.roleId in <foreach item="item" index="index" collection="myIn_roleid" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_appid != null and myIn_appid != ''">
+         AND sys_re_user_role.appId in <foreach item="item" index="index" collection="myIn_appid" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+</mapper>

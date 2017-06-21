@@ -12,13 +12,13 @@
     <head>
    		 <title>${pageTitle}</title>
    		 
-		<%@include file="common/csslib.jsp" %> 
+		<%@include file="${commonUrl}common/csslib.jsp" %> 
      </head>
     <!-- END HEAD -->
 
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
 		
-		<%@include file="common/header.jsp" %> 
+		<%@include file="${commonUrl}common/header.jsp" %> 
 		
         <!-- BEGIN HEADER & CONTENT DIVIDER -->
         <div class="clearfix"> </div>
@@ -26,22 +26,22 @@
         
 		<!-- BEGIN CONTAINER -->
         <div class="page-container">
-            <%@include file="common/sidebar.jsp" %> 
+            <%@include file="${commonUrl}common/sidebar.jsp" %> 
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
                 <!-- BEGIN CONTENT BODY -->
                 <div class="page-content">
-                    <%@include file="common/pageHeader.jsp" %>
-					<%@include file="common/include/${pageContentJsp}" %>
+                    <%@include file="${commonUrl}common/pageHeader.jsp" %>
+					<%@include file="${commonUrl}common/include/${pageContentJsp}" %>
 			    </div>
                 <!-- END CONTENT BODY -->
             </div>
             <!-- END CONTENT -->
-			<%@include file="common/quickSidebar.jsp" %>
+			<%@include file="${commonUrl}common/quickSidebar.jsp" %>
 		</div>
         <!-- END CONTAINER -->
- 		<%@ include file="common/footer.jsp" %>
- 		<%@ include file="common/jslib.jsp" %>
+ 		<%@ include file="${commonUrl}common/footer.jsp" %>
+ 		<%@ include file="${commonUrl}common/jslib.jsp" %>
     </body> 
 
 </html>

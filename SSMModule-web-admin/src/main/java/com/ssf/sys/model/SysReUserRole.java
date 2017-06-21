@@ -1,0 +1,77 @@
+package com.ssf.sys.model;
+
+import java.io.Serializable;
+
+/**
+ *   sys_re_user_role	用户角色表
+ *
+ */
+public class SysReUserRole implements Serializable {
+    /**
+     *  ,所属表字段为sys_re_user_role.id
+     */
+    private Integer id;
+
+    /**
+     *  用户ID ,所属表字段为sys_re_user_role.userId
+     */
+    private Integer userid;
+
+    /**
+     *  角色ID,所属表字段为sys_re_user_role.roleId
+     */
+    private Integer roleid;
+
+    /**
+     *  应用ID,所属表字段为sys_re_user_role.appId
+     */
+    private Integer appid;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
+    public Integer getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
+    }
+
+    public Integer getAppid() {
+        return appid;
+    }
+
+    public void setAppid(Integer appid) {
+        this.appid = appid;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", userid=").append(userid);
+        sb.append(", roleid=").append(roleid);
+        sb.append(", appid=").append(appid);
+        sb.append("]");
+        return sb.toString();
+    }
+}

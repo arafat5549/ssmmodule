@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.ssf</groupId>
+    <artifactId>SSMModule-parent</artifactId>
+    <version>0.0.1-RELEASE</version>
+  </parent>
+  <artifactId>SSMModule-swagger</artifactId>
+  <packaging>war</packaging>
+  <name>SSMModule-swagger</name>
+  <url>http://maven.apache.org</url>
+  
+  <dependencies>
+      <dependency>
+			<groupId>com.ssf</groupId>
+			<artifactId>SSMModule-service</artifactId>
+			<version>${project.version}</version>
+        </dependency>
+        
+        <!-- BEGIN#引入swagger相关部分的Jar包#BEGIN -->
+        
+        	<dependency>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-annotations</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+			</dependency>
+        <!-- END#引入swagger相关部分的Jar包#END -->
+        
+        <!-- SpringWEB部分的包导入  -->
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc-portlet</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		
+		<!-- JSON解析#jackson-->
+			<dependency>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-core</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+			</dependency>
+			<dependency>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-annotations</artifactId>
+			</dependency>
+		
+			<!-- WEB依赖包 -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>jsp-api</artifactId>
+			</dependency>
+			<!-- jstl jsp页面标签 -->
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+			</dependency>
+  </dependencies>
+  <build>
+    <finalName>SSMModule-swagger</finalName>
+    <plugins>
+    		 <!-- maven-tomcat7服务器插件 --> 	
+	          <plugin>
+	                <groupId>org.apache.tomcat.maven</groupId>
+	                <artifactId>tomcat7-maven-plugin</artifactId>
+	                <version>2.1</version>
+	                <configuration>
+	                    <port>9997</port>      <!-- 参数maven.tomcat.ajp.port   默认8080-->
+	                    <!--<ajpPort>8010</ajpPort> 参数maven.tomcat.port 默认0 -->
+	                    <path>/</path>
+	                    <uriEncoding>UTF-8</uriEncoding>
+	                    <finalName>${project.artifactId}</finalName>
+	                    <server>tomcat7</server>
+						<ignorePackaging>true</ignorePackaging>
+	                </configuration>
+	            </plugin>
+    </plugins>
+  </build>
+</project>

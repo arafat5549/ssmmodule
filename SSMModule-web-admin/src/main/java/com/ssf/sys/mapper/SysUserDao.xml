@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.sys.dao.SysUserDao">
+  <resultMap id="BaseResultMap" type="com.ssf.sys.model.SysUser">
+    <id column="sys_user_id" jdbcType="INTEGER" property="id" />
+    <result column="sys_user_account" jdbcType="VARCHAR" property="account" />
+    <result column="sys_user_password" jdbcType="VARCHAR" property="password" />
+    <result column="sys_user_lastLoginIp" jdbcType="VARCHAR" property="lastloginip" />
+    <result column="sys_user_lastLoginTime" jdbcType="TIMESTAMP" property="lastlogintime" />
+    <result column="sys_user_loginCount" jdbcType="INTEGER" property="logincount" />
+    <result column="sys_user_createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="sys_user_isEnable" jdbcType="BIT" property="isenable" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sys_user.id as sys_user_id, sys_user.account as sys_user_account, sys_user.password as sys_user_password, 
+    sys_user.lastLoginIp as sys_user_lastLoginIp, sys_user.lastLoginTime as sys_user_lastLoginTime, 
+    sys_user.loginCount as sys_user_loginCount, sys_user.createTime as sys_user_createTime, 
+    sys_user.isEnable as sys_user_isEnable
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user sys_user
+    where sys_user.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.sys.model.SysUser">
+    insert into sys_user (id, account, password, 
+      lastLoginIp, lastLoginTime, loginCount, 
+      createTime, isEnable)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{lastloginip,jdbcType=VARCHAR}, #{lastlogintime,jdbcType=TIMESTAMP}, #{logincount,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{isenable,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.sys.model.SysUser">
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="lastloginip != null">
+        lastLoginIp,
+      </if>
+      <if test="lastlogintime != null">
+        lastLoginTime,
+      </if>
+      <if test="logincount != null">
+        loginCount,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="isenable != null">
+        isEnable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="lastloginip != null">
+        #{lastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime != null">
+        #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logincount != null">
+        #{logincount,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isenable != null">
+        #{isenable,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.sys.model.SysUser">
+    update sys_user
+    <set>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="lastloginip != null">
+        lastLoginIp = #{lastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime != null">
+        lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logincount != null">
+        loginCount = #{logincount,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isenable != null">
+        isEnable = #{isenable,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.sys.model.SysUser">
+    update sys_user
+    set account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      lastLoginIp = #{lastloginip,jdbcType=VARCHAR},
+      lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+      loginCount = #{logincount,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      isEnable = #{isenable,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="deleteLogicByIds">
+    update sys_user sys_user set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_user </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_user sys_user</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_user </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_user sys_user</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND sys_user.id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="account != null and account != ''">
+         AND sys_user.account = #{account,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null and password != ''">
+         AND sys_user.password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="lastloginip != null and lastloginip != ''">
+         AND sys_user.lastLoginIp = #{lastloginip,jdbcType=VARCHAR}
+      </if>
+      <if test="lastlogintime != null and lastlogintime != ''">
+         AND sys_user.lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="logincount != null and logincount != ''">
+         AND sys_user.loginCount = #{logincount,jdbcType=INTEGER}
+      </if>
+      <if test="createtime != null and createtime != ''">
+         AND sys_user.createTime = #{createtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="isenable != null and isenable != ''">
+         AND sys_user.isEnable = #{isenable,jdbcType=BIT}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND sys_user.id &gt; #{myGreater_id,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_account != null and myGreater_account != ''">
+         AND sys_user.account &gt; #{myGreater_account,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_password != null and myGreater_password != ''">
+         AND sys_user.password &gt; #{myGreater_password,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_lastloginip != null and myGreater_lastloginip != ''">
+         AND sys_user.lastLoginIp &gt; #{myGreater_lastloginip,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_lastlogintime != null and myGreater_lastlogintime != ''">
+         AND sys_user.lastLoginTime &gt; #{myGreater_lastlogintime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myGreater_logincount != null and myGreater_logincount != ''">
+         AND sys_user.loginCount &gt; #{myGreater_logincount,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_createtime != null and myGreater_createtime != ''">
+         AND sys_user.createTime &gt; #{myGreater_createtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myGreater_isenable != null and myGreater_isenable != ''">
+         AND sys_user.isEnable &gt; #{myGreater_isenable,jdbcType=BIT}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND sys_user.id &lt; #{myLesser_id,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_account != null and myLesser_account != ''">
+         AND sys_user.account &lt; #{myLesser_account,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_password != null and myLesser_password != ''">
+         AND sys_user.password &lt; #{myLesser_password,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_lastloginip != null and myLesser_lastloginip != ''">
+         AND sys_user.lastLoginIp &lt; #{myLesser_lastloginip,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_lastlogintime != null and myLesser_lastlogintime != ''">
+         AND sys_user.lastLoginTime &lt; #{myLesser_lastlogintime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myLesser_logincount != null and myLesser_logincount != ''">
+         AND sys_user.loginCount &lt; #{myLesser_logincount,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_createtime != null and myLesser_createtime != ''">
+         AND sys_user.createTime &lt; #{myLesser_createtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myLesser_isenable != null and myLesser_isenable != ''">
+         AND sys_user.isEnable &lt; #{myLesser_isenable,jdbcType=BIT}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND sys_user.id like CONCAT('%', #{myLike_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_account != null and myLike_account != ''">
+         AND sys_user.account like CONCAT('%', #{myLike_account,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_password != null and myLike_password != ''">
+         AND sys_user.password like CONCAT('%', #{myLike_password,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_lastloginip != null and myLike_lastloginip != ''">
+         AND sys_user.lastLoginIp like CONCAT('%', #{myLike_lastloginip,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_lastlogintime != null and myLike_lastlogintime != ''">
+         AND sys_user.lastLoginTime like CONCAT('%', #{myLike_lastlogintime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLike_logincount != null and myLike_logincount != ''">
+         AND sys_user.loginCount like CONCAT('%', #{myLike_logincount,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_createtime != null and myLike_createtime != ''">
+         AND sys_user.createTime like CONCAT('%', #{myLike_createtime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLike_isenable != null and myLike_isenable != ''">
+         AND sys_user.isEnable like CONCAT('%', #{myLike_isenable,jdbcType=BIT},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND sys_user.id like CONCAT('%', #{myLikeStart_id,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_account != null and myLikeStart_account != ''">
+         AND sys_user.account like CONCAT('%', #{myLikeStart_account,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_password != null and myLikeStart_password != ''">
+         AND sys_user.password like CONCAT('%', #{myLikeStart_password,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_lastloginip != null and myLikeStart_lastloginip != ''">
+         AND sys_user.lastLoginIp like CONCAT('%', #{myLikeStart_lastloginip,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_lastlogintime != null and myLikeStart_lastlogintime != ''">
+         AND sys_user.lastLoginTime like CONCAT('%', #{myLikeStart_lastlogintime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="myLikeStart_logincount != null and myLikeStart_logincount != ''">
+         AND sys_user.loginCount like CONCAT('%', #{myLikeStart_logincount,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_createtime != null and myLikeStart_createtime != ''">
+         AND sys_user.createTime like CONCAT('%', #{myLikeStart_createtime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="myLikeStart_isenable != null and myLikeStart_isenable != ''">
+         AND sys_user.isEnable like CONCAT('%', #{myLikeStart_isenable,jdbcType=BIT})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND sys_user.id like CONCAT( #{myLikeEnd_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_account != null and myLikeEnd_account != ''">
+         AND sys_user.account like CONCAT( #{myLikeEnd_account,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_password != null and myLikeEnd_password != ''">
+         AND sys_user.password like CONCAT( #{myLikeEnd_password,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_lastloginip != null and myLikeEnd_lastloginip != ''">
+         AND sys_user.lastLoginIp like CONCAT( #{myLikeEnd_lastloginip,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_lastlogintime != null and myLikeEnd_lastlogintime != ''">
+         AND sys_user.lastLoginTime like CONCAT( #{myLikeEnd_lastlogintime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLikeEnd_logincount != null and myLikeEnd_logincount != ''">
+         AND sys_user.loginCount like CONCAT( #{myLikeEnd_logincount,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_createtime != null and myLikeEnd_createtime != ''">
+         AND sys_user.createTime like CONCAT( #{myLikeEnd_createtime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLikeEnd_isenable != null and myLikeEnd_isenable != ''">
+         AND sys_user.isEnable like CONCAT( #{myLikeEnd_isenable,jdbcType=BIT},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND sys_user.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_account != null and myIn_account != ''">
+         AND sys_user.account in <foreach item="item" index="index" collection="myIn_account" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_password != null and myIn_password != ''">
+         AND sys_user.password in <foreach item="item" index="index" collection="myIn_password" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_lastloginip != null and myIn_lastloginip != ''">
+         AND sys_user.lastLoginIp in <foreach item="item" index="index" collection="myIn_lastloginip" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_lastlogintime != null and myIn_lastlogintime != ''">
+         AND sys_user.lastLoginTime in <foreach item="item" index="index" collection="myIn_lastlogintime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_logincount != null and myIn_logincount != ''">
+         AND sys_user.loginCount in <foreach item="item" index="index" collection="myIn_logincount" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createtime != null and myIn_createtime != ''">
+         AND sys_user.createTime in <foreach item="item" index="index" collection="myIn_createtime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_isenable != null and myIn_isenable != ''">
+         AND sys_user.isEnable in <foreach item="item" index="index" collection="myIn_isenable" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+</mapper>

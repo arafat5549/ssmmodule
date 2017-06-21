@@ -68,7 +68,7 @@
 		<org.aspectj.aspectjweaver>1.8.7</org.aspectj.aspectjweaver>
 		<org.aspectj.aspectjrt>1.8.7</org.aspectj.aspectjrt>
 		<cglib>3.1</cglib>
-		<!-- 数据库 -->
+		<!-- 数据�? -->
 		<org.mybatis.mybatis>3.2.8</org.mybatis.mybatis>
 		<org.mybatis.mybatis-spring>1.2.2</org.mybatis.mybatis-spring>
 		<mysql-connector-java>5.1.21</mysql-connector-java>
@@ -92,7 +92,7 @@
 		<org.json.json>20160212</org.json.json>
 		<json-simple>1.1.1</json-simple>
 		<fastjson.version>1.2.11</fastjson.version>
-		<!-- 通用工具类 -->
+		<!-- 通用工具 -->
 		<commons-codec>1.9</commons-codec>
 		<commons-lang>2.6</commons-lang>
 		<commons-lang3>3.3.2</commons-lang3>
@@ -104,7 +104,7 @@
 		<org.freemarker.freemarker>2.3.22</org.freemarker.freemarker>
 		<!-- 其他 -->
 		<lucene.version>5.2.1</lucene.version><!-- 搜索引擎 -->
-		<org.im4java>1.4.0</org.im4java><!-- im4java是ImageMagick的另�?个Java�?源接�?,图形处理 -->
+		<org.im4java>1.4.0</org.im4java><!-- im4java是ImageMagick的,图形处理 -->
 		<org.apache.poi>3.9</org.apache.poi><!-- 处理Word,Excle等Office文档 -->
 		<com.itextpdf>5.5.7</com.itextpdf>  <!-- 处理PDF -->
 		<org.sitemesh.sitemesh>3.0.1</org.sitemesh.sitemesh> <!-- 布局引擎 -->
@@ -112,7 +112,11 @@
 		<commons-httpclient>3.1</commons-httpclient>
 		<cxf.version>3.1.5</cxf.version>
 		<jsqlparser>0.9.5</jsqlparser>  <!-- SQL解析工具 -->
-		<!-- 需要本地导入的包 -->
+		<!-- swaggerAPI -->
+		<swagger.version>1.5.10</swagger.version>
+		<springfox.version>2.6.1</springfox.version>
+		<jackson.version>2.8.8</jackson.version>
+		<!-- 要本地导入的 -->
 		<springside.version>5.0.0-SNAPSHOT</springside.version>
 	</properties>
 
@@ -375,7 +379,7 @@
 					<artifactId>jackson-annotations</artifactId>
 					<version>${jackson.version}</version>
 			</dependency>
-			<!-- 其他JSON包 -->
+			<!-- 其他JSON处理包 -->
 			<dependency>
 				<groupId>org.json</groupId>
 				<artifactId>json</artifactId>
@@ -391,7 +395,7 @@
 				<artifactId>json-simple</artifactId>
 				<version>${json-simple}</version>
 			</dependency>
-			<!-- JSON包结束 -->
+			<!-- JSON包结�? -->
 			<!-- XML处理 -->
 			<dependency>
 				<groupId>dom4j</groupId>
@@ -414,7 +418,7 @@
 				<groupId>javax.servlet.jsp</groupId>
 				<artifactId>jsp-api</artifactId>
 				<version>${javax.servlet.jsp.jsp-api}</version>
-				<scope>provided</scope>   <!--这里说明jsp-api.jar文件将由应用服务器提�? -->
+				<scope>provided</scope>   <!--这里说明jsp-api.jar文件将由应用服务器提供 -->
 			</dependency>
 			<!-- jstl jsp页面标签 -->
 			<dependency>
@@ -554,7 +558,39 @@
 				<version>${cxf.version}</version>
 			</dependency>
 
-			<!-- 私有方法�? -->
+			<!-- Springfox API文档 -->
+			<dependency>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-annotations</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${springfox.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${springfox.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<!-- 私有包-需要本地导入 -->
 			<dependency>
 				<groupId>springside4</groupId>
 				<artifactId>springside-utils</artifactId>
@@ -565,15 +601,17 @@
 
 
 	<modules>
-	    <!-- 基础包 -->
+	    <!-- 基础模块-代码自动生成和通用工具类 -->
 		<module>SSMModule-common</module>
-		<!-- <module>SSMModule-persist</module> -->
-		<!-- 包括service层和dao层 以及自动代码生成和测试 -->
-		<module>SSMModule-service</module>
-		<!-- web层之前台商城 -->
-		<module>SSMModule-web-shop</module>
+		<!-- 包括service层和dao�? 以及自动代码生成和测试 
+		<module>SSMModule-service</module>-->
+		<!-- web层之前台商城 
+		<module>SSMModule-web-shop</module>-->
 		<!-- web层之后台管理模块 -->
    		<module>SSMModule-web-admin</module>
+   		
+   		<!-- swaggerDEMO 
+   		<module>SSMModule-swagger</module>-->
   </modules>
 
 	<!-- 提供pluginManagement 帮助管理插件 -->
@@ -599,11 +637,31 @@
 						<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
-				
-
 	            
 			</plugins>
 		</pluginManagement>
+		
+		<resources>
+			<!-- Intellij idea兼容 -->
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+			
+			<resource>
+				<directory>src/main/resources</directory>
+				<!-- 过滤替换配置文件变量 -->
+				<filtering>true</filtering>
+			</resource>
+			
+			<!-- 环境配置文件
+			<resource>
+				<directory>deploy/${env}</directory>
+			</resource>
+			 -->
+		</resources>
 	</build>
 
 </project>

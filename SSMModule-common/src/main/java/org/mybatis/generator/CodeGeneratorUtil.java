@@ -63,11 +63,11 @@ public class CodeGeneratorUtil {
 				String comment = comments.get(tname);
 				int idx = comment.lastIndexOf("表");
 				String pageTitle= idx > 0 ? comment.substring(0,comment.lastIndexOf("表")) : comment;
-				System.out.println(pageTitle+","+comment+","+tname);
+				//System.out.println(pageTitle+","+comment+","+tname);
 				//System.out.println(key+","+clsName+","+tname+","+webPackageName);
 				if(clsName.equals("SysUser"))
 				{
-					//createJspTemplate(webPackageName, clsName, jspPackageName,pageTitle,"templates/jsp.ftl","list.jsp");
+					createJspTemplate(webPackageName, clsName, jspPackageName,pageTitle,"templates/jsp.ftl","list.jsp");
 				}
 			}
 		}
@@ -94,6 +94,8 @@ public class CodeGeneratorUtil {
 		root.put("pageContentJsp",pageContentJsp);
 		
 		root.put("pageTitle",pageTitle);
+		root.put("commonUrl","");
+		
 		String workDir = (String) System.getProperties().get("user.dir");
 		try {
 			jsp(template,workDir, root, "jspPackageName",suffix);

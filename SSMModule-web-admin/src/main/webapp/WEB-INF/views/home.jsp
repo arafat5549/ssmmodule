@@ -26,7 +26,7 @@
         
 		<!-- BEGIN CONTAINER -->
         <div class="page-container">
-            <%@include file="common/sidebar.jsp" %> 
+            <%@include file="common/sidebarJson.jsp" %> 
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
                 <!-- BEGIN CONTENT BODY -->
@@ -42,6 +42,33 @@
         <!-- END CONTAINER -->
  		<%@ include file="common/footer.jsp" %>
  		<%@ include file="common/jslib.jsp" %>
+ 		
+ 		<!-- Custom Javascript Area -->
+ 		<script type="text/javascript">
+ 		
+	 		var handler = {
+	 			//封装相关ajax的url
+	 			 URL: {
+	 			        menuList: function (parentId) {//菜单列表
+	 			            return '/permission/list/' + parentId;
+	 			        },
+	 			        userList: function(){
+	 			        	
+	 			        },
+	 			 },
+	 			 
+	 			menuList: function (parentId) {
+	 		        //执行购买请求
+	 		        $.get(handler.URL.menuList(parentId), {}, function (result) {
+	 		            
+	 		            
+	 		        });
+
+	 		    }
+	 		};
+ 			
+ 			
+ 		</script>
     </body> 
 
 </html>

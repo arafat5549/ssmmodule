@@ -173,10 +173,11 @@ public class MybatisGenerator {
 			System.out.println("dbType为空设为默认值mysql");
 		}
 		 String myBussinessPackage = props.getProperty("myBussinessPackage");
+		 String myMapperPackage = props.getProperty("myMapperPackage");
 		 String myModelPackage 	   = props.getProperty("myModelPackage");
 		 
 		 try {
-			return GeneratorConfigXMLUtil.generateConfigXML(tableNames, prefixs, ORIGIN_CONFIG, myBussinessPackage, myModelPackage);
+			return GeneratorConfigXMLUtil.generateConfigXML(tableNames, prefixs, ORIGIN_CONFIG, myBussinessPackage,myMapperPackage, myModelPackage);
 		} catch (IOException | CloneNotSupportedException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
 			e.printStackTrace();
 		}

@@ -91,7 +91,15 @@
 		    <groupId>com.github.jsqlparser</groupId>
 		    <artifactId>jsqlparser</artifactId>
 		</dependency>
-		
+		<!-- Protobuff -->
+			<dependency>
+				<groupId>com.dyuproject.protostuff</groupId>
+				<artifactId>protostuff-core</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.dyuproject.protostuff</groupId>
+				<artifactId>protostuff-runtime</artifactId>
+			</dependency>
 		 <!-- XML解析 -->
 		 <dependency>
 			<groupId>dom4j</groupId>
@@ -215,4 +223,6 @@
 		</dependency>
 		-->
   </dependencies>
+  
+  
 </project>

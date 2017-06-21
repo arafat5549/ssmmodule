@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.sys.dao.SysRoleDao">
+  <resultMap id="BaseResultMap" type="com.ssf.sys.model.SysRole">
+    <id column="sys_role_id" jdbcType="INTEGER" property="id" />
+    <result column="sys_role_appId" jdbcType="INTEGER" property="appid" />
+    <result column="sys_role_name" jdbcType="VARCHAR" property="name" />
+    <result column="sys_role_sort" jdbcType="INTEGER" property="sort" />
+    <result column="sys_role_description" jdbcType="VARCHAR" property="description" />
+    <result column="sys_role_isEnable" jdbcType="BIT" property="isenable" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sys_role.id as sys_role_id, sys_role.appId as sys_role_appId, sys_role.name as sys_role_name, 
+    sys_role.sort as sys_role_sort, sys_role.description as sys_role_description, sys_role.isEnable as sys_role_isEnable
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role sys_role
+    where sys_role.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.sys.model.SysRole">
+    insert into sys_role (id, appId, name, 
+      sort, description, isEnable
+      )
+    values (#{id,jdbcType=INTEGER}, #{appid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{isenable,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.sys.model.SysRole">
+    insert into sys_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="appid != null">
+        appId,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="isenable != null">
+        isEnable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null">
+        #{appid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="isenable != null">
+        #{isenable,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.sys.model.SysRole">
+    update sys_role
+    <set>
+      <if test="appid != null">
+        appId = #{appid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="isenable != null">
+        isEnable = #{isenable,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.sys.model.SysRole">
+    update sys_role
+    set appId = #{appid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      isEnable = #{isenable,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="deleteLogicByIds">
+    update sys_role sys_role set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_role </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_role sys_role</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_role </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_role sys_role</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND sys_role.id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="appid != null and appid != ''">
+         AND sys_role.appId = #{appid,jdbcType=INTEGER}
+      </if>
+      <if test="name != null and name != ''">
+         AND sys_role.name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="sort != null and sort != ''">
+         AND sys_role.sort = #{sort,jdbcType=INTEGER}
+      </if>
+      <if test="description != null and description != ''">
+         AND sys_role.description = #{description,jdbcType=VARCHAR}
+      </if>
+      <if test="isenable != null and isenable != ''">
+         AND sys_role.isEnable = #{isenable,jdbcType=BIT}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND sys_role.id &gt; #{myGreater_id,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_appid != null and myGreater_appid != ''">
+         AND sys_role.appId &gt; #{myGreater_appid,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_name != null and myGreater_name != ''">
+         AND sys_role.name &gt; #{myGreater_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_sort != null and myGreater_sort != ''">
+         AND sys_role.sort &gt; #{myGreater_sort,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_description != null and myGreater_description != ''">
+         AND sys_role.description &gt; #{myGreater_description,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_isenable != null and myGreater_isenable != ''">
+         AND sys_role.isEnable &gt; #{myGreater_isenable,jdbcType=BIT}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND sys_role.id &lt; #{myLesser_id,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_appid != null and myLesser_appid != ''">
+         AND sys_role.appId &lt; #{myLesser_appid,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_name != null and myLesser_name != ''">
+         AND sys_role.name &lt; #{myLesser_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_sort != null and myLesser_sort != ''">
+         AND sys_role.sort &lt; #{myLesser_sort,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_description != null and myLesser_description != ''">
+         AND sys_role.description &lt; #{myLesser_description,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_isenable != null and myLesser_isenable != ''">
+         AND sys_role.isEnable &lt; #{myLesser_isenable,jdbcType=BIT}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND sys_role.id like CONCAT('%', #{myLike_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_appid != null and myLike_appid != ''">
+         AND sys_role.appId like CONCAT('%', #{myLike_appid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_name != null and myLike_name != ''">
+         AND sys_role.name like CONCAT('%', #{myLike_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_sort != null and myLike_sort != ''">
+         AND sys_role.sort like CONCAT('%', #{myLike_sort,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_description != null and myLike_description != ''">
+         AND sys_role.description like CONCAT('%', #{myLike_description,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_isenable != null and myLike_isenable != ''">
+         AND sys_role.isEnable like CONCAT('%', #{myLike_isenable,jdbcType=BIT},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND sys_role.id like CONCAT('%', #{myLikeStart_id,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_appid != null and myLikeStart_appid != ''">
+         AND sys_role.appId like CONCAT('%', #{myLikeStart_appid,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_name != null and myLikeStart_name != ''">
+         AND sys_role.name like CONCAT('%', #{myLikeStart_name,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_sort != null and myLikeStart_sort != ''">
+         AND sys_role.sort like CONCAT('%', #{myLikeStart_sort,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_description != null and myLikeStart_description != ''">
+         AND sys_role.description like CONCAT('%', #{myLikeStart_description,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_isenable != null and myLikeStart_isenable != ''">
+         AND sys_role.isEnable like CONCAT('%', #{myLikeStart_isenable,jdbcType=BIT})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND sys_role.id like CONCAT( #{myLikeEnd_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_appid != null and myLikeEnd_appid != ''">
+         AND sys_role.appId like CONCAT( #{myLikeEnd_appid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_name != null and myLikeEnd_name != ''">
+         AND sys_role.name like CONCAT( #{myLikeEnd_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_sort != null and myLikeEnd_sort != ''">
+         AND sys_role.sort like CONCAT( #{myLikeEnd_sort,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_description != null and myLikeEnd_description != ''">
+         AND sys_role.description like CONCAT( #{myLikeEnd_description,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_isenable != null and myLikeEnd_isenable != ''">
+         AND sys_role.isEnable like CONCAT( #{myLikeEnd_isenable,jdbcType=BIT},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND sys_role.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_appid != null and myIn_appid != ''">
+         AND sys_role.appId in <foreach item="item" index="index" collection="myIn_appid" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_name != null and myIn_name != ''">
+         AND sys_role.name in <foreach item="item" index="index" collection="myIn_name" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_sort != null and myIn_sort != ''">
+         AND sys_role.sort in <foreach item="item" index="index" collection="myIn_sort" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_description != null and myIn_description != ''">
+         AND sys_role.description in <foreach item="item" index="index" collection="myIn_description" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_isenable != null and myIn_isenable != ''">
+         AND sys_role.isEnable in <foreach item="item" index="index" collection="myIn_isenable" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+</mapper>

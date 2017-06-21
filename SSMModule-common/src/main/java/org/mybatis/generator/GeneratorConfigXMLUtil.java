@@ -92,7 +92,7 @@ public class GeneratorConfigXMLUtil {
         return ele;
 	}
 	
-	private static void generteConfigBase(List<String> tableNames,String src,String out,String pName,String mName) throws IOException, CloneNotSupportedException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException{
+	private static void generteConfigBase(List<String> tableNames,String src,String out,String daoName,String mapperName,String modelName) throws IOException, CloneNotSupportedException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException{
 		InputStream is = URLResourceUtil.asStream("classpath://"+src);
 		//System.out.println(is);
 		//Document is2 = XmlParserUtilss.getDocument("src/main/resources/"+src);
@@ -117,18 +117,21 @@ public class GeneratorConfigXMLUtil {
 		}
         ele.getParent().remove(ele);
         
-        if(!StringUtils.isBlank(mName)){
+        if(!StringUtils.isBlank(modelName)){
         	Element element = selectElement("//javaModelGenerator",document);
-        	element.addAttribute("targetPackage", mName);
+        	element.addAttribute("targetPackage", modelName);
         }
-        if(!StringUtils.isBlank(pName)){
-        	Element element = selectElement("//sqlMapGenerator",document);
-        	element.addAttribute("targetPackage", pName);
-            System.out.println(pName);
-            
+        if(!StringUtils.isBlank(daoName)){
         	Element element2 = selectElement("//javaClientGenerator",document);
-        	element2.addAttribute("targetPackage", pName);
+        	element2.addAttribute("targetPackage", daoName);
         }
+        if(!StringUtils.isBlank(mapperName)){
+        	Element element = selectElement("//sqlMapGenerator",document);
+        	element.addAttribute("targetPackage", mapperName);
+            System.out.println(mapperName);
+        }
+
+    	
         
         //String name = Resources.getResourceURL(out).toString();//getResourceAsFile(out).toString();
         System.out.println(out);
@@ -187,7 +190,8 @@ public class GeneratorConfigXMLUtil {
      * @throws InstantiationException 
      * @throws IllegalAccessException 
 	 */
-	public static List<String> generateConfigXML(List<String> tableNames,List<String> prefixs,String src,String myBussinessPackage,String myModelPackage) throws IOException, CloneNotSupportedException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException{
+	public static List<String> generateConfigXML(List<String> tableNames,List<String> prefixs,String src,String myBussinessPackage,String myMapperPackage,String myModelPackage) 
+			throws IOException, CloneNotSupportedException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException{
 		//String src = "generatorConfig.xml";
 		//List<String> tableNames = Lists.newArrayList("sys_pix_user","sys_product","rp_account_check_batch","pms_menu","pix_account","demo");
 		//String myBussinessPackage = "com.ssf.dao";
@@ -210,7 +214,7 @@ public class GeneratorConfigXMLUtil {
 			
 			String daoPackageName = MybatisGenerator.parsePackageName(myBussinessPackage, key);
 			String modelPackageName = MybatisGenerator.parsePackageName(myModelPackage, key);
-			
+			String mapperPackgeName = MybatisGenerator.parsePackageName(myMapperPackage, key);
 			String out = outBaseName+"Bak.xml";
 			if(prefixs != null){
 				out = outBaseName+"_"+key+"xml";
@@ -225,7 +229,7 @@ public class GeneratorConfigXMLUtil {
 			}
 			out = "src/main/resources/"+  out;
 			System.out.println(src+","+out);
-		    generteConfigBase((List<String>)multimap.get(key), src, out ,daoPackageName,modelPackageName);
+		    generteConfigBase((List<String>)multimap.get(key), src, out ,daoPackageName,mapperPackgeName,modelPackageName);
 		}
 		
 		return configs;

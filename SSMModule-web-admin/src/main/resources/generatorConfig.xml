@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<!--  每次修改的部分为替换  targetPackage tableName 部分，对应数据库不同的表结构，不同的包名，自动映射出来相关的类文件  -->
+<!--  注意如果是单表结构的逻辑，增加 两个自定义插件，并且必须有 id deleteFlag createTime 表字段   -->
+<!--  如果为关联关系的表结构，注释掉两个自定义插件，并且关联关系的两个表字段，设定为复合主键，之后生成的实体类型，默认为 Key 后缀的主键名称   -->
+<generatorConfiguration>
+
+	<!-- 引入配置文件 -->  
+    <properties resource="jdbc.properties"/>  
+
+	<!-- <classPathEntry location="${classPath}" />-->
+    
+	<context id="context1" targetRuntime="MyBatis3">
+	
+		<!-- 防止部分IDE，在进行代码生成器过程中，自定义注释部分 中文乱码 -->
+		<property name="javaFileEncoding" value="UTF-8"/>
+	
+		<!-- 由于beginningDelimiter和endingDelimiter的默认值为双引号(")，在Mysql中不能这么写，所以还要将这两个默认值改为**反单引号(`)**，配置如下：  -->
+		
+		<property name="beginningDelimiter" value=""/>
+		<property name="endingDelimiter" value=""/>
+	
+		<!-- 这个插件用来在XXXExample类中生成大小写敏感的LIKE方法 -->
+		<!-- <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"></plugin>   -->
+		
+		<!-- 这个插件主要用来为生成的Java模型类添加序列化接口，并生成serialVersionUID字段； -->
+        <!-- <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin> -->
+        
+        <!-- 为生成的Java模型创建一个toString方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+	
+		<!-- page plugin && add deleteLogicByIds method  -->
+		<!-- 单表逻辑的话， 可以增加下面的两个两个自定义插件，关联关系的话，建议注释掉如下的两个插件-->
+		
+		<plugin type="com.ssf.common.mybatis.plugin.PaginationPlugin"/>
+		
+		<plugin type="com.ssf.common.mybatis.plugin.DeleteLogicByIdsPlugin"/> 
+		
+		<!--  自定义的序列化 类文件 插件 -->
+		<plugin type="com.ssf.common.mybatis.plugin.serializable.SerializablePlugin"/>
+		
+		<!-- mysql oracle 两种数据源的分页配置插件 根据 _databaseId 的区别来区分当前数据源是oracle还是mysql，方便数据迁移过程中的分页逻辑不报错 -->
+		<plugin type="com.ssf.common.mybatis.plugin.mutiDatasource.MutiDatasourcePaginationPlugin"/>
+		
+		<!-- 取消 Example 类文件的生成，在进行代码生成器的过程中，生成 selectCountByMap selectListByMap 两种方法，代替 Example 方法的生成 -->
+		<plugin type="com.ssf.common.mybatis.plugin.SelectCountAndListByMapPlugin"/>
+		
+		<!-- 自定义注释部分（实体类entity生成过程中，将配置的数据库部分的注释部分生成，关键节点的注解部分生成） -->
+		<plugin type="com.ssf.common.mybatis.plugin.MyTableAnnotationPlugin"/>
+		
+		<!-- 动态表名的处理，解决selectByPrimaryKeyAndTableName deleteByPrimaryKeyAndTableName 两个方法
+		<plugin type="com.ssf.common.mybatis.plugin.MyDynamicTableNamePlugin"/> 
+		<plugin type="com.ssf.common.mybatis.plugin.MyInsertUpdateDynamicTableNamePlugin"/>
+		-->
+		<!-- 为继承的BaseMapper接口添加对应的实现类 -->
+		<plugin type="com.ssf.common.mybatis.plugin.InterFaceExtendsPlugin">
+           <property name="mappers" value="com.ssf.common.mybatis.base.BaseMapper"/>
+         </plugin>
+         
+        <plugin type="com.ssf.common.mybatis.plugin.OverIsMergeablePlugin" />
+		<!-- #######################插件部分结束####################### -->
+		
+		
+		<!-- 自定义 注释部分，增加字段方面的注释 -->
+		<commentGenerator type="com.ssf.common.mybatis.plugin.MyCommentGeneratorPlugin">
+			<property name="suppressAllComments" value="true" /> 
+		</commentGenerator>
+		
+        <jdbcConnection 
+        	driverClass="${jdbc.driverClassName}"
+            connectionURL="${jdbc.url}"
+            userId="${jdbc.username}" 
+            password="${jdbc.password}" />
+            
+        <javaModelGenerator targetPackage="${myModelPackage}" targetProject="${targetProject}src\main\java" >
+        	<!-- alexgaoyh 20160602 增加基础bean的继承操作，将通用属性集成到BaseEntity内部
+        	<property name="rootClass" value="com.ssf.common.mybatis.base.BaseEntity"/> -->
+        </javaModelGenerator>
+        
+        <sqlMapGenerator targetPackage="${myMapperPackage}" targetProject="${targetProject}src\main\java" />
+        
+        <javaClientGenerator targetPackage="${myBussinessPackage}" targetProject="${targetProject}src\main\java" type="XMLMAPPER" />
+        
+        <!-- domainObjectName 部分，如果不加的话，好像数据库表结构是驼峰式的话，生成的*。java类文件不是驼峰式的结构，故加上这个配置部分 -->
+        <!-- table 中增加属性 alias 部分，这一部分的设定，用来给表结构增加别名，如果出现关联查询的情况下，可以通过设定表结构的别名，来避免  Oracle00-918:未明确定义列的错误 -->
+        <!-- alias:如果指定，这个值会用在生成的select查询SQL的表的别名和列名上。 列名会被别名为 alias_actualColumnName(别名_实际列名) 这种模式。 -->
+        <!-- 选择一个table来生成相关文件，可以有一个或多个table，必须要有table元素
+		        选择的table会生成一下文件：
+		        1，SQL map文件
+		        2，生成一个主键类；
+		        3，除了BLOB和主键的其他字段的类；
+		        4，包含BLOB的类；
+		        5，一个用户生成动态查询的条件类（selectByExample, deleteByExample），可选；
+		        6，Mapper接口（可选）
+		
+		        tableName（必要）：要生成对象的表名；
+		        注意：大小写敏感问题。正常情况下，MBG会自动的去识别数据库标识符的大小写敏感度，在一般情况下，MBG会
+		            根据设置的schema，catalog或tablename去查询数据表，按照下面的流程：
+		            1，如果schema，catalog或tablename中有空格，那么设置的是什么格式，就精确的使用指定的大小写格式去查询；
+		            2，否则，如果数据库的标识符使用大写的，那么MBG自动把表名变成大写再查找；
+		            3，否则，如果数据库的标识符使用小写的，那么MBG自动把表名变成小写再查找；
+		            4，否则，使用指定的大小写格式查询；
+		        另外的，如果在创建表的时候，使用的""把数据库对象规定大小写，就算数据库标识符是使用的大写，在这种情况下也会使用给定的大小写来创建表名；
+		        这个时候，请设置delimitIdentifiers="true"即可保留大小写格式；
+		
+		        可选：
+		        1，schema：数据库的schema；
+		        2，catalog：数据库的catalog；
+		        3，alias：为数据表设置的别名，如果设置了alias，那么生成的所有的SELECT SQL语句中，列名会变成：alias_actualColumnName
+		        4，domainObjectName：生成的domain类的名字，如果不设置，直接使用表名作为domain类的名字；可以设置为somepck.domainName，那么会自动把domainName类再放到somepck包里面；
+		        5，enableInsert（默认true）：指定是否生成insert语句；
+		        6，enableSelectByPrimaryKey（默认true）：指定是否生成按照主键查询对象的语句（就是getById或get）；
+		        7，enableSelectByExample（默认true）：MyBatis3Simple为false，指定是否生成动态查询语句；
+		        8，enableUpdateByPrimaryKey（默认true）：指定是否生成按照主键修改对象的语句（即update)；
+		        9，enableDeleteByPrimaryKey（默认true）：指定是否生成按照主键删除对象的语句（即delete）；
+		        10，enableDeleteByExample（默认true）：MyBatis3Simple为false，指定是否生成动态删除语句；
+		        11，enableCountByExample（默认true）：MyBatis3Simple为false，指定是否生成动态查询总条数语句（用于分页的总条数查询）；
+		        12，enableUpdateByExample（默认true）：MyBatis3Simple为false，指定是否生成动态修改语句（只修改对象中不为空的属性）；
+		        13，modelType：参考context元素的defaultModelType，相当于覆盖；
+		        14，delimitIdentifiers：参考tableName的解释，注意，默认的delimitIdentifiers是双引号，如果类似MYSQL这样的数据库，使用的是`（反引号，那么还需要设置context的beginningDelimiter和endingDelimiter属性）
+		        15，delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers参考context的属性
+				mapperName:需要1.3.5以上版本  可以将生成XXXMapper改为 "XXXXDao"
+		        注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
+		     -->
+        <table 
+            mapperName="${domainObjectName}Dao"
+            schema="" 
+            tableName="${tableName}" 
+            domainObjectName="${domainObjectName}" 
+            delimitAllColumns="true" 
+        	alias="${alias}" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+        	
+        	<!-- 生成的实体类字段和数据库表结构中的字段一致 -->
+        	<!-- <property name="useActualColumnNames" value="true" /> -->
+        	
+        	<!-- 数据库生成的主键id,用来指定自动生成主键的属性（identity字段或者sequences序列）。如果指定这个元素，MBG在生成insert的SQL映射文件中插入一个<selectKey>元素 -->
+        	<!-- 单元测试的话 ，使用 demoMapper.insert(demo); 之后，调用  demo。getId() 即可获取到当前的id集合-->
+        	<!-- <generatedKey column="id" sqlStatement="Mysql" identity="true" type="post"/>-->   
+        	     	
+        	<columnOverride column="delete_flag" property="deleteFlag" 
+        		javaType="com.ssf.common.vo.enums.DeleteFlagEnum" typeHandler="com.ssf.common.vo.enums.handler.DeleteFlagEnumHandler"></columnOverride>
+        	<columnOverride column="create_time" property="createTime" 
+        		typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>  	
+        	<columnOverride column="update_time" property="updateTime" 
+        		typeHandler="com.ssf.common.vo.GMT.handler.GMTDateTransHandler"/>  
+        	<!-- 生成代码字段名默认按驼峰命名， 单表逻辑的话， id createTime deleteFlag 三个字段为必须的，关联关系表结构的话，要注释掉如下的三个字段 -->
+        	<columnOverride column="resource_type" property="resourceType" 
+        		javaType="com.ssf.common.vo.enums.MenuResourceTypeEnum" typeHandler="com.ssf.common.vo.enums.handler.MenuResourceTypeEnumHandler"></columnOverride>
+
+        	
+        	<columnOverride column="SQL_MODEL_OPERATION" property="sqlModelOperation" 
+        		javaType="com.ssf.common.vo.enums.sql.operation.SQLOperationModelEnum" 
+        		typeHandler="com.ssf.common.vo.enums.sql.operation.handler.SQLOperationModelEnumHandler"></columnOverride>
+        	
+        </table>
+        
+    </context>
+	    
+</generatorConfiguration>

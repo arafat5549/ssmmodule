@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.sys.dao.SysAppDao">
+  <resultMap id="BaseResultMap" type="com.ssf.sys.model.SysApp">
+    <id column="sys_app_id" jdbcType="INTEGER" property="id" />
+    <result column="sys_app_name" jdbcType="VARCHAR" property="name" />
+    <result column="sys_app_sort" jdbcType="INTEGER" property="sort" />
+    <result column="sys_app_createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="sys_app_isEnable" jdbcType="BIT" property="isenable" />
+    <result column="sys_app_code" jdbcType="VARCHAR" property="code" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sys_app.id as sys_app_id, sys_app.name as sys_app_name, sys_app.sort as sys_app_sort, 
+    sys_app.createTime as sys_app_createTime, sys_app.isEnable as sys_app_isEnable, sys_app.code as sys_app_code
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_app sys_app
+    where sys_app.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_app
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.sys.model.SysApp">
+    insert into sys_app (id, name, sort, 
+      createTime, isEnable, code
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{isenable,jdbcType=BIT}, #{code,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.sys.model.SysApp">
+    insert into sys_app
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="isenable != null">
+        isEnable,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isenable != null">
+        #{isenable,jdbcType=BIT},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.sys.model.SysApp">
+    update sys_app
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isenable != null">
+        isEnable = #{isenable,jdbcType=BIT},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.sys.model.SysApp">
+    update sys_app
+    set name = #{name,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      isEnable = #{isenable,jdbcType=BIT},
+      code = #{code,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="deleteLogicByIds">
+    update sys_app sys_app set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_app </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_app sys_app</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_app </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_app sys_app</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND sys_app.id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="name != null and name != ''">
+         AND sys_app.name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="sort != null and sort != ''">
+         AND sys_app.sort = #{sort,jdbcType=INTEGER}
+      </if>
+      <if test="createtime != null and createtime != ''">
+         AND sys_app.createTime = #{createtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="isenable != null and isenable != ''">
+         AND sys_app.isEnable = #{isenable,jdbcType=BIT}
+      </if>
+      <if test="code != null and code != ''">
+         AND sys_app.code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND sys_app.id &gt; #{myGreater_id,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_name != null and myGreater_name != ''">
+         AND sys_app.name &gt; #{myGreater_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_sort != null and myGreater_sort != ''">
+         AND sys_app.sort &gt; #{myGreater_sort,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_createtime != null and myGreater_createtime != ''">
+         AND sys_app.createTime &gt; #{myGreater_createtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myGreater_isenable != null and myGreater_isenable != ''">
+         AND sys_app.isEnable &gt; #{myGreater_isenable,jdbcType=BIT}
+      </if>
+      <if test="myGreater_code != null and myGreater_code != ''">
+         AND sys_app.code &gt; #{myGreater_code,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND sys_app.id &lt; #{myLesser_id,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_name != null and myLesser_name != ''">
+         AND sys_app.name &lt; #{myLesser_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_sort != null and myLesser_sort != ''">
+         AND sys_app.sort &lt; #{myLesser_sort,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_createtime != null and myLesser_createtime != ''">
+         AND sys_app.createTime &lt; #{myLesser_createtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="myLesser_isenable != null and myLesser_isenable != ''">
+         AND sys_app.isEnable &lt; #{myLesser_isenable,jdbcType=BIT}
+      </if>
+      <if test="myLesser_code != null and myLesser_code != ''">
+         AND sys_app.code &lt; #{myLesser_code,jdbcType=VARCHAR}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND sys_app.id like CONCAT('%', #{myLike_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_name != null and myLike_name != ''">
+         AND sys_app.name like CONCAT('%', #{myLike_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_sort != null and myLike_sort != ''">
+         AND sys_app.sort like CONCAT('%', #{myLike_sort,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_createtime != null and myLike_createtime != ''">
+         AND sys_app.createTime like CONCAT('%', #{myLike_createtime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLike_isenable != null and myLike_isenable != ''">
+         AND sys_app.isEnable like CONCAT('%', #{myLike_isenable,jdbcType=BIT},'%' )
+      </if>
+      <if test="myLike_code != null and myLike_code != ''">
+         AND sys_app.code like CONCAT('%', #{myLike_code,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND sys_app.id like CONCAT('%', #{myLikeStart_id,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_name != null and myLikeStart_name != ''">
+         AND sys_app.name like CONCAT('%', #{myLikeStart_name,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_sort != null and myLikeStart_sort != ''">
+         AND sys_app.sort like CONCAT('%', #{myLikeStart_sort,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_createtime != null and myLikeStart_createtime != ''">
+         AND sys_app.createTime like CONCAT('%', #{myLikeStart_createtime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="myLikeStart_isenable != null and myLikeStart_isenable != ''">
+         AND sys_app.isEnable like CONCAT('%', #{myLikeStart_isenable,jdbcType=BIT})
+      </if>
+      <if test="myLikeStart_code != null and myLikeStart_code != ''">
+         AND sys_app.code like CONCAT('%', #{myLikeStart_code,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND sys_app.id like CONCAT( #{myLikeEnd_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_name != null and myLikeEnd_name != ''">
+         AND sys_app.name like CONCAT( #{myLikeEnd_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_sort != null and myLikeEnd_sort != ''">
+         AND sys_app.sort like CONCAT( #{myLikeEnd_sort,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_createtime != null and myLikeEnd_createtime != ''">
+         AND sys_app.createTime like CONCAT( #{myLikeEnd_createtime,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLikeEnd_isenable != null and myLikeEnd_isenable != ''">
+         AND sys_app.isEnable like CONCAT( #{myLikeEnd_isenable,jdbcType=BIT},'%' )
+      </if>
+      <if test="myLikeEnd_code != null and myLikeEnd_code != ''">
+         AND sys_app.code like CONCAT( #{myLikeEnd_code,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND sys_app.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_name != null and myIn_name != ''">
+         AND sys_app.name in <foreach item="item" index="index" collection="myIn_name" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_sort != null and myIn_sort != ''">
+         AND sys_app.sort in <foreach item="item" index="index" collection="myIn_sort" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_createtime != null and myIn_createtime != ''">
+         AND sys_app.createTime in <foreach item="item" index="index" collection="myIn_createtime" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_isenable != null and myIn_isenable != ''">
+         AND sys_app.isEnable in <foreach item="item" index="index" collection="myIn_isenable" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_code != null and myIn_code != ''">
+         AND sys_app.code in <foreach item="item" index="index" collection="myIn_code" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+</mapper>

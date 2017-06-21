@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.sys.dao.SysPermissionDao">
+  <resultMap id="BaseResultMap" type="com.ssf.sys.model.SysPermission">
+    <id column="sys_permission_id" jdbcType="INTEGER" property="id" />
+    <result column="sys_permission_appId" jdbcType="INTEGER" property="appid" />
+    <result column="sys_permission_parentId" jdbcType="INTEGER" property="parentid" />
+    <result column="sys_permission_name" jdbcType="VARCHAR" property="name" />
+    <result column="sys_permission_url" jdbcType="VARCHAR" property="url" />
+    <result column="sys_permission_sort" jdbcType="INTEGER" property="sort" />
+    <result column="sys_permission_isMenu" jdbcType="BIT" property="ismenu" />
+    <result column="sys_permission_isEnable" jdbcType="BIT" property="isenable" />
+    <result column="sys_permission_icon" jdbcType="VARCHAR" property="icon" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sys_permission.id as sys_permission_id, sys_permission.appId as sys_permission_appId, 
+    sys_permission.parentId as sys_permission_parentId, sys_permission.name as sys_permission_name, 
+    sys_permission.url as sys_permission_url, sys_permission.sort as sys_permission_sort, 
+    sys_permission.isMenu as sys_permission_isMenu, sys_permission.isEnable as sys_permission_isEnable, 
+    sys_permission.icon as sys_permission_icon
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_permission sys_permission
+    where sys_permission.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssf.sys.model.SysPermission">
+    insert into sys_permission (id, appId, parentId, 
+      name, url, sort, isMenu, 
+      isEnable, icon)
+    values (#{id,jdbcType=INTEGER}, #{appid,jdbcType=INTEGER}, #{parentid,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{ismenu,jdbcType=BIT}, 
+      #{isenable,jdbcType=BIT}, #{icon,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssf.sys.model.SysPermission">
+    insert into sys_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="appid != null">
+        appId,
+      </if>
+      <if test="parentid != null">
+        parentId,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="ismenu != null">
+        isMenu,
+      </if>
+      <if test="isenable != null">
+        isEnable,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null">
+        #{appid,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="ismenu != null">
+        #{ismenu,jdbcType=BIT},
+      </if>
+      <if test="isenable != null">
+        #{isenable,jdbcType=BIT},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssf.sys.model.SysPermission">
+    update sys_permission
+    <set>
+      <if test="appid != null">
+        appId = #{appid,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null">
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="ismenu != null">
+        isMenu = #{ismenu,jdbcType=BIT},
+      </if>
+      <if test="isenable != null">
+        isEnable = #{isenable,jdbcType=BIT},
+      </if>
+      <if test="icon != null">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssf.sys.model.SysPermission">
+    update sys_permission
+    set appId = #{appid,jdbcType=INTEGER},
+      parentId = #{parentid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      isMenu = #{ismenu,jdbcType=BIT},
+      isEnable = #{isenable,jdbcType=BIT},
+      icon = #{icon,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="deleteLogicByIds">
+    update sys_permission sys_permission set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+  <sql id="OracleDialectPrefix">
+    <if test="page != null and databaseId == 'oracle'">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix">
+    <if test="page != null and databaseId == 'oracle'">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlDialect">
+    <if test="page != null and databaseId == 'mysql'">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </sql>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_permission </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_permission sys_permission</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+     <include refid="OracleDialectPrefix" /> select <include refid="Base_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  sys_permission </if><if test="dynamicTableName == null or dynamicTableName == ''"> sys_permission sys_permission</if> <include refid="Base_Query_Map_Condition" />  order by  id desc <include refid="OracleDialectSuffix" /><include refid="MysqlDialect" /> 
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND sys_permission.id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="appid != null and appid != ''">
+         AND sys_permission.appId = #{appid,jdbcType=INTEGER}
+      </if>
+      <if test="parentid != null and parentid != ''">
+         AND sys_permission.parentId = #{parentid,jdbcType=INTEGER}
+      </if>
+      <if test="name != null and name != ''">
+         AND sys_permission.name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="url != null and url != ''">
+         AND sys_permission.url = #{url,jdbcType=VARCHAR}
+      </if>
+      <if test="sort != null and sort != ''">
+         AND sys_permission.sort = #{sort,jdbcType=INTEGER}
+      </if>
+      <if test="ismenu != null and ismenu != ''">
+         AND sys_permission.isMenu = #{ismenu,jdbcType=BIT}
+      </if>
+      <if test="isenable != null and isenable != ''">
+         AND sys_permission.isEnable = #{isenable,jdbcType=BIT}
+      </if>
+      <if test="icon != null and icon != ''">
+         AND sys_permission.icon = #{icon,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_id != null and myGreater_id != ''">
+         AND sys_permission.id &gt; #{myGreater_id,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_appid != null and myGreater_appid != ''">
+         AND sys_permission.appId &gt; #{myGreater_appid,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_parentid != null and myGreater_parentid != ''">
+         AND sys_permission.parentId &gt; #{myGreater_parentid,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_name != null and myGreater_name != ''">
+         AND sys_permission.name &gt; #{myGreater_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_url != null and myGreater_url != ''">
+         AND sys_permission.url &gt; #{myGreater_url,jdbcType=VARCHAR}
+      </if>
+      <if test="myGreater_sort != null and myGreater_sort != ''">
+         AND sys_permission.sort &gt; #{myGreater_sort,jdbcType=INTEGER}
+      </if>
+      <if test="myGreater_ismenu != null and myGreater_ismenu != ''">
+         AND sys_permission.isMenu &gt; #{myGreater_ismenu,jdbcType=BIT}
+      </if>
+      <if test="myGreater_isenable != null and myGreater_isenable != ''">
+         AND sys_permission.isEnable &gt; #{myGreater_isenable,jdbcType=BIT}
+      </if>
+      <if test="myGreater_icon != null and myGreater_icon != ''">
+         AND sys_permission.icon &gt; #{myGreater_icon,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_id != null and myLesser_id != ''">
+         AND sys_permission.id &lt; #{myLesser_id,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_appid != null and myLesser_appid != ''">
+         AND sys_permission.appId &lt; #{myLesser_appid,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_parentid != null and myLesser_parentid != ''">
+         AND sys_permission.parentId &lt; #{myLesser_parentid,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_name != null and myLesser_name != ''">
+         AND sys_permission.name &lt; #{myLesser_name,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_url != null and myLesser_url != ''">
+         AND sys_permission.url &lt; #{myLesser_url,jdbcType=VARCHAR}
+      </if>
+      <if test="myLesser_sort != null and myLesser_sort != ''">
+         AND sys_permission.sort &lt; #{myLesser_sort,jdbcType=INTEGER}
+      </if>
+      <if test="myLesser_ismenu != null and myLesser_ismenu != ''">
+         AND sys_permission.isMenu &lt; #{myLesser_ismenu,jdbcType=BIT}
+      </if>
+      <if test="myLesser_isenable != null and myLesser_isenable != ''">
+         AND sys_permission.isEnable &lt; #{myLesser_isenable,jdbcType=BIT}
+      </if>
+      <if test="myLesser_icon != null and myLesser_icon != ''">
+         AND sys_permission.icon &lt; #{myLesser_icon,jdbcType=VARCHAR}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND sys_permission.id like CONCAT('%', #{myLike_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_appid != null and myLike_appid != ''">
+         AND sys_permission.appId like CONCAT('%', #{myLike_appid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_parentid != null and myLike_parentid != ''">
+         AND sys_permission.parentId like CONCAT('%', #{myLike_parentid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_name != null and myLike_name != ''">
+         AND sys_permission.name like CONCAT('%', #{myLike_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_url != null and myLike_url != ''">
+         AND sys_permission.url like CONCAT('%', #{myLike_url,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_sort != null and myLike_sort != ''">
+         AND sys_permission.sort like CONCAT('%', #{myLike_sort,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_ismenu != null and myLike_ismenu != ''">
+         AND sys_permission.isMenu like CONCAT('%', #{myLike_ismenu,jdbcType=BIT},'%' )
+      </if>
+      <if test="myLike_isenable != null and myLike_isenable != ''">
+         AND sys_permission.isEnable like CONCAT('%', #{myLike_isenable,jdbcType=BIT},'%' )
+      </if>
+      <if test="myLike_icon != null and myLike_icon != ''">
+         AND sys_permission.icon like CONCAT('%', #{myLike_icon,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND sys_permission.id like CONCAT('%', #{myLikeStart_id,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_appid != null and myLikeStart_appid != ''">
+         AND sys_permission.appId like CONCAT('%', #{myLikeStart_appid,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_parentid != null and myLikeStart_parentid != ''">
+         AND sys_permission.parentId like CONCAT('%', #{myLikeStart_parentid,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_name != null and myLikeStart_name != ''">
+         AND sys_permission.name like CONCAT('%', #{myLikeStart_name,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_url != null and myLikeStart_url != ''">
+         AND sys_permission.url like CONCAT('%', #{myLikeStart_url,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_sort != null and myLikeStart_sort != ''">
+         AND sys_permission.sort like CONCAT('%', #{myLikeStart_sort,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_ismenu != null and myLikeStart_ismenu != ''">
+         AND sys_permission.isMenu like CONCAT('%', #{myLikeStart_ismenu,jdbcType=BIT})
+      </if>
+      <if test="myLikeStart_isenable != null and myLikeStart_isenable != ''">
+         AND sys_permission.isEnable like CONCAT('%', #{myLikeStart_isenable,jdbcType=BIT})
+      </if>
+      <if test="myLikeStart_icon != null and myLikeStart_icon != ''">
+         AND sys_permission.icon like CONCAT('%', #{myLikeStart_icon,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND sys_permission.id like CONCAT( #{myLikeEnd_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_appid != null and myLikeEnd_appid != ''">
+         AND sys_permission.appId like CONCAT( #{myLikeEnd_appid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_parentid != null and myLikeEnd_parentid != ''">
+         AND sys_permission.parentId like CONCAT( #{myLikeEnd_parentid,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_name != null and myLikeEnd_name != ''">
+         AND sys_permission.name like CONCAT( #{myLikeEnd_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_url != null and myLikeEnd_url != ''">
+         AND sys_permission.url like CONCAT( #{myLikeEnd_url,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_sort != null and myLikeEnd_sort != ''">
+         AND sys_permission.sort like CONCAT( #{myLikeEnd_sort,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_ismenu != null and myLikeEnd_ismenu != ''">
+         AND sys_permission.isMenu like CONCAT( #{myLikeEnd_ismenu,jdbcType=BIT},'%' )
+      </if>
+      <if test="myLikeEnd_isenable != null and myLikeEnd_isenable != ''">
+         AND sys_permission.isEnable like CONCAT( #{myLikeEnd_isenable,jdbcType=BIT},'%' )
+      </if>
+      <if test="myLikeEnd_icon != null and myLikeEnd_icon != ''">
+         AND sys_permission.icon like CONCAT( #{myLikeEnd_icon,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND sys_permission.id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_appid != null and myIn_appid != ''">
+         AND sys_permission.appId in <foreach item="item" index="index" collection="myIn_appid" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_parentid != null and myIn_parentid != ''">
+         AND sys_permission.parentId in <foreach item="item" index="index" collection="myIn_parentid" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_name != null and myIn_name != ''">
+         AND sys_permission.name in <foreach item="item" index="index" collection="myIn_name" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_url != null and myIn_url != ''">
+         AND sys_permission.url in <foreach item="item" index="index" collection="myIn_url" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_sort != null and myIn_sort != ''">
+         AND sys_permission.sort in <foreach item="item" index="index" collection="myIn_sort" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_ismenu != null and myIn_ismenu != ''">
+         AND sys_permission.isMenu in <foreach item="item" index="index" collection="myIn_ismenu" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_isenable != null and myIn_isenable != ''">
+         AND sys_permission.isEnable in <foreach item="item" index="index" collection="myIn_isenable" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_icon != null and myIn_icon != ''">
+         AND sys_permission.icon in <foreach item="item" index="index" collection="myIn_icon" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+  </sql>
+</mapper>
